@@ -1,0 +1,931 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AD178CE31E6EEF5B00F8B187 /* VLTActivityItem.h in Headers */ = {isa = PBXBuildFile; fileRef = AD178C9B1E6EEF5B00F8B187 /* VLTActivityItem.h */; };
+		AD178CE41E6EEF5B00F8B187 /* VLTActivityItem.m in Sources */ = {isa = PBXBuildFile; fileRef = AD178C9C1E6EEF5B00F8B187 /* VLTActivityItem.m */; };
+		AD178CE51E6EEF5B00F8B187 /* VLTApiClient.h in Headers */ = {isa = PBXBuildFile; fileRef = AD178C9D1E6EEF5B00F8B187 /* VLTApiClient.h */; };
+		AD178CE61E6EEF5B00F8B187 /* VLTApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AD178C9E1E6EEF5B00F8B187 /* VLTApiClient.m */; };
+		AD178CE71E6EEF5B00F8B187 /* VLTConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = AD178C9F1E6EEF5B00F8B187 /* VLTConfig.h */; };
+		AD178CE81E6EEF5B00F8B187 /* VLTConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = AD178CA01E6EEF5B00F8B187 /* VLTConfig.m */; };
+		AD178CE91E6EEF5B00F8B187 /* VLTConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = AD178CA11E6EEF5B00F8B187 /* VLTConstants.h */; };
+		AD178CEA1E6EEF5B00F8B187 /* VLTConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AD178CA21E6EEF5B00F8B187 /* VLTConstants.m */; };
+		AD178CEB1E6EEF5B00F8B187 /* VLTCore.h in Headers */ = {isa = PBXBuildFile; fileRef = AD178CA31E6EEF5B00F8B187 /* VLTCore.h */; };
+		AD178CEC1E6EEF5B00F8B187 /* VLTCore.m in Sources */ = {isa = PBXBuildFile; fileRef = AD178CA41E6EEF5B00F8B187 /* VLTCore.m */; };
+		AD178CED1E6EEF5B00F8B187 /* VLTMotion.h in Headers */ = {isa = PBXBuildFile; fileRef = AD178CA51E6EEF5B00F8B187 /* VLTMotion.h */; };
+		AD178CEE1E6EEF5B00F8B187 /* VLTMotion.m in Sources */ = {isa = PBXBuildFile; fileRef = AD178CA61E6EEF5B00F8B187 /* VLTMotion.m */; };
+		AD178CEF1E6EEF5B00F8B187 /* VLTNotification.h in Headers */ = {isa = PBXBuildFile; fileRef = AD178CA71E6EEF5B00F8B187 /* VLTNotification.h */; };
+		AD178CF01E6EEF5B00F8B187 /* VLTNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = AD178CA81E6EEF5B00F8B187 /* VLTNotification.m */; };
+		AD178CF31E6EEF5B00F8B187 /* VLTRecordingConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = AD178CAB1E6EEF5B00F8B187 /* VLTRecordingConfig.h */; };
+		AD178CF41E6EEF5B00F8B187 /* VLTRecordingConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = AD178CAC1E6EEF5B00F8B187 /* VLTRecordingConfig.m */; };
+		AD178CF51E6EEF5B00F8B187 /* VLTTrackingUploader.h in Headers */ = {isa = PBXBuildFile; fileRef = AD178CAD1E6EEF5B00F8B187 /* VLTTrackingUploader.h */; };
+		AD178CF61E6EEF5B00F8B187 /* VLTTrackingUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = AD178CAE1E6EEF5B00F8B187 /* VLTTrackingUploader.m */; };
+		AD178CF71E6EEF5B00F8B187 /* VLTAccDMSensorRecorder.h in Headers */ = {isa = PBXBuildFile; fileRef = AD178CB11E6EEF5B00F8B187 /* VLTAccDMSensorRecorder.h */; };
+		AD178CF81E6EEF5B00F8B187 /* VLTAccDMSensorRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = AD178CB21E6EEF5B00F8B187 /* VLTAccDMSensorRecorder.m */; };
+		AD178CF91E6EEF5B00F8B187 /* VLTAccSensorRecorder.h in Headers */ = {isa = PBXBuildFile; fileRef = AD178CB31E6EEF5B00F8B187 /* VLTAccSensorRecorder.h */; };
+		AD178CFA1E6EEF5B00F8B187 /* VLTAccSensorRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = AD178CB41E6EEF5B00F8B187 /* VLTAccSensorRecorder.m */; };
+		AD178CFB1E6EEF5B00F8B187 /* VLTGyroSensorRecorder.h in Headers */ = {isa = PBXBuildFile; fileRef = AD178CB51E6EEF5B00F8B187 /* VLTGyroSensorRecorder.h */; };
+		AD178CFC1E6EEF5B00F8B187 /* VLTGyroSensorRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = AD178CB61E6EEF5B00F8B187 /* VLTGyroSensorRecorder.m */; };
+		AD178CFD1E6EEF5B00F8B187 /* VLTMotionRecorder.h in Headers */ = {isa = PBXBuildFile; fileRef = AD178CB71E6EEF5B00F8B187 /* VLTMotionRecorder.h */; };
+		AD178CFE1E6EEF5B00F8B187 /* VLTMultiMotionRecorder.h in Headers */ = {isa = PBXBuildFile; fileRef = AD178CB81E6EEF5B00F8B187 /* VLTMultiMotionRecorder.h */; };
+		AD178CFF1E6EEF5B00F8B187 /* VLTMultiMotionRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = AD178CB91E6EEF5B00F8B187 /* VLTMultiMotionRecorder.m */; };
+		AD178D001E6EEF5B00F8B187 /* VLTSensorRecorder.h in Headers */ = {isa = PBXBuildFile; fileRef = AD178CBA1E6EEF5B00F8B187 /* VLTSensorRecorder.h */; };
+		AD178D011E6EEF5B00F8B187 /* VLTSensorRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = AD178CBB1E6EEF5B00F8B187 /* VLTSensorRecorder.m */; };
+		AD178D021E6EEF5B00F8B187 /* VLTSensorTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = AD178CBC1E6EEF5B00F8B187 /* VLTSensorTypes.h */; };
+		AD178D031E6EEF5B00F8B187 /* VLTData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD178CBE1E6EEF5B00F8B187 /* VLTData.h */; };
+		AD178D041E6EEF5B00F8B187 /* VLTData.m in Sources */ = {isa = PBXBuildFile; fileRef = AD178CBF1E6EEF5B00F8B187 /* VLTData.m */; };
+		AD178D051E6EEF5B00F8B187 /* VLTSample.h in Headers */ = {isa = PBXBuildFile; fileRef = AD178CC01E6EEF5B00F8B187 /* VLTSample.h */; };
+		AD178D061E6EEF5B00F8B187 /* VLTSampleBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = AD178CC11E6EEF5B00F8B187 /* VLTSampleBuilder.h */; };
+		AD178D071E6EEF5B00F8B187 /* VLTSampleBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = AD178CC21E6EEF5B00F8B187 /* VLTSampleBuilder.m */; };
+		AD178D081E6EEF5B00F8B187 /* VLTSimpleSample.h in Headers */ = {isa = PBXBuildFile; fileRef = AD178CC31E6EEF5B00F8B187 /* VLTSimpleSample.h */; };
+		AD178D091E6EEF5B00F8B187 /* VLTSimpleSample.m in Sources */ = {isa = PBXBuildFile; fileRef = AD178CC41E6EEF5B00F8B187 /* VLTSimpleSample.m */; };
+		AD178D0A1E6EEF5B00F8B187 /* VLTSensorBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = AD178CC51E6EEF5B00F8B187 /* VLTSensorBuilder.h */; };
+		AD178D0B1E6EEF5B00F8B187 /* VLTSensorBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = AD178CC61E6EEF5B00F8B187 /* VLTSensorBuilder.m */; };
+		AD178D0E1E6EEF5B00F8B187 /* VLTDate.h in Headers */ = {isa = PBXBuildFile; fileRef = AD178CCA1E6EEF5B00F8B187 /* VLTDate.h */; };
+		AD178D0F1E6EEF5B00F8B187 /* VLTDate.m in Sources */ = {isa = PBXBuildFile; fileRef = AD178CCB1E6EEF5B00F8B187 /* VLTDate.m */; };
+		AD178D101E6EEF5B00F8B187 /* VLTMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = AD178CCC1E6EEF5B00F8B187 /* VLTMacros.h */; };
+		AD178D111E6EEF5B00F8B187 /* VLTProtobufHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = AD178CCD1E6EEF5B00F8B187 /* VLTProtobufHelper.h */; };
+		AD178D121E6EEF5B00F8B187 /* VLTProtobufHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = AD178CCE1E6EEF5B00F8B187 /* VLTProtobufHelper.m */; };
+		AD178D131E6EEF5B00F8B187 /* VLTErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = AD178CCF1E6EEF5B00F8B187 /* VLTErrors.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AD178D141E6EEF5B00F8B187 /* VLTManager.h in Headers */ = {isa = PBXBuildFile; fileRef = AD178CD01E6EEF5B00F8B187 /* VLTManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AD178D151E6EEF5B00F8B187 /* VLTManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AD178CD11E6EEF5B00F8B187 /* VLTManager.m */; };
+		AD178D161E6EEF5B00F8B187 /* VLTTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = AD178CD21E6EEF5B00F8B187 /* VLTTracker.h */; };
+		AD178D171E6EEF5B00F8B187 /* VLTTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = AD178CD31E6EEF5B00F8B187 /* VLTTracker.m */; };
+		AD178D2E1E6EF38500F8B187 /* ProtocolBuffers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD178D2D1E6EF38500F8B187 /* ProtocolBuffers.framework */; };
+		AD178D301E6EF4A400F8B187 /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD178D2F1E6EF4A400F8B187 /* AFNetworking.framework */; };
+		AD4940491E72A5FD0009572A /* Velocity.pb.h in Headers */ = {isa = PBXBuildFile; fileRef = AD493F5F1E72A5FD0009572A /* Velocity.pb.h */; };
+		AD49404A1E72A5FD0009572A /* Velocity.pb.m in Sources */ = {isa = PBXBuildFile; fileRef = AD493F601E72A5FD0009572A /* Velocity.pb.m */; };
+		AD72F8F71E5E534A000EDAB1 /* OCMock.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AD72F8F61E5E534A000EDAB1 /* OCMock.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AD72F8F91E5E535D000EDAB1 /* Quick.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AD72F8F81E5E535D000EDAB1 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AD72F9101E5ED9D0000EDAB1 /* Quick.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AD72F8F81E5E535D000EDAB1 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AD72F9111E5ED9D5000EDAB1 /* OCMock.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AD72F8F61E5E534A000EDAB1 /* OCMock.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AD9674C61E6F0ADC001D536D /* VLTApiClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ADF433B41E5E4555002D9097 /* VLTApiClientTests.m */; };
+		AD9674C71E6F0ADF001D536D /* VLTManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AD72F9121E5EFDC2000EDAB1 /* VLTManagerTests.m */; };
+		AD9674DA1E6F0C8A001D536D /* VelocitySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD178C7A1E6EEA8400F8B187 /* VelocitySDK.framework */; };
+		AD9674DD1E6F0CFF001D536D /* VelocitySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD178C7A1E6EEA8400F8B187 /* VelocitySDK.framework */; };
+		AD9674DE1E6F0DDA001D536D /* VelocityApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AD72F9001E5ED968000EDAB1 /* VelocityApiTests.m */; };
+		AD9674DF1E6F0E9D001D536D /* AFNetworking.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AD178D2F1E6EF4A400F8B187 /* AFNetworking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AD9674E01E6F0EA4001D536D /* ProtocolBuffers.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AD178D2D1E6EF38500F8B187 /* ProtocolBuffers.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AD9674E11E6F0EE4001D536D /* AFNetworking.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AD178D2F1E6EF4A400F8B187 /* AFNetworking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AD9674E21E6F0EE9001D536D /* ProtocolBuffers.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AD178D2D1E6EF38500F8B187 /* ProtocolBuffers.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		ADB3F1FA1F349CBC001A191D /* VLTUserDataStore.h in Headers */ = {isa = PBXBuildFile; fileRef = ADB3F1F81F349CBC001A191D /* VLTUserDataStore.h */; };
+		ADB3F1FB1F349CBC001A191D /* VLTUserDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = ADB3F1F91F349CBC001A191D /* VLTUserDataStore.m */; };
+		ADB3F2021F34AFED001A191D /* VLTDetectUploader.h in Headers */ = {isa = PBXBuildFile; fileRef = ADB3F2001F34AFED001A191D /* VLTDetectUploader.h */; };
+		ADB3F2031F34AFED001A191D /* VLTDetectUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = ADB3F2011F34AFED001A191D /* VLTDetectUploader.m */; };
+		ADB3F2061F34B1AA001A191D /* VLTPredictor.h in Headers */ = {isa = PBXBuildFile; fileRef = ADB3F2041F34B1AA001A191D /* VLTPredictor.h */; };
+		ADB3F2071F34B1AA001A191D /* VLTPredictor.m in Sources */ = {isa = PBXBuildFile; fileRef = ADB3F2051F34B1AA001A191D /* VLTPredictor.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AD9674C81E6F0AFC001D536D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B914941D1DB8AFBB007D941B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AD178C791E6EEA8400F8B187;
+			remoteInfo = "VelocitySDK iOS";
+		};
+		AD9674DB1E6F0CFB001D536D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B914941D1DB8AFBB007D941B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AD178C791E6EEA8400F8B187;
+			remoteInfo = "VelocitySDK iOS";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AD72F8ED1E5E51E1000EDAB1 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				AD9674E01E6F0EA4001D536D /* ProtocolBuffers.framework in Copy Frameworks */,
+				AD9674DF1E6F0E9D001D536D /* AFNetworking.framework in Copy Frameworks */,
+				AD72F8F91E5E535D000EDAB1 /* Quick.framework in Copy Frameworks */,
+				AD72F8F71E5E534A000EDAB1 /* OCMock.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD72F90A1E5ED974000EDAB1 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				AD9674E21E6F0EE9001D536D /* ProtocolBuffers.framework in Copy Frameworks */,
+				AD9674E11E6F0EE4001D536D /* AFNetworking.framework in Copy Frameworks */,
+				AD72F9111E5ED9D5000EDAB1 /* OCMock.framework in Copy Frameworks */,
+				AD72F9101E5ED9D0000EDAB1 /* Quick.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		AD178C7A1E6EEA8400F8B187 /* VelocitySDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VelocitySDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD178C831E6EEC2000F8B187 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AD178C841E6EEC2000F8B187 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		AD178C851E6EEC2000F8B187 /* VelocitySDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VelocitySDK.h; sourceTree = "<group>"; };
+		AD178C9B1E6EEF5B00F8B187 /* VLTActivityItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTActivityItem.h; sourceTree = "<group>"; };
+		AD178C9C1E6EEF5B00F8B187 /* VLTActivityItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTActivityItem.m; sourceTree = "<group>"; };
+		AD178C9D1E6EEF5B00F8B187 /* VLTApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTApiClient.h; sourceTree = "<group>"; };
+		AD178C9E1E6EEF5B00F8B187 /* VLTApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTApiClient.m; sourceTree = "<group>"; };
+		AD178C9F1E6EEF5B00F8B187 /* VLTConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTConfig.h; sourceTree = "<group>"; };
+		AD178CA01E6EEF5B00F8B187 /* VLTConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTConfig.m; sourceTree = "<group>"; };
+		AD178CA11E6EEF5B00F8B187 /* VLTConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTConstants.h; sourceTree = "<group>"; };
+		AD178CA21E6EEF5B00F8B187 /* VLTConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTConstants.m; sourceTree = "<group>"; };
+		AD178CA31E6EEF5B00F8B187 /* VLTCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTCore.h; sourceTree = "<group>"; };
+		AD178CA41E6EEF5B00F8B187 /* VLTCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTCore.m; sourceTree = "<group>"; };
+		AD178CA51E6EEF5B00F8B187 /* VLTMotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTMotion.h; sourceTree = "<group>"; };
+		AD178CA61E6EEF5B00F8B187 /* VLTMotion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTMotion.m; sourceTree = "<group>"; };
+		AD178CA71E6EEF5B00F8B187 /* VLTNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTNotification.h; sourceTree = "<group>"; };
+		AD178CA81E6EEF5B00F8B187 /* VLTNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTNotification.m; sourceTree = "<group>"; };
+		AD178CAB1E6EEF5B00F8B187 /* VLTRecordingConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTRecordingConfig.h; sourceTree = "<group>"; };
+		AD178CAC1E6EEF5B00F8B187 /* VLTRecordingConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTRecordingConfig.m; sourceTree = "<group>"; };
+		AD178CAD1E6EEF5B00F8B187 /* VLTTrackingUploader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTTrackingUploader.h; sourceTree = "<group>"; };
+		AD178CAE1E6EEF5B00F8B187 /* VLTTrackingUploader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTTrackingUploader.m; sourceTree = "<group>"; };
+		AD178CB11E6EEF5B00F8B187 /* VLTAccDMSensorRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTAccDMSensorRecorder.h; sourceTree = "<group>"; };
+		AD178CB21E6EEF5B00F8B187 /* VLTAccDMSensorRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTAccDMSensorRecorder.m; sourceTree = "<group>"; };
+		AD178CB31E6EEF5B00F8B187 /* VLTAccSensorRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTAccSensorRecorder.h; sourceTree = "<group>"; };
+		AD178CB41E6EEF5B00F8B187 /* VLTAccSensorRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTAccSensorRecorder.m; sourceTree = "<group>"; };
+		AD178CB51E6EEF5B00F8B187 /* VLTGyroSensorRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTGyroSensorRecorder.h; sourceTree = "<group>"; };
+		AD178CB61E6EEF5B00F8B187 /* VLTGyroSensorRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTGyroSensorRecorder.m; sourceTree = "<group>"; };
+		AD178CB71E6EEF5B00F8B187 /* VLTMotionRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTMotionRecorder.h; sourceTree = "<group>"; };
+		AD178CB81E6EEF5B00F8B187 /* VLTMultiMotionRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTMultiMotionRecorder.h; sourceTree = "<group>"; };
+		AD178CB91E6EEF5B00F8B187 /* VLTMultiMotionRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTMultiMotionRecorder.m; sourceTree = "<group>"; };
+		AD178CBA1E6EEF5B00F8B187 /* VLTSensorRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTSensorRecorder.h; sourceTree = "<group>"; };
+		AD178CBB1E6EEF5B00F8B187 /* VLTSensorRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTSensorRecorder.m; sourceTree = "<group>"; };
+		AD178CBC1E6EEF5B00F8B187 /* VLTSensorTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTSensorTypes.h; sourceTree = "<group>"; };
+		AD178CBE1E6EEF5B00F8B187 /* VLTData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTData.h; sourceTree = "<group>"; };
+		AD178CBF1E6EEF5B00F8B187 /* VLTData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTData.m; sourceTree = "<group>"; };
+		AD178CC01E6EEF5B00F8B187 /* VLTSample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTSample.h; sourceTree = "<group>"; };
+		AD178CC11E6EEF5B00F8B187 /* VLTSampleBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTSampleBuilder.h; sourceTree = "<group>"; };
+		AD178CC21E6EEF5B00F8B187 /* VLTSampleBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTSampleBuilder.m; sourceTree = "<group>"; };
+		AD178CC31E6EEF5B00F8B187 /* VLTSimpleSample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTSimpleSample.h; sourceTree = "<group>"; };
+		AD178CC41E6EEF5B00F8B187 /* VLTSimpleSample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTSimpleSample.m; sourceTree = "<group>"; };
+		AD178CC51E6EEF5B00F8B187 /* VLTSensorBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTSensorBuilder.h; sourceTree = "<group>"; };
+		AD178CC61E6EEF5B00F8B187 /* VLTSensorBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTSensorBuilder.m; sourceTree = "<group>"; };
+		AD178CCA1E6EEF5B00F8B187 /* VLTDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTDate.h; sourceTree = "<group>"; };
+		AD178CCB1E6EEF5B00F8B187 /* VLTDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTDate.m; sourceTree = "<group>"; };
+		AD178CCC1E6EEF5B00F8B187 /* VLTMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTMacros.h; sourceTree = "<group>"; };
+		AD178CCD1E6EEF5B00F8B187 /* VLTProtobufHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTProtobufHelper.h; sourceTree = "<group>"; };
+		AD178CCE1E6EEF5B00F8B187 /* VLTProtobufHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTProtobufHelper.m; sourceTree = "<group>"; };
+		AD178CCF1E6EEF5B00F8B187 /* VLTErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTErrors.h; sourceTree = "<group>"; };
+		AD178CD01E6EEF5B00F8B187 /* VLTManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTManager.h; sourceTree = "<group>"; };
+		AD178CD11E6EEF5B00F8B187 /* VLTManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTManager.m; sourceTree = "<group>"; };
+		AD178CD21E6EEF5B00F8B187 /* VLTTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTTracker.h; sourceTree = "<group>"; };
+		AD178CD31E6EEF5B00F8B187 /* VLTTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTTracker.m; sourceTree = "<group>"; };
+		AD178D2D1E6EF38500F8B187 /* ProtocolBuffers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ProtocolBuffers.framework; path = Carthage/Build/iOS/ProtocolBuffers.framework; sourceTree = "<group>"; };
+		AD178D2F1E6EF4A400F8B187 /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = Carthage/Build/iOS/AFNetworking.framework; sourceTree = "<group>"; };
+		AD493F5F1E72A5FD0009572A /* Velocity.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Velocity.pb.h; sourceTree = "<group>"; };
+		AD493F601E72A5FD0009572A /* Velocity.pb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Velocity.pb.m; sourceTree = "<group>"; };
+		AD6D1DF21DD3542600081C60 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		AD72F8F61E5E534A000EDAB1 /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMock.framework; path = Carthage/Build/iOS/OCMock.framework; sourceTree = "<group>"; };
+		AD72F8F81E5E535D000EDAB1 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
+		AD72F8FE1E5ED968000EDAB1 /* ApiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ApiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD72F9001E5ED968000EDAB1 /* VelocityApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VelocityApiTests.m; sourceTree = "<group>"; };
+		AD72F9021E5ED968000EDAB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AD72F9121E5EFDC2000EDAB1 /* VLTManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTManagerTests.m; sourceTree = "<group>"; };
+		ADAB68661DDBCB58001D49DA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		ADB3F1F81F349CBC001A191D /* VLTUserDataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTUserDataStore.h; sourceTree = "<group>"; };
+		ADB3F1F91F349CBC001A191D /* VLTUserDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTUserDataStore.m; sourceTree = "<group>"; };
+		ADB3F2001F34AFED001A191D /* VLTDetectUploader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTDetectUploader.h; sourceTree = "<group>"; };
+		ADB3F2011F34AFED001A191D /* VLTDetectUploader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTDetectUploader.m; sourceTree = "<group>"; };
+		ADB3F2041F34B1AA001A191D /* VLTPredictor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTPredictor.h; sourceTree = "<group>"; };
+		ADB3F2051F34B1AA001A191D /* VLTPredictor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTPredictor.m; sourceTree = "<group>"; };
+		ADE1556F1DB8FBB600DC906A /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		ADF433A31E5E3A15002D9097 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		ADF433A71E5E3A15002D9097 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ADF433B41E5E4555002D9097 /* VLTApiClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTApiClientTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AD178C761E6EEA8400F8B187 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD178D2E1E6EF38500F8B187 /* ProtocolBuffers.framework in Frameworks */,
+				AD178D301E6EF4A400F8B187 /* AFNetworking.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD72F8FB1E5ED968000EDAB1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD9674DD1E6F0CFF001D536D /* VelocitySDK.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADF433A01E5E3A15002D9097 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD9674DA1E6F0C8A001D536D /* VelocitySDK.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7E690D0360E63F8784D89F39 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AD178D2F1E6EF4A400F8B187 /* AFNetworking.framework */,
+				AD178D2D1E6EF38500F8B187 /* ProtocolBuffers.framework */,
+				AD72F8F81E5E535D000EDAB1 /* Quick.framework */,
+				AD72F8F61E5E534A000EDAB1 /* OCMock.framework */,
+				ADAB68661DDBCB58001D49DA /* CoreData.framework */,
+				AD6D1DF21DD3542600081C60 /* libsqlite3.tbd */,
+				ADE1556F1DB8FBB600DC906A /* CoreMotion.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AD178C821E6EEC2000F8B187 /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				AD178C831E6EEC2000F8B187 /* Info.plist */,
+				AD178C841E6EEC2000F8B187 /* module.modulemap */,
+				AD178C851E6EEC2000F8B187 /* VelocitySDK.h */,
+			);
+			path = Framework;
+			sourceTree = "<group>";
+		};
+		AD178C861E6EEF5B00F8B187 /* VelocitySDK */ = {
+			isa = PBXGroup;
+			children = (
+				AD178C871E6EEF5B00F8B187 /* Core */,
+				AD178CAF1E6EEF5B00F8B187 /* Sensors */,
+				AD178CC71E6EEF5B00F8B187 /* Support */,
+				AD178CCF1E6EEF5B00F8B187 /* VLTErrors.h */,
+				AD178CD01E6EEF5B00F8B187 /* VLTManager.h */,
+				AD178CD11E6EEF5B00F8B187 /* VLTManager.m */,
+				AD178CD21E6EEF5B00F8B187 /* VLTTracker.h */,
+				AD178CD31E6EEF5B00F8B187 /* VLTTracker.m */,
+				ADB3F2041F34B1AA001A191D /* VLTPredictor.h */,
+				ADB3F2051F34B1AA001A191D /* VLTPredictor.m */,
+			);
+			path = VelocitySDK;
+			sourceTree = "<group>";
+		};
+		AD178C871E6EEF5B00F8B187 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				AD178C9B1E6EEF5B00F8B187 /* VLTActivityItem.h */,
+				AD178C9C1E6EEF5B00F8B187 /* VLTActivityItem.m */,
+				AD178C9D1E6EEF5B00F8B187 /* VLTApiClient.h */,
+				AD178C9E1E6EEF5B00F8B187 /* VLTApiClient.m */,
+				AD178C9F1E6EEF5B00F8B187 /* VLTConfig.h */,
+				AD178CA01E6EEF5B00F8B187 /* VLTConfig.m */,
+				AD178CA11E6EEF5B00F8B187 /* VLTConstants.h */,
+				AD178CA21E6EEF5B00F8B187 /* VLTConstants.m */,
+				AD178CA31E6EEF5B00F8B187 /* VLTCore.h */,
+				AD178CA41E6EEF5B00F8B187 /* VLTCore.m */,
+				AD178CA51E6EEF5B00F8B187 /* VLTMotion.h */,
+				AD178CA61E6EEF5B00F8B187 /* VLTMotion.m */,
+				AD178CA71E6EEF5B00F8B187 /* VLTNotification.h */,
+				AD178CA81E6EEF5B00F8B187 /* VLTNotification.m */,
+				AD178CAB1E6EEF5B00F8B187 /* VLTRecordingConfig.h */,
+				AD178CAC1E6EEF5B00F8B187 /* VLTRecordingConfig.m */,
+				AD178CAD1E6EEF5B00F8B187 /* VLTTrackingUploader.h */,
+				AD178CAE1E6EEF5B00F8B187 /* VLTTrackingUploader.m */,
+				ADB3F1F81F349CBC001A191D /* VLTUserDataStore.h */,
+				ADB3F1F91F349CBC001A191D /* VLTUserDataStore.m */,
+				ADB3F2001F34AFED001A191D /* VLTDetectUploader.h */,
+				ADB3F2011F34AFED001A191D /* VLTDetectUploader.m */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		AD178CAF1E6EEF5B00F8B187 /* Sensors */ = {
+			isa = PBXGroup;
+			children = (
+				AD178CB01E6EEF5B00F8B187 /* Recorders */,
+				AD178CBD1E6EEF5B00F8B187 /* Samples */,
+				AD178CC51E6EEF5B00F8B187 /* VLTSensorBuilder.h */,
+				AD178CC61E6EEF5B00F8B187 /* VLTSensorBuilder.m */,
+			);
+			path = Sensors;
+			sourceTree = "<group>";
+		};
+		AD178CB01E6EEF5B00F8B187 /* Recorders */ = {
+			isa = PBXGroup;
+			children = (
+				AD178CB11E6EEF5B00F8B187 /* VLTAccDMSensorRecorder.h */,
+				AD178CB21E6EEF5B00F8B187 /* VLTAccDMSensorRecorder.m */,
+				AD178CB31E6EEF5B00F8B187 /* VLTAccSensorRecorder.h */,
+				AD178CB41E6EEF5B00F8B187 /* VLTAccSensorRecorder.m */,
+				AD178CB51E6EEF5B00F8B187 /* VLTGyroSensorRecorder.h */,
+				AD178CB61E6EEF5B00F8B187 /* VLTGyroSensorRecorder.m */,
+				AD178CB71E6EEF5B00F8B187 /* VLTMotionRecorder.h */,
+				AD178CB81E6EEF5B00F8B187 /* VLTMultiMotionRecorder.h */,
+				AD178CB91E6EEF5B00F8B187 /* VLTMultiMotionRecorder.m */,
+				AD178CBA1E6EEF5B00F8B187 /* VLTSensorRecorder.h */,
+				AD178CBB1E6EEF5B00F8B187 /* VLTSensorRecorder.m */,
+				AD178CBC1E6EEF5B00F8B187 /* VLTSensorTypes.h */,
+			);
+			path = Recorders;
+			sourceTree = "<group>";
+		};
+		AD178CBD1E6EEF5B00F8B187 /* Samples */ = {
+			isa = PBXGroup;
+			children = (
+				AD178CBE1E6EEF5B00F8B187 /* VLTData.h */,
+				AD178CBF1E6EEF5B00F8B187 /* VLTData.m */,
+				AD178CC01E6EEF5B00F8B187 /* VLTSample.h */,
+				AD178CC11E6EEF5B00F8B187 /* VLTSampleBuilder.h */,
+				AD178CC21E6EEF5B00F8B187 /* VLTSampleBuilder.m */,
+				AD178CC31E6EEF5B00F8B187 /* VLTSimpleSample.h */,
+				AD178CC41E6EEF5B00F8B187 /* VLTSimpleSample.m */,
+			);
+			path = Samples;
+			sourceTree = "<group>";
+		};
+		AD178CC71E6EEF5B00F8B187 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				AD178CCA1E6EEF5B00F8B187 /* VLTDate.h */,
+				AD178CCB1E6EEF5B00F8B187 /* VLTDate.m */,
+				AD178CCC1E6EEF5B00F8B187 /* VLTMacros.h */,
+				AD178CCD1E6EEF5B00F8B187 /* VLTProtobufHelper.h */,
+				AD178CCE1E6EEF5B00F8B187 /* VLTProtobufHelper.m */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		AD493F521E72A5CC0009572A /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				AD493F531E72A5FD0009572A /* velocity-protobuf */,
+			);
+			path = Vendor;
+			sourceTree = "<group>";
+		};
+		AD493F531E72A5FD0009572A /* velocity-protobuf */ = {
+			isa = PBXGroup;
+			children = (
+				AD493F591E72A5FD0009572A /* lib */,
+			);
+			path = "velocity-protobuf";
+			sourceTree = "<group>";
+		};
+		AD493F591E72A5FD0009572A /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				AD493F5E1E72A5FD0009572A /* objc */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		AD493F5E1E72A5FD0009572A /* objc */ = {
+			isa = PBXGroup;
+			children = (
+				AD493F5F1E72A5FD0009572A /* Velocity.pb.h */,
+				AD493F601E72A5FD0009572A /* Velocity.pb.m */,
+			);
+			path = objc;
+			sourceTree = "<group>";
+		};
+		AD72F8FF1E5ED968000EDAB1 /* ApiTests */ = {
+			isa = PBXGroup;
+			children = (
+				AD72F9001E5ED968000EDAB1 /* VelocityApiTests.m */,
+				AD72F9021E5ED968000EDAB1 /* Info.plist */,
+			);
+			path = ApiTests;
+			sourceTree = "<group>";
+		};
+		ADF433A41E5E3A15002D9097 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				ADF433A71E5E3A15002D9097 /* Info.plist */,
+				ADF433B41E5E4555002D9097 /* VLTApiClientTests.m */,
+				AD72F9121E5EFDC2000EDAB1 /* VLTManagerTests.m */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		B914941C1DB8AFBB007D941B = {
+			isa = PBXGroup;
+			children = (
+				AD493F521E72A5CC0009572A /* Vendor */,
+				AD178C821E6EEC2000F8B187 /* Framework */,
+				AD178C861E6EEF5B00F8B187 /* VelocitySDK */,
+				ADF433A41E5E3A15002D9097 /* Tests */,
+				AD72F8FF1E5ED968000EDAB1 /* ApiTests */,
+				B91494271DB8AFBB007D941B /* Products */,
+				7E690D0360E63F8784D89F39 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		B91494271DB8AFBB007D941B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ADF433A31E5E3A15002D9097 /* Tests.xctest */,
+				AD72F8FE1E5ED968000EDAB1 /* ApiTests.xctest */,
+				AD178C7A1E6EEA8400F8B187 /* VelocitySDK.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		AD178C771E6EEA8400F8B187 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD178D131E6EEF5B00F8B187 /* VLTErrors.h in Headers */,
+				ADB3F1FA1F349CBC001A191D /* VLTUserDataStore.h in Headers */,
+				AD178D141E6EEF5B00F8B187 /* VLTManager.h in Headers */,
+				AD178CFB1E6EEF5B00F8B187 /* VLTGyroSensorRecorder.h in Headers */,
+				ADB3F2061F34B1AA001A191D /* VLTPredictor.h in Headers */,
+				AD178CEB1E6EEF5B00F8B187 /* VLTCore.h in Headers */,
+				ADB3F2021F34AFED001A191D /* VLTDetectUploader.h in Headers */,
+				AD4940491E72A5FD0009572A /* Velocity.pb.h in Headers */,
+				AD178CEF1E6EEF5B00F8B187 /* VLTNotification.h in Headers */,
+				AD178CE31E6EEF5B00F8B187 /* VLTActivityItem.h in Headers */,
+				AD178D021E6EEF5B00F8B187 /* VLTSensorTypes.h in Headers */,
+				AD178CF31E6EEF5B00F8B187 /* VLTRecordingConfig.h in Headers */,
+				AD178CFD1E6EEF5B00F8B187 /* VLTMotionRecorder.h in Headers */,
+				AD178D081E6EEF5B00F8B187 /* VLTSimpleSample.h in Headers */,
+				AD178CF71E6EEF5B00F8B187 /* VLTAccDMSensorRecorder.h in Headers */,
+				AD178CE51E6EEF5B00F8B187 /* VLTApiClient.h in Headers */,
+				AD178CE71E6EEF5B00F8B187 /* VLTConfig.h in Headers */,
+				AD178CF91E6EEF5B00F8B187 /* VLTAccSensorRecorder.h in Headers */,
+				AD178D111E6EEF5B00F8B187 /* VLTProtobufHelper.h in Headers */,
+				AD178D0A1E6EEF5B00F8B187 /* VLTSensorBuilder.h in Headers */,
+				AD178D031E6EEF5B00F8B187 /* VLTData.h in Headers */,
+				AD178CF51E6EEF5B00F8B187 /* VLTTrackingUploader.h in Headers */,
+				AD178D0E1E6EEF5B00F8B187 /* VLTDate.h in Headers */,
+				AD178D051E6EEF5B00F8B187 /* VLTSample.h in Headers */,
+				AD178CED1E6EEF5B00F8B187 /* VLTMotion.h in Headers */,
+				AD178CFE1E6EEF5B00F8B187 /* VLTMultiMotionRecorder.h in Headers */,
+				AD178D061E6EEF5B00F8B187 /* VLTSampleBuilder.h in Headers */,
+				AD178D161E6EEF5B00F8B187 /* VLTTracker.h in Headers */,
+				AD178D001E6EEF5B00F8B187 /* VLTSensorRecorder.h in Headers */,
+				AD178D101E6EEF5B00F8B187 /* VLTMacros.h in Headers */,
+				AD178CE91E6EEF5B00F8B187 /* VLTConstants.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		AD178C791E6EEA8400F8B187 /* VelocitySDK iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD178C7F1E6EEA8400F8B187 /* Build configuration list for PBXNativeTarget "VelocitySDK iOS" */;
+			buildPhases = (
+				AD178C751E6EEA8400F8B187 /* Sources */,
+				AD178C761E6EEA8400F8B187 /* Frameworks */,
+				AD178C771E6EEA8400F8B187 /* Headers */,
+				AD178C781E6EEA8400F8B187 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "VelocitySDK iOS";
+			productName = "VelocitySDK iOS";
+			productReference = AD178C7A1E6EEA8400F8B187 /* VelocitySDK.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		AD72F8FD1E5ED968000EDAB1 /* ApiTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD72F9061E5ED968000EDAB1 /* Build configuration list for PBXNativeTarget "ApiTests" */;
+			buildPhases = (
+				AD72F8FA1E5ED968000EDAB1 /* Sources */,
+				AD72F8FB1E5ED968000EDAB1 /* Frameworks */,
+				AD72F8FC1E5ED968000EDAB1 /* Resources */,
+				AD72F90A1E5ED974000EDAB1 /* Copy Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AD9674DC1E6F0CFB001D536D /* PBXTargetDependency */,
+			);
+			name = ApiTests;
+			productName = VelocityApiTests;
+			productReference = AD72F8FE1E5ED968000EDAB1 /* ApiTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		ADF433A21E5E3A15002D9097 /* Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ADF433AE1E5E3A15002D9097 /* Build configuration list for PBXNativeTarget "Tests" */;
+			buildPhases = (
+				ADF4339F1E5E3A15002D9097 /* Sources */,
+				ADF433A01E5E3A15002D9097 /* Frameworks */,
+				ADF433A11E5E3A15002D9097 /* Resources */,
+				AD72F8ED1E5E51E1000EDAB1 /* Copy Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AD9674C91E6F0AFC001D536D /* PBXTargetDependency */,
+			);
+			name = Tests;
+			productName = VelocityTests;
+			productReference = ADF433A31E5E3A15002D9097 /* Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B914941D1DB8AFBB007D941B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = Veloctity;
+				TargetAttributes = {
+					AD178C791E6EEA8400F8B187 = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+					};
+					AD72F8FD1E5ED968000EDAB1 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = X983NVGJMG;
+						ProvisioningStyle = Automatic;
+					};
+					ADF433A21E5E3A15002D9097 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = X983NVGJMG;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = B91494201DB8AFBB007D941B /* Build configuration list for PBXProject "VelocitySDK" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B914941C1DB8AFBB007D941B;
+			productRefGroup = B91494271DB8AFBB007D941B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AD178C791E6EEA8400F8B187 /* VelocitySDK iOS */,
+				ADF433A21E5E3A15002D9097 /* Tests */,
+				AD72F8FD1E5ED968000EDAB1 /* ApiTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AD178C781E6EEA8400F8B187 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD72F8FC1E5ED968000EDAB1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADF433A11E5E3A15002D9097 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AD178C751E6EEA8400F8B187 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD178D0F1E6EEF5B00F8B187 /* VLTDate.m in Sources */,
+				AD178D151E6EEF5B00F8B187 /* VLTManager.m in Sources */,
+				AD178CFF1E6EEF5B00F8B187 /* VLTMultiMotionRecorder.m in Sources */,
+				AD178CF61E6EEF5B00F8B187 /* VLTTrackingUploader.m in Sources */,
+				AD49404A1E72A5FD0009572A /* Velocity.pb.m in Sources */,
+				ADB3F2031F34AFED001A191D /* VLTDetectUploader.m in Sources */,
+				AD178CF41E6EEF5B00F8B187 /* VLTRecordingConfig.m in Sources */,
+				AD178D071E6EEF5B00F8B187 /* VLTSampleBuilder.m in Sources */,
+				AD178CE61E6EEF5B00F8B187 /* VLTApiClient.m in Sources */,
+				AD178D171E6EEF5B00F8B187 /* VLTTracker.m in Sources */,
+				AD178D0B1E6EEF5B00F8B187 /* VLTSensorBuilder.m in Sources */,
+				AD178D091E6EEF5B00F8B187 /* VLTSimpleSample.m in Sources */,
+				AD178CFA1E6EEF5B00F8B187 /* VLTAccSensorRecorder.m in Sources */,
+				ADB3F2071F34B1AA001A191D /* VLTPredictor.m in Sources */,
+				AD178CEC1E6EEF5B00F8B187 /* VLTCore.m in Sources */,
+				AD178D011E6EEF5B00F8B187 /* VLTSensorRecorder.m in Sources */,
+				AD178CEA1E6EEF5B00F8B187 /* VLTConstants.m in Sources */,
+				AD178CEE1E6EEF5B00F8B187 /* VLTMotion.m in Sources */,
+				AD178D121E6EEF5B00F8B187 /* VLTProtobufHelper.m in Sources */,
+				AD178CFC1E6EEF5B00F8B187 /* VLTGyroSensorRecorder.m in Sources */,
+				AD178CE81E6EEF5B00F8B187 /* VLTConfig.m in Sources */,
+				AD178D041E6EEF5B00F8B187 /* VLTData.m in Sources */,
+				AD178CF01E6EEF5B00F8B187 /* VLTNotification.m in Sources */,
+				AD178CE41E6EEF5B00F8B187 /* VLTActivityItem.m in Sources */,
+				AD178CF81E6EEF5B00F8B187 /* VLTAccDMSensorRecorder.m in Sources */,
+				ADB3F1FB1F349CBC001A191D /* VLTUserDataStore.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD72F8FA1E5ED968000EDAB1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD9674DE1E6F0DDA001D536D /* VelocityApiTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADF4339F1E5E3A15002D9097 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD9674C71E6F0ADF001D536D /* VLTManagerTests.m in Sources */,
+				AD9674C61E6F0ADC001D536D /* VLTApiClientTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AD9674C91E6F0AFC001D536D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AD178C791E6EEA8400F8B187 /* VelocitySDK iOS */;
+			targetProxy = AD9674C81E6F0AFC001D536D /* PBXContainerItemProxy */;
+		};
+		AD9674DC1E6F0CFB001D536D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AD178C791E6EEA8400F8B187 /* VelocitySDK iOS */;
+			targetProxy = AD9674DB1E6F0CFB001D536D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		AD178C801E6EEA8400F8B187 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BITCODE_GENERATION_MODE = marker;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = ./Framework/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.concreteinteractive.VelocitySDK;
+				PRODUCT_NAME = VelocitySDK;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		AD178C811E6EEA8400F8B187 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BITCODE_GENERATION_MODE = bitcode;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = ./Framework/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.concreteinteractive.VelocitySDK;
+				PRODUCT_NAME = VelocitySDK;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		AD72F9071E5ED968000EDAB1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = X983NVGJMG;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"TEST_TARGET=1",
+				);
+				INFOPLIST_FILE = ApiTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.concreteinteractive.VelocitySDK.ApiTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AD72F9081E5ED968000EDAB1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = X983NVGJMG;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
+				INFOPLIST_FILE = ApiTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.concreteinteractive.VelocitySDK.ApiTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		ADF433AB1E5E3A15002D9097 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = X983NVGJMG;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.concreteinteractive.VelocitySDK.Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		ADF433AC1E5E3A15002D9097 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = X983NVGJMG;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.concreteinteractive.VelocitySDK.Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		B91494381DB8AFBB007D941B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MODULEMAP_FILE = "$(PROJECT_DIR)/Framework/module.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				SDKROOT = iphoneos;
+				STRIP_STYLE = debugging;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		B91494391DB8AFBB007D941B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MODULEMAP_FILE = "$(PROJECT_DIR)/Framework/module.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				SDKROOT = iphoneos;
+				STRIP_STYLE = debugging;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AD178C7F1E6EEA8400F8B187 /* Build configuration list for PBXNativeTarget "VelocitySDK iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD178C801E6EEA8400F8B187 /* Debug */,
+				AD178C811E6EEA8400F8B187 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD72F9061E5ED968000EDAB1 /* Build configuration list for PBXNativeTarget "ApiTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD72F9071E5ED968000EDAB1 /* Debug */,
+				AD72F9081E5ED968000EDAB1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ADF433AE1E5E3A15002D9097 /* Build configuration list for PBXNativeTarget "Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ADF433AB1E5E3A15002D9097 /* Debug */,
+				ADF433AC1E5E3A15002D9097 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B91494201DB8AFBB007D941B /* Build configuration list for PBXProject "VelocitySDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B91494381DB8AFBB007D941B /* Debug */,
+				B91494391DB8AFBB007D941B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B914941D1DB8AFBB007D941B /* Project object */;
+}

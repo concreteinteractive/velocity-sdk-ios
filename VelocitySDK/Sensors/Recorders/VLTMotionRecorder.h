@@ -1,0 +1,21 @@
+//
+//  VLTMotionRecoring.h
+//  Velocity
+//
+//  Created by Vytautas Galaunia on 21/10/16.
+//  Copyright © 2016 Veloctity. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@class VLTData;
+
+@protocol VLTMotionRecorder <NSObject>
+
+- (void)startRecording;
+- (void)stopRecording;
+- (NSTimeInterval)availableTimeInBuffer;
+
+- (nonnull NSArray<VLTData *> *)dataForTimeInterval:(NSTimeInterval)interval;
+
+@end

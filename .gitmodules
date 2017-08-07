@@ -1,0 +1,3 @@
+[submodule "vendor/velocity-protobuf"]
+	path = vendor/velocity-protobuf
+	url = git@github.com:concreteinteractive/velocity-protobuf.git

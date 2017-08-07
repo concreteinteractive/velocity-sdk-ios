@@ -1,0 +1,5 @@
+framework module VelocitySDK {
+    umbrella header "VelocitySDK.h"
+    export *
+    module * { export * }
+}
