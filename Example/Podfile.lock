@@ -1,0 +1,28 @@
+PODS:
+  - AFNetworking/NSURLSession (3.1.0):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.1.0)
+  - AFNetworking/Security (3.1.0)
+  - AFNetworking/Serialization (3.1.0)
+  - ProtocolBuffers (1.9.11)
+  - VelocitySDK (1.2):
+    - AFNetworking/NSURLSession
+    - ProtocolBuffers
+
+DEPENDENCIES:
+  - VelocitySDK (from `../`)
+
+EXTERNAL SOURCES:
+  VelocitySDK:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  ProtocolBuffers: d509225eb2ea43d9582a59e94348fcf86e2abd65
+  VelocitySDK: 65f41fbdf50e6a2a5f145c52e757220bab53f4e8
+
+PODFILE CHECKSUM: 561d80425ccf4ffeaefe703e154a3afdefd5fb27
+
+COCOAPODS: 1.2.1

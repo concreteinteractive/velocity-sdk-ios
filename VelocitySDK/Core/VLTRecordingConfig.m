@@ -12,6 +12,7 @@
 
 @property (nonatomic, assign) NSTimeInterval sampleSize;
 @property (nonatomic, assign) NSTimeInterval captureInterval;
+@property (nonatomic, getter=isDetectMotionOn) BOOL detectMotionOn;
 
 @end
 
@@ -23,6 +24,20 @@
     if (self) {
         _sampleSize = [dictionary[@"sample_size"] doubleValue];
         _captureInterval = [dictionary[@"capture_interval"] doubleValue];
+        _detectMotionOn = [dictionary[@"detect_motion_enabled"] boolValue];
+    }
+    return self;
+}
+
+- (nonnull instancetype)initSampleSize:(NSTimeInterval)sampleSize
+                              interval:(NSTimeInterval)captureInterval
+                      detectioMotionOn:(BOOL)detectMotionOn
+{
+    self = [super init];
+    if (self) {
+        _sampleSize = sampleSize;
+        _captureInterval = captureInterval;
+        _detectMotionOn = detectMotionOn;
     }
     return self;
 }

@@ -13,14 +13,21 @@
 @class VLTPBSensor;
 @class VLTPBSample;
 @class VLTData;
+@class VLTPBDetectMotionRequest;
 
 @interface VLTProtobufHelper : NSObject
 
-
 + (nonnull VLTPBCapture *)captureFromDatas:(nonnull NSArray <VLTData *> *)datas
-                                       ifa:(nonnull NSString *)ifa
+                                       ifa:(nullable NSString *)ifa
                              sequenceIndex:(UInt32)seqIndex
                               impressionId:(nonnull NSString *)impressionId;
+
++ (nonnull VLTPBDetectMotionRequest *)detectMotionRequestFromDatas:(nonnull NSArray <VLTData *> *)datas
+                                                      impressionId:(nonnull NSString *)impressionId
+                                                        modelNames:(nonnull NSArray<NSString *> *)modelNames
+                                                               ifa:(nullable NSString *)ifa
+                                                            userId:(nullable NSString *)userId
+                                                     sequenceIndex:(UInt32)seqIndex;
 
 + (nonnull VLTPBSensor *)sensorFromData:(nonnull VLTData *)data;
 

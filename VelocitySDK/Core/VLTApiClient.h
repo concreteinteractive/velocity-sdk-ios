@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 @class VLTPBCapture;
 @class VLTRecordingConfig;
+@class VLTPBDetectMotionRequest;
+@class VLTDetectResult;
 
 @interface VLTApiClient : NSObject
 
@@ -29,8 +31,8 @@
                     success:(nullable void (^)(void))success
                     failure:(nullable void (^)(NSError *_Nonnull error))failure;
 
-- (void)detect:(nonnull VLTPBCapture *)capture
-       success:(nullable void (^)(void))success
-       failure:(nullable void (^)(NSError *_Nonnull error))failure;
+- (void)detect:(nonnull VLTPBDetectMotionRequest *)detectMotionRequest
+       success:(nullable void (^)(VLTDetectResult * _Nonnull result))success
+       failure:(nullable void (^)(NSError * _Nonnull error))failure;
 
 @end

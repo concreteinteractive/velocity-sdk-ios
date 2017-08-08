@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "VLTMotionRecorder.h"
 
+@class VLTDetectResult;
+
 @interface VLTDetectUploader : NSObject
 
 @property (nonatomic, readonly, nonnull) id <VLTMotionRecorder> recorder;
@@ -17,13 +19,12 @@
 @property (atomic, readonly) BOOL isUploading;
 
 @property (nonatomic, copy, nullable) void(^onError)(NSError * _Nonnull  error);
-@property (nonatomic, copy, nullable) void(^onUpload)();
+@property (nonatomic, copy, nullable) void(^onSuccess)(VLTDetectResult * _Nonnull result);
 
 - (nonnull instancetype)initWithRecorder:(nonnull id<VLTMotionRecorder>)recorder
                             impressionId:(nonnull NSString *)impressionId
                               sampleSize:(NSTimeInterval)sampleSize;
 - (void)startUploading;
 - (void)stopUploading;
-
 
 @end

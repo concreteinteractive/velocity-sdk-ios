@@ -7,25 +7,27 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "VLTPredictor.h"
+#import "VLTDetector.h"
 #import "VLTApiClient.h"
 #import "VLTConfig.h"
 #import "VLTMotionRecorder.h"
-#import "VLTTrackingUploader.h"
+#import "VLTDetectUploader.h"
 #import "VLTSensorBuilder.h"
 #import "VLTRecordingConfig.h"
 #import "VLTErrors.h"
 #import "VLTMacros.h"
+#import "VLTDetectResult.h"
+#import "VLTCore.h"
 
-static const NSTimeInterval CheckInterval = 120;
+static const NSTimeInterval VLTDetectorCheckInterval = 120;
 
-@interface VLTPredictor ()
+@interface VLTDetector ()
 
 @property (atomic, strong) id <VLTMotionRecorder> recorder;
 @property (atomic, assign, getter=isActive) BOOL active;
-@property (atomic, strong) VLTTrackingUploader *uploader;
-@property (atomic, strong) NSTimer *checkTimer;
-@property (atomic, copy) void(^onPredictionReceived)(NSArray<NSString *> *predictions);
+@property (atomic, strong) VLTDetectUploader *uploader;
+@property (atomic, strong) dispatch_source_t checkTimer;
+@property (atomic, copy) void(^onDetectReceived)(VLTDetectResult *);
 @property (atomic, strong) NSDate *lastUploadDate;
 
 @property (atomic, assign) NSTimeInterval sampleSize;
@@ -33,34 +35,34 @@ static const NSTimeInterval CheckInterval = 120;
 
 @end
 
-@implementation VLTPredictor
+@implementation VLTDetector
 
 + (void)activate
 {
-    [[VLTPredictor shared] updateConfigAndStart:YES];
+    [[VLTDetector shared] updateConfigAndStart:YES];
 }
 
 + (void)deactivate
 {
-    [[VLTPredictor shared] stop];
+    [[VLTDetector shared] stop];
 }
 
 + (BOOL)isActive
 {
-    return [VLTPredictor shared].isActive;
+    return [VLTDetector shared].isActive;
 }
 
-+ (void)setOnStatusHandler:(void(^)(NSArray<NSString *> *predictions))handler
++ (void)setOnDetectReceivedHandler:(void(^)(VLTDetectResult *))handler
 {
-    [VLTPredictor shared].onPredictionReceived = handler;
+    [VLTDetector shared].onDetectReceived = handler;
 }
 
 + (instancetype)shared
 {
-    static VLTPredictor *sharedInstance = nil;
+    static VLTDetector *sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedInstance = [[VLTPredictor alloc] init];
+        sharedInstance = [[VLTDetector alloc] init];
     });
     return sharedInstance;
 }
@@ -81,17 +83,20 @@ static const NSTimeInterval CheckInterval = 120;
         [self.uploader stopUploading];
         self.uploader = nil;
     }
-    self.uploader = [[VLTTrackingUploader alloc] initWithRecorder:self.recorder
-                                                     impressionId:[[NSUUID UUID] UUIDString]
-                                                       sampleSize:self.sampleSize];
+    self.uploader = [[VLTDetectUploader alloc] initWithRecorder:self.recorder
+                                                   impressionId:[[NSUUID UUID] UUIDString]
+                                                     sampleSize:self.sampleSize];
     vlt_weakify(self);
     self.uploader.onError = ^(NSError *error) {
         DLog(@"Uploader error: %@", error);
         [weak_self handleError:error];
     };
 
-    self.uploader.onUpload = ^{
+    self.uploader.onSuccess = ^(VLTDetectResult *result) {
         weak_self.lastUploadDate = [NSDate date];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            vlt_invoke_block(weak_self.onDetectReceived, result);
+        });
     };
 }
 
@@ -156,24 +161,25 @@ static const NSTimeInterval CheckInterval = 120;
     [[VLTApiClient shared] getConfigWithIFA:[VLTConfig IFA]
                                     success:^(VLTRecordingConfig *config) {
                                         vlt_strongify(self);
-                                        if ([config isValid]) {
-                                            DLog(@"SDK Config is Valid");
-                                            self.sampleSize = config.sampleSize;
-                                            self.captureInterval = config.captureInterval;
-                                            if (freshStart) {
-                                                [self start];
-                                            } else {
-                                                [self startIfPossible];
-                                            }
-                                        } else {
-                                            DLog(@"SDK Config is Invalid");
-                                            vlt_invoke_block(self.onPredictionReceived, nil);
+
+                                        if (![config isValid]) {
+                                            DLog(@"Velocity SDK Config is Invalid");
+                                            return;
+                                        }
+                                        if (!config.isDetectMotionOn) {
+                                            DLog(@"Velocity SDK Config - motion detection is off.");
+                                            return;
                                         }
 
+                                        self.sampleSize = config.sampleSize;
+                                        self.captureInterval = config.captureInterval;
+                                        if (freshStart) {
+                                            [self start];
+                                        } else {
+                                            [self startIfPossible];
+                                        }
                                     } failure:^(NSError *error) {
-                                        vlt_strongify(self);
-                                        DLog(@"SDK Config get error: %@", error);
-                                        vlt_invoke_block(self.onPredictionReceived, nil);
+                                        DLog(@"Velocity SDK Config get error: %@", error);
                                     }];
 }
 
@@ -224,18 +230,20 @@ static const NSTimeInterval CheckInterval = 120;
 - (void)startCheckTimer
 {
     [self invalidateTimer];
-    self.checkTimer = [NSTimer timerWithTimeInterval:CheckInterval
-                                              target:self
-                                            selector:@selector(startIfPossible)
-                                            userInfo:nil
-                                             repeats:YES];
-    [[NSRunLoop mainRunLoop] addTimer:self.checkTimer forMode:NSRunLoopCommonModes];
+
+    vlt_weakify(self);
+    self.checkTimer = [VLTCore timer:VLTDetectorCheckInterval handler:^{
+        vlt_strongify(self);
+        [self startIfPossible];
+    }];
 }
 
 - (void)invalidateTimer
 {
-    [self.checkTimer invalidate];
-    self.checkTimer = nil;
+    if (self.checkTimer != nil) {
+        dispatch_source_cancel(self.checkTimer);
+        self.checkTimer = nil;
+    }
 }
 
 @end

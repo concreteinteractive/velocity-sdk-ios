@@ -10,8 +10,16 @@
 #import <CoreMotion/CoreMotion.h>
 #import "VLTSimpleSample.h"
 #import "VLTDate.h"
+#import "VLTMacros.h"
 
 @implementation VLTSampleBuilder
+
++ (nonnull id<VLTSample>)simulatorSample {
+    return [[VLTSimpleSample alloc] initWithTimestamp:[[NSDate date] timeIntervalSince1970]
+                                                    x:arc4random_uniform(10)
+                                                    y:arc4random_uniform(10)
+                                                    z:arc4random_uniform(10)];
+}
 
 + (nonnull id<VLTSample>)sampleFrom:(id)sourceData
 {
@@ -22,7 +30,7 @@
     } else if ([sourceData isKindOfClass:[CMDeviceMotion class]]) {
         return [VLTSampleBuilder fromDeviceMotion:(CMDeviceMotion *)sourceData];
     } else {
-        NSLog(@"VLTSampleBuilder RETURNING EMPTY SAMPLE AS TYPE IS NOT SUPPORTED.");
+        DLog(@"VLTSampleBuilder RETURNING EMPTY SAMPLE AS TYPE IS NOT SUPPORTED.");
         return [VLTSampleBuilder emptySample];
     }
 }

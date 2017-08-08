@@ -7,11 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-
-extern NSString * _Nonnull const VLTMotionWalking;
-extern NSString * _Nonnull const VLTMotionDriving;
-
+#import "VLTDetectResult.h"
 
 @interface VLTManager : NSObject
 
@@ -47,8 +43,7 @@ extern NSString * _Nonnull const VLTMotionDriving;
  */
 + (void)setUserId:(nullable NSString *)userId;
 
-+ (void)activatePredictionsForMotions:(nonnull NSArray<NSString *> *)models
-                              handler:(nonnull void(^)(NSArray<NSString *> * _Nonnull))handler;
++ (void)activateDetectionWithHandler:(nonnull void(^)(VLTDetectResult * _Nonnull))handler;
 
 /*!
  @brief Marks given goal and event as completed

@@ -12,10 +12,14 @@
 #import "VLTApiClient.h"
 #import "VLTConfig.h"
 #import "VLTMacros.h"
+#import "VLTUserDataStore.h"
+#import "VLTCore.h"
+
+static const NSTimeInterval VLTDetectUploaderTimerInterval = 1.0;
 
 @interface VLTDetectUploader ()
 
-@property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic, strong) dispatch_source_t timer;
 @property (nonatomic, assign) NSTimeInterval sampleSize;
 @property (nonatomic, strong) id <VLTMotionRecorder> recorder;
 @property (nonatomic, copy) NSString *impressionId;
@@ -40,36 +44,31 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [self.timer invalidate];
-    self.timer = nil;
-}
 
 - (void)startUploading {
     [self createTimer];
 }
 
-- (void)createTimer
-{
-    [self.timer invalidate];
-    NSDate *afterSecond = [NSDate dateWithTimeInterval:1.0 sinceDate:[NSDate date]];
-
-    self.timer = [[NSTimer alloc] initWithFireDate:afterSecond
-                                          interval:self.sampleSize
-                                            target:self
-                                          selector:@selector(upload)
-                                          userInfo:nil
-                                           repeats:YES];
-    [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
-    [self.timer fire];
+- (void)stopUploading {
+    [self invalidateTimer];
 }
 
-- (void)stopUploading {
-    if (self.timer.isValid) {
-        [self.timer invalidate];
+- (void)invalidateTimer
+{
+    if (self.timer != nil) {
+        dispatch_source_cancel(self.timer);
         self.timer = nil;
     }
+}
+
+- (void)createTimer
+{
+    [self invalidateTimer];
+    vlt_weakify(self);
+    self.timer = [VLTCore timer:VLTDetectUploaderTimerInterval handler:^{
+        vlt_strongify(self);
+        [self upload];
+    }];
 }
 
 - (void)upload
@@ -81,23 +80,26 @@
             vlt_strongify(self);
             UInt32 seqIndex = self.sequenceIndex;
             self.sequenceIndex = self.sequenceIndex + 1;
-            VLTPBCapture *capture = [VLTProtobufHelper captureFromDatas:[self.recorder dataForTimeInterval:self.sampleSize]
-                                                                    ifa:[VLTConfig IFA]
-                                                          sequenceIndex:seqIndex
-                                                           impressionId:self.impressionId];
 
+            VLTPBDetectMotionRequest *motionReq = nil;
+            motionReq = [VLTProtobufHelper detectMotionRequestFromDatas:[self.recorder dataForTimeInterval:self.sampleSize]
+                                                           impressionId:self.impressionId
+                                                             modelNames:@[]
+                                                                    ifa:[VLTConfig IFA]
+                                                                 userId:[VLTUserDataStore shared].userId
+                                                          sequenceIndex:seqIndex];
             self.isInProgress = YES;
-            [[VLTApiClient shared] uploadForTracking:capture
-                                             success:^{
-                                                 DLog(@"VLTTrackingPredictionUploader uploaded.");
-                                                 self.isInProgress = NO;
-                                                 vlt_invoke_block(self.onUpload);
-                                             }
-                                             failure:^(NSError * _Nonnull error) {
-                                                 DLog(@"VLTTrackingPredictionUploader error: %@", error);
-                                                 self.isInProgress = NO;
-                                                 vlt_invoke_block(self.onError, error);
-                                             }];
+            [[VLTApiClient shared] detect:motionReq
+                                  success:^(VLTDetectResult * _Nonnull result) {
+                                      DLog(@"DetectMotionRequest done.");
+                                      self.isInProgress = NO;
+                                      vlt_invoke_block(self.onSuccess, result);
+                                  }
+                                  failure:^(NSError * _Nonnull error) {
+                                      DLog(@"DetectMotionRequest faile. Error: %@", error);
+                                      self.isInProgress = NO;
+                                      vlt_invoke_block(self.onError, error);
+                                  }];
         }];
         [queue addOperation:operation];
     }

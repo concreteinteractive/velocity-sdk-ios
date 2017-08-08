@@ -18,6 +18,7 @@ Pod::Spec.new do |s|
   s.source_files        = [
     'Framework/VelocitySDK.h',
     'VelocitySDK/**/*.{h,m}',
+    'vendor/velocity-protobuf/lib/objc/*.{h,m}',
   ]
 
   s.frameworks    = 'UIKit', 'CoreData'
