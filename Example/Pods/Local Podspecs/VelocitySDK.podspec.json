@@ -1,0 +1,42 @@
+{
+  "name": "VelocitySDK",
+  "version": "1.2",
+  "summary": "The open source library for Velocity SDK.",
+  "homepage": "https://www.vlcty.net/",
+  "license": "MIT",
+  "authors": {
+    "Concrete Interactive": "start@concreteinteractive.com"
+  },
+  "source": {
+    "git": "https://github.com/concreteinteractive/velocity-sdk-ios.git",
+    "tag": "1.2",
+    "submodules": true
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "requires_arc": true,
+  "public_header_files": [
+    "Framework/VelocitySDK.h",
+    "VelocitySDK/VLTErrors.h",
+    "VelocitySDK/VLTManager.h"
+  ],
+  "source_files": [
+    "Framework/VelocitySDK.h",
+    "VelocitySDK/**/*.{h,m}",
+    "vendor/velocity-protobuf/lib/objc/*.{h,m}"
+  ],
+  "frameworks": [
+    "UIKit",
+    "CoreData"
+  ],
+  "module_name": "VelocitySDK",
+  "dependencies": {
+    "AFNetworking/NSURLSession": [
+
+    ],
+    "ProtocolBuffers": [
+
+    ]
+  }
+}

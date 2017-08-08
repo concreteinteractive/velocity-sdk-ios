@@ -17,6 +17,7 @@
 #import "VLTRecordingConfig.h"
 #import "VLTConfig.h"
 #import "VLTCore.h"
+#import "VLTDetectResult.h"
 
 static NSString * const VLTApiClientBaseUrl = @"https://sdk.vlcty.net/api/";
 
@@ -155,10 +156,31 @@ typedef NS_ENUM(NSInteger, VLTApiStatusCode) {
                            }] resume];
 }
 
-- (void)detect:(nonnull VLTPBCapture *)capture
-       success:(nullable void (^)(void))success
-       failure:(nullable void (^)(NSError *_Nonnull error))failure
+- (void)detect:(nonnull VLTPBDetectMotionRequest *)detectMotionRequest
+       success:(nullable void (^)(VLTDetectResult * _Nonnull result))success
+       failure:(nullable void (^)(NSError * _Nonnull error))failure
 {
+    NSData *data = [detectMotionRequest data];
+    NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:sessionConfig];
+    [manager setCompletionQueue:[[VLTCore queue] underlyingQueue]];
+
+    NSDictionary *params = @{SessionIDKey: [VLTConfig sessionID]};
+    NSMutableURLRequest *req = [self requestWithMethod:@"POST" endpoint:@"motions/detect" parameters:params error:nil];
+    [self setProtobufContentType:req];
+    [req setHTTPBody:data];
+
+    [[manager dataTaskWithRequest:req
+                   uploadProgress:nil
+                 downloadProgress:nil
+                completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+                    if (!error) {
+                        VLTDetectResult *result = [[VLTDetectResult alloc] initWithDictionary:responseObject];
+                        vlt_invoke_block(success, result);
+                    } else {
+                        vlt_invoke_block(failure, [self apiErrorFromError:error response:response]);
+                    }
+                }] resume];
 
 }
 

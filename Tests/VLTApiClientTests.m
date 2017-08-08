@@ -59,12 +59,8 @@
 
     [[VLTApiClient shared] markGoalAsCompleted:@"GOAL_ID"
                                        eventId:@"EVENT_ID"
-                                       success:^{
-                                           NSLog(@"Success!");
-                                       }
-                                       failure:^(NSError * _Nonnull error) {
-                                           NSLog(@"Failure!");
-                                       }];
+                                       success:^{}
+                                       failure:^(NSError * _Nonnull error) {}];
 
     OCMVerifyAll(self.jsonManagerMock);
 

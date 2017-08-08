@@ -12,4 +12,6 @@
 
 + (NSOperationQueue *)queue;
 
++ (dispatch_source_t)timer:(NSTimeInterval)interval handler:(dispatch_block_t)handler;
+
 @end

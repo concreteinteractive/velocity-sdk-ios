@@ -10,6 +10,7 @@
 #import "VLTApiClient.h"
 #import "VLTTracker.h"
 #import "VLTUserDataStore.h"
+#import "VLTDetector.h"
 
 NSString * const VLTMotionWalking = @"walking";
 NSString * const VLTMotionDriving = @"driving";
@@ -56,10 +57,15 @@ NSString * const VLTMotionDriving = @"driving";
     [VLTTracker setOnStatusHandler:handler];
 }
 
-+ (void)activatePredictionsForMotions:(nonnull NSArray<NSString *> *)models
-                              handler:(nonnull void(^)(NSArray<NSString *> * _Nonnull))handler
++ (void)activateDetectionWithHandler:(nonnull void(^)(VLTDetectResult * _Nonnull))handler
 {
-    
+    [VLTDetector setOnDetectReceivedHandler:handler];
+    [VLTDetector activate];
+}
+
++ (void)deactivateDetection
+{
+    [VLTDetector deactivate];
 }
 
 + (void)markGoalAsCompleted:(nonnull NSString *)goalId

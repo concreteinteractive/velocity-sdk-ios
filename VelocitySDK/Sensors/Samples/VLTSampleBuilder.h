@@ -11,6 +11,8 @@
 
 @interface VLTSampleBuilder : NSObject
 
-+ (id<VLTSample>)sampleFrom:(id)sourceData;
++ (nonnull id<VLTSample>)sampleFrom:(nonnull id)sourceData;
+
++ (nonnull id<VLTSample>)simulatorSample;
 
 @end

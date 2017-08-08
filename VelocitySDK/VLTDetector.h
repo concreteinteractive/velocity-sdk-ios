@@ -8,11 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@interface VLTPredictor : NSObject
+@class VLTDetectResult;
+
+@interface VLTDetector : NSObject
 
 + (void)activate;
 + (void)deactivate;
 + (BOOL)isActive;
-+ (void)setOnStatusHandler:(void(^)(NSArray<NSString *> *predictions))handler;
++ (void)setOnDetectReceivedHandler:(void(^)(VLTDetectResult *))handler;
 
 @end
