@@ -11,6 +11,8 @@
 
 @interface VLTSimpleSample : NSObject <VLTSample>
 
-- (instancetype)initWithTimestamp:(NSTimeInterval)timestamp x:(float)x y:(float)y z:(float)z NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithTimestamp:(NSTimeInterval)timestamp x:(float)x y:(float)y z:(float)z;
+- (nonnull instancetype)initWithTimestamp:(NSTimeInterval)timestamp
+                                   values:(nonnull NSArray<NSNumber *> *)values NS_DESIGNATED_INITIALIZER;
 
 @end
