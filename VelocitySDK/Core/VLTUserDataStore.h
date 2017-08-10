@@ -11,6 +11,7 @@
 @interface VLTUserDataStore : NSObject
 
 @property (atomic,  strong, nullable) NSString *userId;
+@property (atomic,  assign, getter=isGpsEnabled) BOOL gpsEnabled;
 
 + (nonnull instancetype)shared;
 

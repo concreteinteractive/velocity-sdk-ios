@@ -13,6 +13,8 @@
 #import "VLTConfig.h"
 #import "VLTSimulatorSensorRecorder.h"
 #import "VLTSensorTypes.h"
+#import "VLTGPSSensorRecorder.h"
+#import "VLTGPS.h"
 
 @implementation VLTSensorBuilder
 
@@ -37,7 +39,17 @@
     gyroRecorder = [[VLTSimulatorSensorRecorder alloc] initWithUpdateInterval:updateInterval
                                                                  timeInBuffer:bufferSize
                                                                    sensorType:VLTSensorTypeGyro];
-    return [[VLTMultiMotionRecorder alloc] initWithMotionRecorders:@[accRecorder, gyroRecorder]];
+    NSMutableArray<VLTSensorRecorder *> *recorders = [[NSMutableArray alloc] init];
+    [recorders addObject:accRecorder];
+    [recorders addObject:gyroRecorder];
+
+    if ([VLTGPS isEnabled]) {
+        VLTGPSSensorRecorder *gpsRecorder = [[VLTGPSSensorRecorder alloc] initWithUpdateInterval:updateInterval
+                                                                                    timeInBuffer:bufferSize];
+        [recorders addObject:gpsRecorder];
+    }
+
+    return [[VLTMultiMotionRecorder alloc] initWithMotionRecorders:recorders];
 }
 
 + (nonnull id<VLTMotionRecorder>)buildRealDeviceRecorder

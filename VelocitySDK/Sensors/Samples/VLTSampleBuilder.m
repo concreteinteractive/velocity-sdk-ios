@@ -11,6 +11,7 @@
 #import "VLTSimpleSample.h"
 #import "VLTDate.h"
 #import "VLTMacros.h"
+#import <CoreLocation/CoreLocation.h>
 
 @implementation VLTSampleBuilder
 
@@ -29,10 +30,24 @@
         return [VLTSampleBuilder fromGyroData:(CMGyroData *)sourceData];
     } else if ([sourceData isKindOfClass:[CMDeviceMotion class]]) {
         return [VLTSampleBuilder fromDeviceMotion:(CMDeviceMotion *)sourceData];
+    } else if ([sourceData isKindOfClass:[CLLocation class]]) {
+        return [VLTSampleBuilder fromLocation:(CLLocation *)sourceData];
     } else {
         DLog(@"VLTSampleBuilder RETURNING EMPTY SAMPLE AS TYPE IS NOT SUPPORTED.");
         return [VLTSampleBuilder emptySample];
     }
+}
+
++ (nonnull id<VLTSample>)fromLocation:(CLLocation *)location
+{
+    return [[VLTSimpleSample alloc] initWithTimestamp:location.timestamp.timeIntervalSince1970
+                                               values:@[
+                                                        @(location.coordinate.latitude),
+                                                        @(location.coordinate.longitude),
+                                                        @(location.altitude),
+                                                        @(location.horizontalAccuracy),
+                                                        @(location.speed),
+                                                        ]];
 }
 
 + (nonnull id<VLTSample>)emptySample

@@ -73,6 +73,9 @@
         case VLTSensorTypeGyro:
             [builder setType:VLTPBSensorTypeGyro];
             break;
+        case VLTSensorTypeGPS:
+            [builder setType:VLTPBSensorTypeGps];
+            break;
         default:
             DLog(@"sensorFromData: builder type is not supported");
             break;
