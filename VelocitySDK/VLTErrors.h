@@ -14,7 +14,8 @@ enum : NSInteger {
     VLTApiFatalError                        = 1001, // Fatal api error. Stops further motions sensing until app is restarted
     VLTApiTokenNotRecognized                = 1002, // Api token is not recognized. Stops further motions sensing until app is restarted
     VLTApiTokenNoAccess                     = 1003, // Api token doesn't have access or was revoked. Stops further motions sensing until app is restarted
-    VLTPayloadParseFailed                   = 1004, // Payload parsing failed. No actions should be taken
+    VLTParseError                           = 1004, // Payload parsing failed. No actions should be taken
+    VLTClientError                          = 1005, // An error occured in Velocity client. E.g. it can occur due network error
 };
 
 static NSString * const VLTErrorDomain = @"VLTErrorDomain";

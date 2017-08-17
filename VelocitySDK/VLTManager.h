@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "VLTDetectResult.h"
+
+@class VLTMotionDetectResult;
 
 @interface VLTManager : NSObject
 
@@ -32,10 +33,6 @@
  */
 + (BOOL)isTrackingActive;
 
-/*!
- @brief Sets callback which is invoked, when Velocity tracking state is activated/deactivated
- */
-+ (void)setOnTrackingStatusHandler:(nonnull void(^)(BOOL active))handler;
 
 /*!
  @brief Sets user id, which should uniquely identify user
@@ -43,7 +40,7 @@
  */
 + (void)setUserId:(nullable NSString *)userId;
 
-+ (void)activateDetectionWithHandler:(nonnull void(^)(VLTDetectResult * _Nonnull))handler;
++ (void)activateDetectionWithHandler:(nonnull void(^)(VLTMotionDetectResult * _Nonnull))handler;
 
 /*!
  @brief Marks given goal and event as completed

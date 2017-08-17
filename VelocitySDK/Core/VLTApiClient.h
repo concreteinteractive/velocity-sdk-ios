@@ -10,7 +10,7 @@
 @class VLTPBCapture;
 @class VLTRecordingConfig;
 @class VLTPBDetectMotionRequest;
-@class VLTDetectResult;
+@class VLTMotionDetectResult;
 
 @interface VLTApiClient : NSObject
 
@@ -18,9 +18,9 @@
 
 - (void)setApiToken:(nonnull NSString *)token;
 
-- (void)getConfigWithIFA:(nullable NSString *)ifa
-                 success:(nullable void (^)(VLTRecordingConfig * _Nonnull config))success
-                 failure:(nullable void (^)(NSError *_Nonnull error))failure;
+- (void)configWithIFA:(nullable NSString *)ifa
+              success:(nullable void (^)(VLTRecordingConfig * _Nonnull config))success
+              failure:(nullable void (^)(NSError *_Nonnull error))failure;
 
 - (void)uploadForTracking:(nonnull VLTPBCapture *)capture
                   success:(nullable void (^)(void))success
@@ -32,7 +32,7 @@
                     failure:(nullable void (^)(NSError *_Nonnull error))failure;
 
 - (void)detect:(nonnull VLTPBDetectMotionRequest *)detectMotionRequest
-       success:(nullable void (^)(VLTDetectResult * _Nonnull result))success
+       success:(nullable void (^)(VLTMotionDetectResult * _Nonnull result))success
        failure:(nullable void (^)(NSError * _Nonnull error))failure;
 
 @end

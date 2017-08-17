@@ -7,6 +7,7 @@
 //
 
 #import "VLTRecordingConfig.h"
+#import "VLTErrors.h"
 
 @interface VLTRecordingConfig ()
 
@@ -18,16 +19,29 @@
 
 @implementation VLTRecordingConfig
 
-- (instancetype)initWithDictionary:(NSDictionary *)dictionary
++ (instancetype)configWithDictionary:(NSDictionary *)dictionary error:(NSError **)error
 {
-    self = [super init];
-    if (self) {
-        _sampleSize = [dictionary[@"sample_size"] doubleValue];
-        _captureInterval = [dictionary[@"capture_interval"] doubleValue];
-        _detectMotionOn = [dictionary[@"detect_motion_enabled"] boolValue];
+    NSTimeInterval sampleSize = [dictionary[@"sample_size"] doubleValue];
+    NSTimeInterval captureInterval = [dictionary[@"capture_interval"] doubleValue];
+    BOOL detectMotionOn = [dictionary[@"detect_motion_enabled"] boolValue];
+
+    if (sampleSize > 0 && captureInterval > 0) {
+        VLTRecordingConfig *config = [[VLTRecordingConfig alloc] initSampleSize:sampleSize
+                                                                       interval:captureInterval
+                                                               detectioMotionOn:detectMotionOn];
+        return config;
     }
-    return self;
+
+    if (error != NULL) {
+        NSDictionary *uInfo;
+        uInfo = @{NSLocalizedDescriptionKey : @"Sample and capture interval needs to be greater than 0"};
+        *error = [NSError errorWithDomain:VLTErrorDomain
+                                     code:VLTParseError
+                                 userInfo:uInfo];
+    }
+    return nil;
 }
+
 
 - (nonnull instancetype)initSampleSize:(NSTimeInterval)sampleSize
                               interval:(NSTimeInterval)captureInterval
@@ -40,11 +54,6 @@
         _detectMotionOn = detectMotionOn;
     }
     return self;
-}
-
-- (BOOL)isValid
-{
-    return (_sampleSize > 0 && _captureInterval > 0);
 }
 
 @end

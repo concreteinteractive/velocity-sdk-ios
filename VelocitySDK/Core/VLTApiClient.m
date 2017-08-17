@@ -17,7 +17,7 @@
 #import "VLTRecordingConfig.h"
 #import "VLTConfig.h"
 #import "VLTCore.h"
-#import "VLTDetectResult.h"
+#import "VLTMotionDetectResult.h"
 
 static NSString * const VLTApiClientBaseUrl = @"https://sdk.vlcty.net/api/";
 
@@ -81,9 +81,9 @@ typedef NS_ENUM(NSInteger, VLTApiStatusCode) {
     return manager;
 }
 
-- (void)getConfigWithIFA:(nullable NSString *)ifa
-                 success:(nullable void (^)(VLTRecordingConfig * _Nonnull config))success
-                 failure:(nullable void (^)(NSError *_Nonnull error))failure
+- (void)configWithIFA:(nullable NSString *)ifa
+              success:(nullable void (^)(VLTRecordingConfig * _Nonnull config))success
+              failure:(nullable void (^)(NSError *_Nonnull error))failure
 {
     NSDictionary *params = @{
                              SessionIDKey: [VLTConfig sessionID],
@@ -96,11 +96,18 @@ typedef NS_ENUM(NSInteger, VLTApiStatusCode) {
                               uploadProgress:nil
                             downloadProgress:nil
                            completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
-                               if (!error) {
-                                   VLTRecordingConfig *config = [[VLTRecordingConfig alloc] initWithDictionary:responseObject];
+                               if (error != nil) {
+                                   vlt_invoke_block(failure, [self apiErrorFromError:error response:response]);
+                                   return;
+                               }
+
+                               NSError *modelError = nil;
+                               VLTRecordingConfig *config = [VLTRecordingConfig configWithDictionary:responseObject
+                                                                                               error:&modelError];
+                               if (config != nil) {
                                    vlt_invoke_block(success, config);
                                } else {
-                                   vlt_invoke_block(failure, [self apiErrorFromError:error response:response]);
+                                   vlt_invoke_block(failure, modelError);
                                }
                            }] resume];
 }
@@ -157,7 +164,7 @@ typedef NS_ENUM(NSInteger, VLTApiStatusCode) {
 }
 
 - (void)detect:(nonnull VLTPBDetectMotionRequest *)detectMotionRequest
-       success:(nullable void (^)(VLTDetectResult * _Nonnull result))success
+       success:(nullable void (^)(VLTMotionDetectResult * _Nonnull result))success
        failure:(nullable void (^)(NSError * _Nonnull error))failure
 {
     NSData *data = [detectMotionRequest data];
@@ -175,7 +182,7 @@ typedef NS_ENUM(NSInteger, VLTApiStatusCode) {
                  downloadProgress:nil
                 completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
                     if (!error) {
-                        VLTDetectResult *result = [[VLTDetectResult alloc] initWithDictionary:responseObject];
+                        VLTMotionDetectResult *result = [[VLTMotionDetectResult alloc] initWithDictionary:responseObject];
                         vlt_invoke_block(success, result);
                     } else {
                         vlt_invoke_block(failure, [self apiErrorFromError:error response:response]);
