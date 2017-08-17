@@ -14,12 +14,11 @@
 @property (nonatomic, readonly) NSTimeInterval captureInterval;
 @property (nonatomic, readonly, getter=isDetectMotionOn) BOOL detectMotionOn;
 
-- (nonnull instancetype)initWithDictionary:(nonnull NSDictionary *)dictionary;
++ (nullable instancetype)configWithDictionary:(nonnull NSDictionary *)dictionary
+                                        error:(NSError * _Nullable * _Nullable)error;
 
 - (nonnull instancetype)initSampleSize:(NSTimeInterval)sampleSize
                               interval:(NSTimeInterval)captureInterval
                       detectioMotionOn:(BOOL)detectMotionOn;
-
-- (BOOL)isValid;
 
 @end

@@ -8,12 +8,17 @@
 
 #import "VLTManager.h"
 #import "VLTApiClient.h"
-#import "VLTTracker.h"
 #import "VLTUserDataStore.h"
-#import "VLTDetector.h"
+#import "VLTClient.h"
 
 NSString * const VLTMotionWalking = @"walking";
 NSString * const VLTMotionDriving = @"driving";
+
+@interface VLTManager ()
+
+@property (atomic, strong) VLTClient *client;
+
+@end
 
 @implementation VLTManager
 
@@ -25,6 +30,15 @@ NSString * const VLTMotionDriving = @"driving";
         sharedInstance = [[self alloc] init];
     });
     return sharedInstance;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _client = [[VLTClient alloc] init];
+    }
+    return self;
 }
 
 + (void)setApiToken:(NSString *)token
@@ -39,33 +53,35 @@ NSString * const VLTMotionDriving = @"driving";
 
 + (void)activateTracking
 {
-    [VLTTracker activate];
+    [VLTManager shared].client.trackingOn = YES;
+    [VLTManager shared].client.active = YES;
 }
 
 + (void)deactivateTracking
 {
-    [VLTTracker deactivate];
+    [VLTManager shared].client.trackingOn = NO;
+    [VLTManager shared].client.active = NO;
 }
 
 + (BOOL)isTrackingActive
 {
-    return [VLTTracker isActive];
+    return ([VLTManager shared].client.trackingOn && [VLTManager shared].client.active);
 }
 
-+ (void)setOnTrackingStatusHandler:(nonnull void(^)(BOOL active))handler
++ (void)activateDetectionWithHandler:(nonnull void(^)(VLTMotionDetectResult * _Nonnull))handler
 {
-    [VLTTracker setOnStatusHandler:handler];
-}
-
-+ (void)activateDetectionWithHandler:(nonnull void(^)(VLTDetectResult * _Nonnull))handler
-{
-    [VLTDetector setOnDetectReceivedHandler:handler];
-    [VLTDetector activate];
+    [VLTManager shared].client.active = YES;
+    [VLTManager shared].client.detectionOn = YES;
+    [VLTManager shared].client.detectHandler = handler;
+    [VLTManager shared].client.errorHandler = ^(NSError *error) {
+        NSLog(@"Detect error: %@", error);
+    };
 }
 
 + (void)deactivateDetection
 {
-    [VLTDetector deactivate];
+    [VLTManager shared].client.active = NO;
+    [VLTManager shared].client.detectionOn = NO;
 }
 
 + (void)markGoalAsCompleted:(nonnull NSString *)goalId
