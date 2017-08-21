@@ -29,7 +29,7 @@ static NSString * const UserIDKey       = @"user_id";
 static NSString * const AppIDKey        = @"app_id";
 static NSString * const GoalIDKey       = @"goal_id";
 static NSString * const EventIDKey      = @"event_id";
-
+static NSString * const LabelsKey       = @"labels";
 
 typedef NS_ENUM(NSInteger, VLTApiStatusCode) {
     VLTApiStatusCodeUnrecognizedToken = 401,
@@ -139,6 +139,43 @@ typedef NS_ENUM(NSInteger, VLTApiStatusCode) {
                 }] resume];
 }
 
+- (void)uploadMotionData:(nonnull VLTPBCapture *)capture
+                  labels:(nonnull NSArray<NSString *> *)labels
+                 success:(nullable void (^)(void))success
+                 failure:(nullable void (^)(NSError *_Nonnull error))failure
+{
+    NSData *data = [capture data];
+    NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:sessionConfig];
+
+    NSDictionary *params = @{
+                             LabelsKey: labels,
+                             };
+    NSString *endpoint = [NSString stringWithFormat:@"motions/label"];
+
+    NSError *error = nil;
+    NSURLRequest *req = [self multipartForRequestWithMethod:@"POST"
+                                                   endpoint:endpoint
+                                                 parameters:params
+                                                       data:data
+                                                      error:&error];
+    if (req != nil) {
+        vlt_invoke_block(failure, error);
+        return;
+    }
+
+    [[manager dataTaskWithRequest:req
+                   uploadProgress:nil
+                 downloadProgress:nil
+                completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+                    if (!error) {
+                        vlt_invoke_block(success);
+                    } else {
+                        vlt_invoke_block(failure, [self apiErrorFromError:error response:response]);
+                    }
+                }] resume];
+}
+
 - (void)markGoalAsCompleted:(nonnull NSString *)goalId
                     eventId:(nonnull NSString *)eventId
                     success:(nullable void (^)(void))success
@@ -204,6 +241,28 @@ typedef NS_ENUM(NSInteger, VLTApiStatusCode) {
     [self setHeadersForRequest:req];
     return req;
 
+}
+
+- (NSMutableURLRequest *)multipartForRequestWithMethod:(NSString *)method
+                                              endpoint:(NSString *)endpoint
+                                            parameters:(NSDictionary *)parameters
+                                                  data:(NSData *)data
+                                                 error:(NSError **)error
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", self.baseUrl, endpoint];
+    void(^block)(id<AFMultipartFormData>  _Nonnull formData) = ^(id<AFMultipartFormData>  _Nonnull formData) {
+        [formData appendPartWithFileData:data
+                                    name:@"motion_data.bin"
+                                fileName:@"motion_data.bin"
+                                mimeType:@"application/octet-stream"];
+    };
+    NSMutableURLRequest *req = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:method
+                                                                                          URLString:urlString
+                                                                                         parameters:parameters
+                                                                          constructingBodyWithBlock:block
+                                                                                              error:error];
+    [self setHeadersForRequest:req];
+    return req;
 }
 
 - (NSMutableURLRequest *)requestWithMethod:(NSString *)method

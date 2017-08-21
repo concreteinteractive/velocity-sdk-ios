@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+
 @class VLTPBCapture;
 @class VLTRecordingConfig;
 @class VLTPBDetectMotionRequest;
@@ -34,5 +35,10 @@
 - (void)detect:(nonnull VLTPBDetectMotionRequest *)detectMotionRequest
        success:(nullable void (^)(VLTMotionDetectResult * _Nonnull result))success
        failure:(nullable void (^)(NSError * _Nonnull error))failure;
+
+- (void)uploadMotionData:(nonnull VLTPBCapture *)capture
+                  labels:(nonnull NSArray<NSString *> *)labels
+                 success:(nullable void (^)(void))success
+                 failure:(nullable void (^)(NSError *_Nonnull error))failure;
 
 @end

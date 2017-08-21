@@ -31,10 +31,10 @@
 
 - (void)tearDown
 {
-    [super tearDown];
-
     [self.apiClientClassMock stopMocking];
     [self.apiClientMock stopMocking];
+
+    [super tearDown];
 }
 
 - (void)testOperationExecution
