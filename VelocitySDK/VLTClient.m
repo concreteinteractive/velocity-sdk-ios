@@ -19,8 +19,11 @@
 #import "VLTOperation.h"
 #import "VLTMotionDetectOperation.h"
 #import "VLTCaptureUploadOperation.h"
+#import "VLTLabeledDataUploadOperation.h"
 
 static void * VLTIsActiveKVOContext = &VLTIsActiveKVOContext;
+
+static const NSTimeInterval LabeledDataMaxTimeInterval = 300;
 
 @interface VLTClient ()
 
@@ -204,6 +207,37 @@ static void * VLTIsActiveKVOContext = &VLTIsActiveKVOContext;
     VLTCaptureUploadOperation *op = [[VLTCaptureUploadOperation alloc] initWithCaptureRequest:captureRequest];
     op.onError = self.errorHandler;
     [self.processingQueue addOperations:@[op] waitUntilFinished:YES];
+}
+
+- (void)pushMotionDataWithLabels:(nonnull NSArray<NSString *> *)labels
+                         success:(void(^)())success
+                         failure:(void(^)(NSError *error))failure
+{
+    if (!self.recordingConfig.pushLabeledDataOn) {
+        NSDictionary *uInfo = @{
+                                NSLocalizedDescriptionKey: @"Labeled data push is off on this client.",
+                                };
+        NSError *error = [NSError errorWithDomain:VLTErrorDomain code:VLTClientError userInfo:uInfo];
+        vlt_invoke_block(failure, error);
+        return;
+    }
+
+    [[VLTCore queue] addOperationWithBlock:^{
+        NSArray<VLTData *> *motionData = [self.recorder dataForTimeInterval:LabeledDataMaxTimeInterval];
+        VLTLabeledDataUploadOperation *op = [[VLTLabeledDataUploadOperation alloc] initWithMotionData:motionData
+                                                                                               labels:labels];
+        op.onSuccess = ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                vlt_invoke_block(success);
+            });
+        };
+        op.onError = ^(NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                vlt_invoke_block(failure, error);
+            });
+        };
+        [op start];
+    }];
 }
 
 

@@ -27,4 +27,14 @@
  **/
 @property (atomic, copy, nullable) void(^errorHandler)(NSError * _Nullable);
 
+/**
+ * @brief Sends at max last 5min of recorded data with given labels
+ * @param labels array of strings with labels for recent motion
+ * @param success block, which is invoked if upload succeed
+ * @param failure dblock, which is invoked if upload fails
+ **/
+- (void)pushMotionDataWithLabels:(nonnull NSArray<NSString *> *)labels
+                         success:(nullable void(^)())success
+                         failure:(nullable void(^)(NSError * _Nullable error))failure;
+
 @end

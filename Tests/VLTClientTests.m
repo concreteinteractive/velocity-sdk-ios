@@ -13,6 +13,7 @@
 #import "VLTRecordingConfig.h"
 #import "VLTMotionDetectResult.h"
 #import "VLTMacros.h"
+#import "VLTData.h"
 
 @interface VLTClientTests : XCTestCase
 
@@ -32,7 +33,10 @@
     self.apiClientClassMock = OCMClassMock([VLTApiClient class]);
     OCMStub([self.apiClientClassMock shared]).andReturn(self.apiClientMock);
 
-    VLTRecordingConfig *cfg = [[VLTRecordingConfig alloc] initSampleSize:2 interval:2 detectioMotionOn:true];
+    VLTRecordingConfig *cfg = [[VLTRecordingConfig alloc] initSampleSize:2
+                                                                interval:2
+                                                        detectioMotionOn:YES
+                                                       pushLabeledDataOn:YES];
     OCMStub([self.apiClientMock configWithIFA:[OCMArg any]
                                       success:[OCMArg any]
                                       failure:[OCMArg any]]).andDo(^(NSInvocation *invocation) {
@@ -53,19 +57,58 @@
     });
 }
 
+- (void)tearDown
+{
+    [self.apiClientClassMock stopMocking];
+    [self.apiClientMock stopMocking];
+
+    [super tearDown];
+}
+
 - (void)testActive
 {
     XCTestExpectation *expectation = [self expectationWithDescription:@"Detect handler invoked"];
     self.client = [[VLTClient alloc] init];
     self.client.detectionOn = YES;
     vlt_weakify(self);
+
+    __block BOOL alreadyFulfilled = NO;
     self.client.detectHandler = ^(VLTMotionDetectResult *result) {
         vlt_strongify(self);
         XCTAssert([NSThread isMainThread], @"Handler must be invoked on main thread.");
-        [expectation fulfill];
+
+        if (!alreadyFulfilled) {
+            alreadyFulfilled = YES;
+            [expectation fulfill];
+        }
     };
     self.client.active = YES;
     [self waitForExpectations:@[expectation] timeout:5];
+}
+
+- (void)testPushMotionDataWithLabels
+{
+    OCMExpect([self.apiClientMock uploadMotionData:OCMOCK_ANY
+                                            labels:OCMOCK_ANY
+                                           success:OCMOCK_ANY
+                                           failure:OCMOCK_ANY]).andDo(^(NSInvocation *invocation) {
+        void (^successBlock)();
+        [invocation getArgument:&successBlock atIndex:4];
+        successBlock();
+    });
+
+    XCTestExpectation *successExpectation = [self expectationWithDescription:@"Success handler invoked"];
+
+    self.client = [[VLTClient alloc] init];
+    self.client.active = YES;
+    [self.client pushMotionDataWithLabels:@[@"test-motion"]
+                                  success:^{
+                                      [successExpectation fulfill];
+                                  }
+                                  failure:^(NSError * _Nullable error) {}];
+
+    OCMVerifyAll(self.apiClientClassMock);
+    [self waitForExpectationsWithTimeout:5 handler:nil];
 }
 
 

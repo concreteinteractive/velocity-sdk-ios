@@ -81,6 +81,11 @@
 		AD5D39F01F46D7370042A4A2 /* VLTCaptureUploadOperationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5D39EF1F46D7370042A4A2 /* VLTCaptureUploadOperationTests.m */; };
 		AD5D39F31F46FD010042A4A2 /* VLTDetectOperationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5D39F21F46FD010042A4A2 /* VLTDetectOperationTests.m */; };
 		AD5D39F51F46FD680042A4A2 /* VLTDrivingDetectOperationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5D39F41F46FD680042A4A2 /* VLTDrivingDetectOperationTests.m */; };
+		AD5D39F81F4AC2510042A4A2 /* VLTMotionDataOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = AD5D39F61F4AC2510042A4A2 /* VLTMotionDataOperation.h */; };
+		AD5D39F91F4AC2510042A4A2 /* VLTMotionDataOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5D39F71F4AC2510042A4A2 /* VLTMotionDataOperation.m */; };
+		AD5D39FC1F4AC4800042A4A2 /* VLTLabeledDataUploadOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = AD5D39FA1F4AC4800042A4A2 /* VLTLabeledDataUploadOperation.h */; };
+		AD5D39FD1F4AC4800042A4A2 /* VLTLabeledDataUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5D39FB1F4AC4800042A4A2 /* VLTLabeledDataUploadOperation.m */; };
+		AD5D39FF1F4ACA8E0042A4A2 /* VLTLabeledDataUploadOperationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5D39FE1F4ACA8E0042A4A2 /* VLTLabeledDataUploadOperationTests.m */; };
 		AD6C939B1F45722A00702051 /* VLTClient.h in Headers */ = {isa = PBXBuildFile; fileRef = AD6C93991F45722A00702051 /* VLTClient.h */; };
 		AD6C939C1F45722A00702051 /* VLTClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AD6C939A1F45722A00702051 /* VLTClient.m */; };
 		AD72F8F71E5E534A000EDAB1 /* OCMock.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AD72F8F61E5E534A000EDAB1 /* OCMock.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -227,6 +232,11 @@
 		AD5D39EF1F46D7370042A4A2 /* VLTCaptureUploadOperationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTCaptureUploadOperationTests.m; sourceTree = "<group>"; };
 		AD5D39F21F46FD010042A4A2 /* VLTDetectOperationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTDetectOperationTests.m; sourceTree = "<group>"; };
 		AD5D39F41F46FD680042A4A2 /* VLTDrivingDetectOperationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTDrivingDetectOperationTests.m; sourceTree = "<group>"; };
+		AD5D39F61F4AC2510042A4A2 /* VLTMotionDataOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTMotionDataOperation.h; sourceTree = "<group>"; };
+		AD5D39F71F4AC2510042A4A2 /* VLTMotionDataOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTMotionDataOperation.m; sourceTree = "<group>"; };
+		AD5D39FA1F4AC4800042A4A2 /* VLTLabeledDataUploadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTLabeledDataUploadOperation.h; sourceTree = "<group>"; };
+		AD5D39FB1F4AC4800042A4A2 /* VLTLabeledDataUploadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTLabeledDataUploadOperation.m; sourceTree = "<group>"; };
+		AD5D39FE1F4ACA8E0042A4A2 /* VLTLabeledDataUploadOperationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTLabeledDataUploadOperationTests.m; sourceTree = "<group>"; };
 		AD6C93991F45722A00702051 /* VLTClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTClient.h; sourceTree = "<group>"; };
 		AD6C939A1F45722A00702051 /* VLTClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTClient.m; sourceTree = "<group>"; };
 		AD6D1DF21DD3542600081C60 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
@@ -457,6 +467,10 @@
 				AD5D39D51F45C2560042A4A2 /* DetectOperations */,
 				AD5D39C91F45C0B50042A4A2 /* VLTOperation.h */,
 				AD5D39CA1F45C0B50042A4A2 /* VLTOperation.m */,
+				AD5D39F61F4AC2510042A4A2 /* VLTMotionDataOperation.h */,
+				AD5D39F71F4AC2510042A4A2 /* VLTMotionDataOperation.m */,
+				AD5D39FA1F4AC4800042A4A2 /* VLTLabeledDataUploadOperation.h */,
+				AD5D39FB1F4AC4800042A4A2 /* VLTLabeledDataUploadOperation.m */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -490,6 +504,7 @@
 			children = (
 				AD5D39F11F46FB510042A4A2 /* DetectOperations */,
 				AD5D39EC1F46D5B50042A4A2 /* CaptureOperations */,
+				AD5D39FE1F4ACA8E0042A4A2 /* VLTLabeledDataUploadOperationTests.m */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -576,12 +591,14 @@
 				AD178CE31E6EEF5B00F8B187 /* VLTActivityItem.h in Headers */,
 				AD1254831F4563CB00EBC849 /* VLTMotionDetectResult.h in Headers */,
 				AD5D39D81F45C2780042A4A2 /* VLTDetectOperation.h in Headers */,
+				AD5D39F81F4AC2510042A4A2 /* VLTMotionDataOperation.h in Headers */,
 				AD178D021E6EEF5B00F8B187 /* VLTSensorTypes.h in Headers */,
 				AD6C939B1F45722A00702051 /* VLTClient.h in Headers */,
 				AD3D91291F3B461000208BA1 /* VLTSimulatorSensorRecorder.h in Headers */,
 				AD178CF31E6EEF5B00F8B187 /* VLTRecordingConfig.h in Headers */,
 				AD5D39DE1F45C31D0042A4A2 /* VLTDrivingDetectOperation.h in Headers */,
 				AD178CFD1E6EEF5B00F8B187 /* VLTMotionRecorder.h in Headers */,
+				AD5D39FC1F4AC4800042A4A2 /* VLTLabeledDataUploadOperation.h in Headers */,
 				AD5D39CF1F45C0B50042A4A2 /* VLTOperation.h in Headers */,
 				AD178D081E6EEF5B00F8B187 /* VLTSimpleSample.h in Headers */,
 				AD178CE51E6EEF5B00F8B187 /* VLTApiClient.h in Headers */,
@@ -765,10 +782,12 @@
 				AD178D041E6EEF5B00F8B187 /* VLTData.m in Sources */,
 				AD1254841F4563CB00EBC849 /* VLTMotionDetectResult.m in Sources */,
 				AD178CF01E6EEF5B00F8B187 /* VLTNotification.m in Sources */,
+				AD5D39FD1F4AC4800042A4A2 /* VLTLabeledDataUploadOperation.m in Sources */,
 				AD178CE41E6EEF5B00F8B187 /* VLTActivityItem.m in Sources */,
 				AD5D39DF1F45C31D0042A4A2 /* VLTDrivingDetectOperation.m in Sources */,
 				AD24C3331F3C80BD00F3DB78 /* VLTGPS.m in Sources */,
 				ADB3F1FB1F349CBC001A191D /* VLTUserDataStore.m in Sources */,
+				AD5D39F91F4AC2510042A4A2 /* VLTMotionDataOperation.m in Sources */,
 				AD5D39D91F45C2780042A4A2 /* VLTDetectOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -788,6 +807,7 @@
 				AD5D39F01F46D7370042A4A2 /* VLTCaptureUploadOperationTests.m in Sources */,
 				AD24C3391F3C8C5C00F3DB78 /* VLTGPSSensorRecorderTests.m in Sources */,
 				AD9674C71E6F0ADF001D536D /* VLTManagerTests.m in Sources */,
+				AD5D39FF1F4ACA8E0042A4A2 /* VLTLabeledDataUploadOperationTests.m in Sources */,
 				AD9674C61E6F0ADC001D536D /* VLTApiClientTests.m in Sources */,
 				AD24C3351F3C882600F3DB78 /* VLTGPSTests.m in Sources */,
 				AD1380A81F45AD25005400AA /* VLTClientTests.m in Sources */,
