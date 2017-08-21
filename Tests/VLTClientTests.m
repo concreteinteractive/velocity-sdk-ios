@@ -14,6 +14,7 @@
 #import "VLTMotionDetectResult.h"
 #import "VLTMacros.h"
 #import "VLTData.h"
+#import "VLTMotionDetectOperation.h"
 
 @interface VLTClientTests : XCTestCase
 
@@ -69,18 +70,23 @@
 {
     XCTestExpectation *expectation = [self expectationWithDescription:@"Detect handler invoked"];
     self.client = [[VLTClient alloc] init];
-    self.client.detectionOn = YES;
+
     vlt_weakify(self);
-
     __block BOOL alreadyFulfilled = NO;
-    self.client.detectHandler = ^(VLTMotionDetectResult *result) {
-        vlt_strongify(self);
-        XCTAssert([NSThread isMainThread], @"Handler must be invoked on main thread.");
+    self.client.operationFatoryHandler = ^NSArray<VLTMotionDataOperation *> *(NSArray<VLTData *> * motionData, UInt32 sequenceIndex) {
+        VLTMotionDetectOperation *op = [[VLTMotionDetectOperation alloc] initWithMotionData:motionData
+                                                                              sequenceIndex:sequenceIndex];
+        op.onMotionDetect = ^(VLTMotionDetectResult *result) {
+            vlt_strongify(self);
+            XCTAssert([NSThread isMainThread], @"Handler must be invoked on main thread.");
 
-        if (!alreadyFulfilled) {
-            alreadyFulfilled = YES;
-            [expectation fulfill];
-        }
+            if (!alreadyFulfilled) {
+                alreadyFulfilled = YES;
+                [expectation fulfill];
+            }
+        };
+
+        return @[op];
     };
     self.client.active = YES;
     [self waitForExpectations:@[expectation] timeout:5];

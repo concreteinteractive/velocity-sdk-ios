@@ -18,20 +18,41 @@
  */
 + (void)setApiToken:(nonnull NSString *)token;
 
-/*!
- @brief Activates Velocity tracking, happens asynchronously
+/**
+ * @brief Enables/Disabled VelocitySDK
+ * @param enabled - bool flag which indicates if VelocitySDK should be enabled/disabled
+ **/
++ (void)setEnabled:(BOOL)enabled;
+
+/**
+ * @brief Return a current state of velocity manager
+ * @return BOOL flag, which indicates if SDK is enabled
+ **/
++ (BOOL)isEnabled;
+
+
+/**
+ * @brief Enabled or disable tracking
+ * @param enabled - bool flag which indicates whether tracking should be enabled
  */
-+ (void)activateTracking;
++ (void)setTrackingEnabled:(BOOL)enabled;
 
 /*!
- @brief Deactivates Velocity tracking
+ @brief Returns whether Velocity tracking is enabled
  */
-+ (void)deactivateTracking;
++ (BOOL)isTrackingEnabled;
+
+/**
+ * @brief Enabled or disable detection
+ * @param enabled - bool flag which indicates whether tracking should be enabled
+ * @param handler - handler, which is invoked when detection occurs
+ */
++ (void)setDetectionEnabled:(BOOL)enabled handler:(nonnull void(^)(VLTMotionDetectResult * _Nonnull))handler;
 
 /*!
- @brief Returns whether Velocity tracking is active or inactive
+ @brief Returns whether Velocity detection is enabled
  */
-+ (BOOL)isTrackingActive;
++ (BOOL)isDetectionEnabled;
 
 
 /*!
@@ -39,8 +60,6 @@
  @param userId string, which uniquely identifying user
  */
 + (void)setUserId:(nullable NSString *)userId;
-
-+ (void)activateDetectionWithHandler:(nonnull void(^)(VLTMotionDetectResult * _Nonnull))handler;
 
 /*!
  @brief Marks given goal and event as completed

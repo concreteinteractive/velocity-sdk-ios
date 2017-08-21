@@ -9,11 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "VLTSample.h"
 
-extern const NSInteger VLTPBSampleLatitudeIndex;
-extern const NSInteger VLTPBSampleLongitudeIndex;
-extern const NSInteger VLTPBSampleAltitudeIndex;
-extern const NSInteger VLTPBSampleHorizontalAccuracyIndex;
-extern const NSInteger VLTPBSampleSpeedIndex;
+extern const NSInteger VLTSampleLatitudeIndex;
+extern const NSInteger VLTSampleLongitudeIndex;
+extern const NSInteger VLTSampleAltitudeIndex;
+extern const NSInteger VLTSampleHorizontalAccuracyIndex;
+extern const NSInteger VLTSampleSpeedIndex;
+
+extern const NSInteger VLTLocationSampleValuesCount;
 
 @interface VLTSampleBuilder : NSObject
 

@@ -21,19 +21,12 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
 
     @IBAction func toggleTracking() {
-        if (!VLTManager.isTrackingActive()) {
-            VLTManager.activateTracking();
-            VLTManager.setOnTrackingStatusHandler({ [weak self] (active) in
-                self?.updateButtonTitle()
-            })
-        } else {
-            VLTManager.deactivateTracking()
-        }
+        VLTManager.setTrackingEnabled(!VLTManager.isTrackingEnabled());
         updateButtonTitle()
     }
 
     func updateButtonTitle() {
-        let trackingTitle = VLTManager.isTrackingActive() ? "Stop Tracking" : "Start Tracking";
+        let trackingTitle = VLTManager.isTrackingEnabled() ? "Stop Tracking" : "Start Tracking";
         trackingButton.setTitle(trackingTitle, for: .normal)
     }
 

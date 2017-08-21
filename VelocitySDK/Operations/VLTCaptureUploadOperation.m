@@ -9,6 +9,9 @@
 #import "VLTCaptureUploadOperation.h"
 #import "VLTApiClient.h"
 #import "VLTMacros.h"
+#import "VLTProtobufHelper.h"
+#import "VLTConfig.h"
+#import "VLTUserDataStore.h"
 
 @interface VLTCaptureUploadOperation ()
 
@@ -23,10 +26,14 @@
     return YES;
 }
 
-- (void)processCaptureRequest
+- (void)processMotionData
 {
+    VLTPBCapture *captureRequest = [VLTProtobufHelper captureFromDatas:self.motionData
+                                                                   ifa:[VLTConfig IFA]
+                                                         sequenceIndex:self.sequenceIndex
+                                                          impressionId:[VLTUserDataStore shared].impressionId];
     vlt_weakify(self);
-    [[VLTApiClient shared] uploadForTracking:self.captureRequest
+    [[VLTApiClient shared] uploadForTracking:captureRequest
                                      success:^{
                                          vlt_strongify(self);
                                          [self markAsFinished];
@@ -34,7 +41,9 @@
                                      failure:^(NSError * _Nonnull error) {
                                          vlt_strongify(self);
                                          self.error = error;
-                                         vlt_invoke_block(self.onError, error);
+                                         dispatch_async(dispatch_get_main_queue(), ^{
+                                             vlt_invoke_block(self.onError, error);
+                                         });
                                          [self markAsFinished];
                                      }];
 }

@@ -10,6 +10,9 @@
 #import "VLTApiClient.h"
 #import "VLTUserDataStore.h"
 #import "VLTClient.h"
+#import "VLTMotionDataOperation.h"
+#import "VLTCaptureUploadOperation.h"
+#import "VLTParkedDetectOperation.h"
 
 NSString * const VLTMotionWalking = @"walking";
 NSString * const VLTMotionDriving = @"driving";
@@ -17,6 +20,10 @@ NSString * const VLTMotionDriving = @"driving";
 @interface VLTManager ()
 
 @property (atomic, strong) VLTClient *client;
+@property (atomic, assign, getter=isTrackingIsOn) BOOL trackingIsOn;
+
+@property (atomic, assign, getter=isDetectionIsOn) BOOL detectionIsOn;
+@property (atomic, copy) void(^detectionHandler)(VLTMotionDetectResult * _Nonnull);
 
 @end
 
@@ -51,37 +58,35 @@ NSString * const VLTMotionDriving = @"driving";
     [VLTUserDataStore shared].userId = userId;
 }
 
-+ (void)activateTracking
++ (void)setEnabled:(BOOL)enabled
 {
-    [VLTManager shared].client.trackingOn = YES;
-    [VLTManager shared].client.active = YES;
+    [VLTManager shared].client.active = enabled;
 }
 
-+ (void)deactivateTracking
++ (BOOL)isEnabled
 {
-    [VLTManager shared].client.trackingOn = NO;
-    [VLTManager shared].client.active = NO;
+    return [VLTManager shared].client.active;
 }
 
-+ (BOOL)isTrackingActive
++ (void)setTrackingEnabled:(BOOL)enabled
 {
-    return ([VLTManager shared].client.trackingOn && [VLTManager shared].client.active);
+    [VLTManager shared].trackingIsOn = NO;
 }
 
-+ (void)activateDetectionWithHandler:(nonnull void(^)(VLTMotionDetectResult * _Nonnull))handler
++ (BOOL)isTrackingEnabled
 {
-    [VLTManager shared].client.active = YES;
-    [VLTManager shared].client.detectionOn = YES;
-    [VLTManager shared].client.detectHandler = handler;
-    [VLTManager shared].client.errorHandler = ^(NSError *error) {
-        NSLog(@"Detect error: %@", error);
-    };
+    return [VLTManager shared].trackingIsOn;
 }
 
-+ (void)deactivateDetection
++ (void)setDetectionEnabled:(BOOL)enabled handler:(nonnull void(^)(VLTMotionDetectResult * _Nonnull))handler
 {
-    [VLTManager shared].client.active = NO;
-    [VLTManager shared].client.detectionOn = NO;
+    [VLTManager shared].detectionIsOn = enabled;
+    [VLTManager shared].detectionHandler = handler;
+}
+
++ (BOOL)isDetectionEnabled
+{
+    return [VLTManager shared].isDetectionIsOn;
 }
 
 + (void)markGoalAsCompleted:(nonnull NSString *)goalId
@@ -90,6 +95,24 @@ NSString * const VLTMotionDriving = @"driving";
                     failure:(nullable void (^)(NSError *_Nonnull error))failure
 {
     [[VLTApiClient shared] markGoalAsCompleted:goalId eventId:eventId success:success failure:failure];
+}
+
+- (NSArray<VLTMotionDataOperation *> *)operationWith:(NSArray<VLTData *> *)motionData sequenceIndex:(UInt32)sequenceIndex
+{
+    NSMutableArray<VLTMotionDataOperation *> *operations = [[NSMutableArray alloc] init];
+    if (self.isTrackingIsOn) {
+        VLTCaptureUploadOperation *captureOp = [[VLTCaptureUploadOperation alloc] initWithMotionData:motionData
+                                                                                       sequenceIndex:sequenceIndex];
+        [operations addObject:captureOp];
+    }
+
+    if (self.isDetectionIsOn) {
+        VLTParkedDetectOperation *captureOp = [[VLTParkedDetectOperation alloc] initWithMotionData:motionData
+                                                                                     sequenceIndex:sequenceIndex];
+        [operations addObject:captureOp];
+    }
+
+    return operations;
 }
 
 @end

@@ -13,11 +13,13 @@
 #import "VLTMacros.h"
 #import <CoreLocation/CoreLocation.h>
 
-const NSInteger VLTPBSampleLatitudeIndex = 0;
-const NSInteger VLTPBSampleLongitudeIndex = 1;
-const NSInteger VLTPBSampleAltitudeIndex = 2;
-const NSInteger VLTPBSampleHorizontalAccuracyIndex = 3;
-const NSInteger VLTPBSampleSpeedIndex = 4;
+const NSInteger VLTSampleLatitudeIndex = 0;
+const NSInteger VLTSampleLongitudeIndex = 1;
+const NSInteger VLTSampleAltitudeIndex = 2;
+const NSInteger VLTSampleHorizontalAccuracyIndex = 3;
+const NSInteger VLTSampleSpeedIndex = 4;
+
+const NSInteger VLTLocationSampleValuesCount = 5;
 
 @implementation VLTSampleBuilder
 

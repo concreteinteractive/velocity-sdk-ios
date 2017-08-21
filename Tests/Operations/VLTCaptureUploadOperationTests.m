@@ -48,7 +48,7 @@
         [invocation getArgument:&successBlock atIndex:3];
         successBlock();
     });
-    op = [[VLTCaptureUploadOperation alloc] init];
+    op = [[VLTCaptureUploadOperation alloc] initWithMotionData:@[] sequenceIndex:1];
     [op start];
     [op waitUntilFinished];
     OCMVerifyAll(self.apiClientClassMock);
@@ -62,7 +62,7 @@
     });
     XCTestExpectation *expectation = [self expectationWithDescription:@"Error handler invoked"];
 
-    op = [[VLTCaptureUploadOperation alloc] init];
+    op = [[VLTCaptureUploadOperation alloc] initWithMotionData:@[] sequenceIndex:1];
     op.onError = ^(NSError *error) {
         [expectation fulfill];
     };

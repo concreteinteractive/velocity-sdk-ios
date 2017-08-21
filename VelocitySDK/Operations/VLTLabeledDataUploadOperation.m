@@ -24,9 +24,10 @@
 @implementation VLTLabeledDataUploadOperation
 
 - (nonnull instancetype)initWithMotionData:(nonnull NSArray<VLTData *> *)motionData
-                                    labels:(nonnull NSArray<NSString *> *)labels
+                             sequenceIndex:(UInt32)sequenceIndex
+                                    labels:(nonnull NSArray<NSString *> *)labels;
 {
-    self = [super init];
+    self = [super initWithMotionData:motionData sequenceIndex:sequenceIndex];
     if (self) {
         _labels = labels;
     }
@@ -50,14 +51,18 @@
                                     success:^{
                                         vlt_strongify(self);
                                         self.success = YES;
-                                        vlt_invoke_block(self.onSuccess);
+                                        dispatch_async(dispatch_get_main_queue(), ^{
+                                            vlt_invoke_block(self.onSuccess);
+                                        });
                                         [self markAsFinished];
                                     }
                                     failure:^(NSError * _Nonnull error) {
                                         vlt_strongify(self);
                                         self.success = NO;
                                         self.error = error;
-                                        vlt_invoke_block(self.onError, error);
+                                        dispatch_async(dispatch_get_main_queue(), ^{
+                                            vlt_invoke_block(self.onError, error);
+                                        });
                                         [self markAsFinished];
                                     }];
 }

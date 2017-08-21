@@ -13,6 +13,7 @@
 #import "VelocitySDK.h"
 #import "VLTErrors.h"
 #import "VLTManager.h"
+#import "VLTMotionDetectResult.h"
 
 FOUNDATION_EXPORT double VelocitySDKVersionNumber;
 FOUNDATION_EXPORT const unsigned char VelocitySDKVersionString[];

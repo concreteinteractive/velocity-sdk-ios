@@ -7,12 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "VLTDetectOperation.h"
+#import "VLTMotionDetectOperation.h"
 
-@interface VLTDrivingDetectOperation : VLTDetectOperation
+@interface VLTDrivingDetectOperation : VLTMotionDataOperation
 
-@property (atomic, assign, readonly) Float32 speedThreshold;
-@property (atomic, assign, readonly) Float32 averageSpeed;
+@property (atomic, assign, readonly) float speedThreshold;
+@property (atomic, assign, readonly) float averageSpeed;
 @property (atomic, assign, readonly) BOOL isDriving;
 
 @end

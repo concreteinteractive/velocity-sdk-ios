@@ -11,6 +11,7 @@
 #import <OCMock/OCMock.h>
 #import "Velocity.pb.h"
 #import "VLTSampleBuilder.h"
+#import "VLTData.h"
 
 @interface VLTDrivingDetectOperationTests : XCTestCase
 
@@ -20,8 +21,8 @@
 
 - (void)testOperationExecutionWithEmptyDetectRequest
 {
-    VLTPBDetectMotionRequest *req = [[VLTPBDetectMotionRequest alloc] init];
-    VLTDrivingDetectOperation *op = [[VLTDrivingDetectOperation alloc] initWithMotionRequest:req];
+    VLTData *gpsData = [[VLTData alloc] initWithSensorType:VLTSensorTypeGPS values:@[]];
+    VLTDrivingDetectOperation *op = [[VLTDrivingDetectOperation alloc] initWithMotionData:@[gpsData] sequenceIndex:1];
 
     [op start];
     [op waitUntilFinished];
