@@ -55,8 +55,6 @@
 		AD178D151E6EEF5B00F8B187 /* VLTManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AD178CD11E6EEF5B00F8B187 /* VLTManager.m */; };
 		AD178D2E1E6EF38500F8B187 /* ProtocolBuffers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD178D2D1E6EF38500F8B187 /* ProtocolBuffers.framework */; };
 		AD178D301E6EF4A400F8B187 /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD178D2F1E6EF4A400F8B187 /* AFNetworking.framework */; };
-		AD24C3321F3C80BD00F3DB78 /* VLTGPS.h in Headers */ = {isa = PBXBuildFile; fileRef = AD24C3301F3C80BD00F3DB78 /* VLTGPS.h */; };
-		AD24C3331F3C80BD00F3DB78 /* VLTGPS.m in Sources */ = {isa = PBXBuildFile; fileRef = AD24C3311F3C80BD00F3DB78 /* VLTGPS.m */; };
 		AD24C3351F3C882600F3DB78 /* VLTGPSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AD24C3341F3C882600F3DB78 /* VLTGPSTests.m */; };
 		AD24C3391F3C8C5C00F3DB78 /* VLTGPSSensorRecorderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AD24C3381F3C8C5C00F3DB78 /* VLTGPSSensorRecorderTests.m */; };
 		AD3D91291F3B461000208BA1 /* VLTSimulatorSensorRecorder.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3D91271F3B461000208BA1 /* VLTSimulatorSensorRecorder.h */; };
@@ -86,6 +84,8 @@
 		AD72F8F91E5E535D000EDAB1 /* Quick.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AD72F8F81E5E535D000EDAB1 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AD72F9101E5ED9D0000EDAB1 /* Quick.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AD72F8F81E5E535D000EDAB1 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AD72F9111E5ED9D5000EDAB1 /* OCMock.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AD72F8F61E5E534A000EDAB1 /* OCMock.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AD85FE921F4C47B800656A6D /* VLTGPS.h in Headers */ = {isa = PBXBuildFile; fileRef = AD85FE901F4C47B800656A6D /* VLTGPS.h */; };
+		AD85FE931F4C47B800656A6D /* VLTGPS.m in Sources */ = {isa = PBXBuildFile; fileRef = AD85FE911F4C47B800656A6D /* VLTGPS.m */; };
 		AD9674C61E6F0ADC001D536D /* VLTApiClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ADF433B41E5E4555002D9097 /* VLTApiClientTests.m */; };
 		AD9674C71E6F0ADF001D536D /* VLTManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AD72F9121E5EFDC2000EDAB1 /* VLTManagerTests.m */; };
 		AD9674DA1E6F0C8A001D536D /* VelocitySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD178C7A1E6EEA8400F8B187 /* VelocitySDK.framework */; };
@@ -203,8 +203,6 @@
 		AD178CD11E6EEF5B00F8B187 /* VLTManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTManager.m; sourceTree = "<group>"; };
 		AD178D2D1E6EF38500F8B187 /* ProtocolBuffers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ProtocolBuffers.framework; path = Carthage/Build/iOS/ProtocolBuffers.framework; sourceTree = "<group>"; };
 		AD178D2F1E6EF4A400F8B187 /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = Carthage/Build/iOS/AFNetworking.framework; sourceTree = "<group>"; };
-		AD24C3301F3C80BD00F3DB78 /* VLTGPS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTGPS.h; sourceTree = "<group>"; };
-		AD24C3311F3C80BD00F3DB78 /* VLTGPS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTGPS.m; sourceTree = "<group>"; };
 		AD24C3341F3C882600F3DB78 /* VLTGPSTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTGPSTests.m; sourceTree = "<group>"; };
 		AD24C3381F3C8C5C00F3DB78 /* VLTGPSSensorRecorderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTGPSSensorRecorderTests.m; sourceTree = "<group>"; };
 		AD3D91271F3B461000208BA1 /* VLTSimulatorSensorRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTSimulatorSensorRecorder.h; sourceTree = "<group>"; };
@@ -237,6 +235,8 @@
 		AD72F9001E5ED968000EDAB1 /* VelocityApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VelocityApiTests.m; sourceTree = "<group>"; };
 		AD72F9021E5ED968000EDAB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AD72F9121E5EFDC2000EDAB1 /* VLTManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTManagerTests.m; sourceTree = "<group>"; };
+		AD85FE901F4C47B800656A6D /* VLTGPS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTGPS.h; sourceTree = "<group>"; };
+		AD85FE911F4C47B800656A6D /* VLTGPS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTGPS.m; sourceTree = "<group>"; };
 		AD9918FD1F4B06CE0002DE4E /* VLTParkedDetectOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTParkedDetectOperation.h; sourceTree = "<group>"; };
 		AD9918FE1F4B06CE0002DE4E /* VLTParkedDetectOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTParkedDetectOperation.m; sourceTree = "<group>"; };
 		AD9919011F4B0C8F0002DE4E /* VLTParkedDetectionOperationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTParkedDetectionOperationTests.m; sourceTree = "<group>"; };
@@ -314,6 +314,8 @@
 				AD178CD11E6EEF5B00F8B187 /* VLTManager.m */,
 				AD6C93991F45722A00702051 /* VLTClient.h */,
 				AD6C939A1F45722A00702051 /* VLTClient.m */,
+				AD85FE901F4C47B800656A6D /* VLTGPS.h */,
+				AD85FE911F4C47B800656A6D /* VLTGPS.m */,
 			);
 			path = VelocitySDK;
 			sourceTree = "<group>";
@@ -373,8 +375,6 @@
 				AD3D91281F3B461000208BA1 /* VLTSimulatorSensorRecorder.m */,
 				AD3D912B1F3C7CC700208BA1 /* VLTGPSSensorRecorder.h */,
 				AD3D912C1F3C7CC700208BA1 /* VLTGPSSensorRecorder.m */,
-				AD24C3301F3C80BD00F3DB78 /* VLTGPS.h */,
-				AD24C3311F3C80BD00F3DB78 /* VLTGPS.m */,
 			);
 			path = Recorders;
 			sourceTree = "<group>";
@@ -547,7 +547,6 @@
 				AD178CEB1E6EEF5B00F8B187 /* VLTCore.h in Headers */,
 				AD9918FF1F4B06CE0002DE4E /* VLTParkedDetectOperation.h in Headers */,
 				AD4940491E72A5FD0009572A /* Velocity.pb.h in Headers */,
-				AD24C3321F3C80BD00F3DB78 /* VLTGPS.h in Headers */,
 				AD178CEF1E6EEF5B00F8B187 /* VLTNotification.h in Headers */,
 				AD178CE31E6EEF5B00F8B187 /* VLTActivityItem.h in Headers */,
 				AD1254831F4563CB00EBC849 /* VLTMotionDetectResult.h in Headers */,
@@ -573,6 +572,7 @@
 				AD178CED1E6EEF5B00F8B187 /* VLTMotion.h in Headers */,
 				AD178CFE1E6EEF5B00F8B187 /* VLTMultiMotionRecorder.h in Headers */,
 				AD178D061E6EEF5B00F8B187 /* VLTSampleBuilder.h in Headers */,
+				AD85FE921F4C47B800656A6D /* VLTGPS.h in Headers */,
 				AD178D001E6EEF5B00F8B187 /* VLTSensorRecorder.h in Headers */,
 				AD178D101E6EEF5B00F8B187 /* VLTMacros.h in Headers */,
 				AD5D3A0A1F4AEDEB0042A4A2 /* VLTMotionDetectOperation.h in Headers */,
@@ -714,6 +714,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD178D0F1E6EEF5B00F8B187 /* VLTDate.m in Sources */,
+				AD85FE931F4C47B800656A6D /* VLTGPS.m in Sources */,
 				AD178D151E6EEF5B00F8B187 /* VLTManager.m in Sources */,
 				AD178CFF1E6EEF5B00F8B187 /* VLTMultiMotionRecorder.m in Sources */,
 				AD49404A1E72A5FD0009572A /* Velocity.pb.m in Sources */,
@@ -742,7 +743,6 @@
 				AD178CF01E6EEF5B00F8B187 /* VLTNotification.m in Sources */,
 				AD5D39FD1F4AC4800042A4A2 /* VLTLabeledDataUploadOperation.m in Sources */,
 				AD178CE41E6EEF5B00F8B187 /* VLTActivityItem.m in Sources */,
-				AD24C3331F3C80BD00F3DB78 /* VLTGPS.m in Sources */,
 				ADB3F1FB1F349CBC001A191D /* VLTUserDataStore.m in Sources */,
 				AD5D39F91F4AC2510042A4A2 /* VLTMotionDataOperation.m in Sources */,
 				AD5D3A091F4AEDEB0042A4A2 /* VLTDrivingDetectOperation.m in Sources */,
