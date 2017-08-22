@@ -44,6 +44,11 @@ static Float32 VLTSpeedThreshold = 4;
     NSTimeInterval totalTimeInSec = 0;
     for (id<VLTSample> sample in gpsData.values) {
         CLLocation *location = [self locationFromSample:sample];
+
+        if (location.horizontalAccuracy < 0) {
+            continue;
+        }
+        
         if (prevLocation) {
             totalDistance += [location distanceFromLocation:prevLocation];
             totalTimeInSec += fabs([location.timestamp timeIntervalSinceDate:prevLocation.timestamp]);
