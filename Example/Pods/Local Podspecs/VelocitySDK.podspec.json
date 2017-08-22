@@ -20,6 +20,7 @@
     "Framework/VelocitySDK.h",
     "VelocitySDK/VLTErrors.h",
     "VelocitySDK/VLTManager.h",
+    "VelocitySDK/VLTGPS.h",
     "VelocitySDK/Core/VLTMotionDetectResult.h"
   ],
   "source_files": [

@@ -14,6 +14,7 @@ Pod::Spec.new do |s|
     'Framework/VelocitySDK.h',
     'VelocitySDK/VLTErrors.h',
     'VelocitySDK/VLTManager.h',
+    'VelocitySDK/VLTGPS.h',
     'VelocitySDK/Core/VLTMotionDetectResult.h',
   ]
   s.source_files        = [
