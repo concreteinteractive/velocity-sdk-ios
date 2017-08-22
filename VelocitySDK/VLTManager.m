@@ -20,9 +20,9 @@ NSString * const VLTMotionDriving = @"driving";
 @interface VLTManager ()
 
 @property (atomic, strong) VLTClient *client;
-@property (atomic, assign, getter=isTrackingIsOn) BOOL trackingIsOn;
+@property (atomic, assign, getter=isTrackingOn) BOOL trackingOn;
 
-@property (atomic, assign, getter=isDetectionIsOn) BOOL detectionIsOn;
+@property (atomic, assign, getter=isDetectionOn) BOOL detectionOn;
 @property (atomic, copy) void(^detectionHandler)(VLTMotionDetectResult * _Nonnull);
 
 @end
@@ -70,23 +70,23 @@ NSString * const VLTMotionDriving = @"driving";
 
 + (void)setTrackingEnabled:(BOOL)enabled
 {
-    [VLTManager shared].trackingIsOn = NO;
+    [VLTManager shared].trackingOn = NO;
 }
 
 + (BOOL)isTrackingEnabled
 {
-    return [VLTManager shared].trackingIsOn;
+    return [VLTManager shared].isTrackingOn;
 }
 
 + (void)setDetectionEnabled:(BOOL)enabled handler:(nonnull void(^)(VLTMotionDetectResult * _Nonnull))handler
 {
-    [VLTManager shared].detectionIsOn = enabled;
+    [VLTManager shared].detectionOn = enabled;
     [VLTManager shared].detectionHandler = handler;
 }
 
 + (BOOL)isDetectionEnabled
 {
-    return [VLTManager shared].isDetectionIsOn;
+    return [VLTManager shared].isDetectionOn;
 }
 
 + (void)markGoalAsCompleted:(nonnull NSString *)goalId
@@ -100,13 +100,13 @@ NSString * const VLTMotionDriving = @"driving";
 - (NSArray<VLTMotionDataOperation *> *)operationWith:(NSArray<VLTData *> *)motionData sequenceIndex:(UInt32)sequenceIndex
 {
     NSMutableArray<VLTMotionDataOperation *> *operations = [[NSMutableArray alloc] init];
-    if (self.isTrackingIsOn) {
+    if (self.isTrackingOn) {
         VLTCaptureUploadOperation *captureOp = [[VLTCaptureUploadOperation alloc] initWithMotionData:motionData
                                                                                        sequenceIndex:sequenceIndex];
         [operations addObject:captureOp];
     }
 
-    if (self.isDetectionIsOn) {
+    if (self.isDetectionOn) {
         VLTParkedDetectOperation *captureOp = [[VLTParkedDetectOperation alloc] initWithMotionData:motionData
                                                                                      sequenceIndex:sequenceIndex];
         [operations addObject:captureOp];
