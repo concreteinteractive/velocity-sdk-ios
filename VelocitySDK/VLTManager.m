@@ -13,6 +13,7 @@
 #import "VLTMotionDataOperation.h"
 #import "VLTCaptureUploadOperation.h"
 #import "VLTParkedDetectOperation.h"
+#import "VLTMacros.h"
 
 NSString * const VLTMotionWalking = @"walking";
 NSString * const VLTMotionDriving = @"driving";
@@ -44,6 +45,11 @@ NSString * const VLTMotionDriving = @"driving";
     self = [super init];
     if (self) {
         _client = [[VLTClient alloc] init];
+        vlt_weakify(self);
+        _client.operationFatoryHandler = ^NSArray<VLTMotionDataOperation *> *(NSArray<VLTData *> *motionData, UInt32 sequenceIndex) {
+            vlt_strongify(self);
+            return [self operationWith:motionData sequenceIndex:sequenceIndex];
+        };
     }
     return self;
 }
