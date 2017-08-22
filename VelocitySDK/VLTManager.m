@@ -13,6 +13,8 @@
 #import "VLTMotionDataOperation.h"
 #import "VLTCaptureUploadOperation.h"
 #import "VLTParkedDetectOperation.h"
+#import "VLTMacros.h"
+#import "VLTCoreMotionActivityTracker.h"
 
 NSString * const VLTMotionWalking = @"walking";
 NSString * const VLTMotionDriving = @"driving";
@@ -44,6 +46,14 @@ NSString * const VLTMotionDriving = @"driving";
     self = [super init];
     if (self) {
         _client = [[VLTClient alloc] init];
+        vlt_weakify(self);
+        _client.operationFatoryHandler = ^NSArray<VLTMotionDataOperation *> *(NSArray<VLTData *> *motionData, UInt32 sequenceIndex) {
+            vlt_strongify(self);
+            return [self operationWith:motionData sequenceIndex:sequenceIndex];
+        };
+        _client.errorHandler = ^(NSError *error) {
+            NSLog(@"VelocitySDK error: %@", error);
+        };
     }
     return self;
 }
@@ -103,13 +113,20 @@ NSString * const VLTMotionDriving = @"driving";
     if (self.isTrackingOn) {
         VLTCaptureUploadOperation *captureOp = [[VLTCaptureUploadOperation alloc] initWithMotionData:motionData
                                                                                        sequenceIndex:sequenceIndex];
+        captureOp.onError = ^(NSError *error) {
+            NSLog(@"[VelocitySDK] Capture error: %@", error);
+        };
         [operations addObject:captureOp];
     }
 
     if (self.isDetectionOn) {
-        VLTParkedDetectOperation *captureOp = [[VLTParkedDetectOperation alloc] initWithMotionData:motionData
-                                                                                     sequenceIndex:sequenceIndex];
-        [operations addObject:captureOp];
+        VLTParkedDetectOperation *parkedOp = [[VLTParkedDetectOperation alloc] initWithMotionData:motionData
+                                                                                    sequenceIndex:sequenceIndex];
+        parkedOp.onMotionDetect = [VLTManager shared].detectionHandler;
+        parkedOp.onError = ^(NSError *error) {
+            NSLog(@"[VelocitySDK] Detection error: %@", error);
+        };
+        [operations addObject:parkedOp];
     }
 
     return operations;
@@ -122,6 +139,11 @@ NSString * const VLTMotionDriving = @"driving";
                                                  failure:^(NSError * _Nullable error) {
                                                      NSLog(@"[VelocitySDK] error: markCurrentMotionAs %@ failed.", labels);
                                                  }];
+}
+
++ (void)setMotionActivityTrackingEnabled:(BOOL)enabled
+{
+    [VLTCoreMotionActivityTracker shared].enabled = enabled;
 }
 
 @end

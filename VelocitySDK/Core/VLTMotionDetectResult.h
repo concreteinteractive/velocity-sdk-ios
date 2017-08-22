@@ -14,6 +14,7 @@ extern NSString * _Nonnull const VLTMotionDetectResultParkedKey;
 
 @interface VLTMotionDetectResult : NSObject
 
+@property (nonatomic, readonly, nonnull) NSDate *timestamp;
 @property (nonatomic, readonly, getter=isWalking) BOOL walking;
 @property (nonatomic, readonly, getter=isDriving) BOOL driving;
 @property (nonatomic, readonly, getter=isParked) BOOL parked;

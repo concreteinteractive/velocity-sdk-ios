@@ -11,6 +11,10 @@
 #import "VLTMotionDetectResult.h"
 #import "VLTMacros.h"
 #import "VLTMotionDetectOperation.h"
+#import "VLTCoreMotionActivityTracker.h"
+#import <CoreMotion/CoreMotion.h>
+
+static const NSTimeInterval PreviousResultRelevanceTimeInterval = 300;
 
 static NSString * const VLTParkedDetectOperationLastResultDefaultsKey = @"VLTParkedDetectOperationLastResultDefaultsKey";
 
@@ -48,7 +52,9 @@ static NSString * const VLTParkedDetectOperationLastResultDefaultsKey = @"VLTPar
     [drivingOp waitUntilFinished];
 
     VLTMotionDetectResult *result;
-    if (drivingOp.isDriving) {
+
+    CMMotionActivity *recentMotionActivity = [VLTCoreMotionActivityTracker shared].recentActivity;
+    if (drivingOp.isDriving || recentMotionActivity.automotive) {
         result = [[VLTMotionDetectResult alloc] initWithDictionary:@{
                                                                      VLTMotionDetectResultDrivingKey: @YES,
                                                                      VLTMotionDetectResultParkedKey: @NO,
@@ -61,7 +67,9 @@ static NSString * const VLTParkedDetectOperationLastResultDefaultsKey = @"VLTPar
 
         if (!detectOp.result) {
             self.error = detectOp.error;
-            vlt_invoke_block(self.onError, self.error);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                vlt_invoke_block(self.onError, self.error);
+            });
             [self markAsFinished];
             return;
         }
@@ -76,13 +84,19 @@ static NSString * const VLTParkedDetectOperationLastResultDefaultsKey = @"VLTPar
                                                                          VLTMotionDetectResultWalkingKey: @YES,
                                                                          }];
         } else {
-            result = previousResult;
+            result = [[VLTMotionDetectResult alloc] initWithDictionary:@{
+                                                                         VLTMotionDetectResultDrivingKey: @NO,
+                                                                         VLTMotionDetectResultParkedKey: @(previousResult.isParked),
+                                                                         VLTMotionDetectResultWalkingKey: @NO,
+                                                                         }];
         }
     }
 
     self.result = result;
     [self saveMotionDetectResult:result];
-    vlt_invoke_block(self.onMotionDetect, result);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        vlt_invoke_block(self.onMotionDetect, result);
+    });
     [self markAsFinished];
 }
 
@@ -101,7 +115,12 @@ static NSString * const VLTParkedDetectOperationLastResultDefaultsKey = @"VLTPar
         return nil;
     }
 
-    return [[VLTMotionDetectResult alloc] initWithDictionary:dict];
+    VLTMotionDetectResult *result = [[VLTMotionDetectResult alloc] initWithDictionary:dict];
+    if (fabs([result.timestamp timeIntervalSinceNow]) < PreviousResultRelevanceTimeInterval) {
+        return result;
+    }
+
+    return nil;
 }
 
 @end

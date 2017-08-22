@@ -121,7 +121,7 @@ static const NSTimeInterval LabeledDataMaxTimeInterval = 300;
     [self invalidateHitTimer];
     [self.processingQueue addOperationWithBlock:^{
         vlt_weakify(self);
-        self.hitTimer = [VLTCore timer:self.recordingConfig.captureInterval
+        self.hitTimer = [VLTCore timer:5 //self.recordingConfig.captureInterval
                                handler:^{
                                    vlt_strongify(self);
                                    [self capture];

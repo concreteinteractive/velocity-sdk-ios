@@ -66,6 +66,12 @@
 + (void)setUserId:(nullable NSString *)userId;
 
 /*!
+ @brief Control the state of core motion activity tracking
+ @param enabled New state of core motion activity tracking
+ */
++ (void)setMotionActivityTrackingEnabled:(BOOL)enabled;
+
+/*!
  @brief Marks given goal and event as completed
  @param goalId - goal id which was completed
  @param eventId - event id which was completed

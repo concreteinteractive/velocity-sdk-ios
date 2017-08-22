@@ -14,6 +14,7 @@ NSString * const VLTMotionDetectResultParkedKey = @"parked";
 
 @interface VLTMotionDetectResult ()
 
+@property (nonatomic) NSDate *timestamp;
 @property (nonatomic, getter=isWalking) BOOL walking;
 @property (nonatomic, getter=isDriving) BOOL driving;
 @property (nonatomic, getter=isParked) BOOL parked;
@@ -26,6 +27,7 @@ NSString * const VLTMotionDetectResultParkedKey = @"parked";
 {
     self = [super init];
     if (self) {
+        _timestamp = [NSDate date];
         _walking = [dict[VLTMotionDetectResultWalkingKey] boolValue] ?: false;
         _driving = [dict[VLTMotionDetectResultDrivingKey] boolValue] ?: false;
         _parked = [dict[VLTMotionDetectResultParkedKey] boolValue] ?: false;

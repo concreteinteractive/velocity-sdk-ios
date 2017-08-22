@@ -10,6 +10,8 @@
 #import <CoreLocation/CoreLocation.h>
 #import "VLTGPS.h"
 #import "VLTSampleBuilder.h"
+#import "VLTData.h"
+#import "VLTSample.h"
 
 @implementation VLTGPSSensorRecorder
 
@@ -46,6 +48,33 @@
 
 - (void)stopRecording
 {
+}
+
+- (nonnull NSArray<VLTData *> *)dataForTimeInterval:(NSTimeInterval)interval
+{
+    NSArray<VLTData *> *datas = [super dataForTimeInterval:DBL_MAX];
+
+    VLTData *gpsData = datas.firstObject;
+    if (!gpsData) {
+        return [super dataForTimeInterval:interval];
+    }
+
+    NSMutableArray <id<VLTSample>> *newResults = [gpsData.values mutableCopy];
+
+    id<VLTSample> lastSample = newResults.lastObject;
+    if (lastSample) {
+        NSTimeInterval timestampLimit = lastSample.timestamp - interval;
+
+        id<VLTSample> sample = newResults.firstObject;
+        while (newResults.count > 2 && sample.timestamp < timestampLimit ) {
+            [newResults removeObjectAtIndex:0];
+            sample = newResults.firstObject;
+        }
+    }
+
+    VLTData *data = [[VLTData alloc] initWithSensorType:gpsData.sensorType
+                                                 values:newResults];
+    return @[data];
 }
 
 - (NSTimeInterval)availableTimeInBuffer

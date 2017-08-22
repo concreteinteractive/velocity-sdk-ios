@@ -211,6 +211,7 @@ typedef NS_ENUM(NSInteger, VLTApiStatusCode) {
 
     NSDictionary *params = @{SessionIDKey: [VLTConfig sessionID]};
     NSMutableURLRequest *req = [self requestWithMethod:@"POST" endpoint:@"motions/detect" parameters:params error:nil];
+    req.timeoutInterval = 20;
     [self setProtobufContentType:req];
     [req setHTTPBody:data];
 
