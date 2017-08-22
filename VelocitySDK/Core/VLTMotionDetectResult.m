@@ -10,11 +10,13 @@
 
 NSString * const VLTMotionDetectResultWalkingKey = @"walking";
 NSString * const VLTMotionDetectResultDrivingKey = @"driving";
+NSString * const VLTMotionDetectResultParkedKey = @"parked";
 
 @interface VLTMotionDetectResult ()
 
 @property (nonatomic, getter=isWalking) BOOL walking;
 @property (nonatomic, getter=isDriving) BOOL driving;
+@property (nonatomic, getter=isParked) BOOL parked;
 
 @end
 
@@ -24,10 +26,20 @@ NSString * const VLTMotionDetectResultDrivingKey = @"driving";
 {
     self = [super init];
     if (self) {
-        _walking = dict[VLTMotionDetectResultWalkingKey] ?: false;
-        _driving = dict[VLTMotionDetectResultDrivingKey] ?: false;
+        _walking = [dict[VLTMotionDetectResultWalkingKey] boolValue] ?: false;
+        _driving = [dict[VLTMotionDetectResultDrivingKey] boolValue] ?: false;
+        _parked = [dict[VLTMotionDetectResultParkedKey] boolValue] ?: false;
     }
     return self;
+}
+
+- (nonnull NSDictionary *)toDictionary
+{
+    return @{
+             VLTMotionDetectResultWalkingKey: @(self.isWalking),
+             VLTMotionDetectResultDrivingKey: @(self.isDriving),
+             VLTMotionDetectResultParkedKey: @(self.isParked),
+             };
 }
 
 @end

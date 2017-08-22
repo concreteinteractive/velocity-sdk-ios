@@ -10,6 +10,9 @@
 #import "VLTApiClient.h"
 #import "VLTMacros.h"
 #import "VLTMotionDetectResult.h"
+#import "VLTProtobufHelper.h"
+#import "VLTConfig.h"
+#import "VLTUserDataStore.h"
 
 @interface VLTMotionDetectOperation ()
 
@@ -25,10 +28,18 @@
     return YES;
 }
 
-- (void)processMotionRequest
+- (void)processMotionData
 {
+
+    VLTPBDetectMotionRequest *motionRequest = nil;
+    motionRequest = [VLTProtobufHelper detectMotionRequestFromDatas:self.motionData
+                                                       impressionId:[VLTUserDataStore shared].impressionId
+                                                         modelNames:@[]
+                                                                ifa:[VLTConfig IFA]
+                                                             userId:[VLTUserDataStore shared].userId
+                                                      sequenceIndex:self.sequenceIndex];
     vlt_weakify(self);
-    [[VLTApiClient shared] detect:self.motionRequest
+    [[VLTApiClient shared] detect:motionRequest
                           success:^(VLTMotionDetectResult * _Nonnull result) {
                               vlt_strongify(self);
                               self.result = result;
@@ -40,7 +51,9 @@
                           failure:^(NSError * _Nonnull error) {
                               vlt_strongify(self);
                               self.error = error;
-                              vlt_invoke_block(self.onError, error);
+                              dispatch_async(dispatch_get_main_queue(), ^{
+                                  vlt_invoke_block(self.onError, error);
+                              });
                               [self markAsFinished];
                           }];
 }

@@ -8,17 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
-@class VLTMotionDetectResult;
+@class VLTMotionDataOperation;
+@class VLTData;
+
+typedef  NSArray<VLTMotionDataOperation *> * _Nonnull (^MotionDataOperationsFactory)(NSArray<VLTData *> * _Nonnull motionData, UInt32 sequenceIndex);
 
 @interface VLTClient : NSObject
 
-@property (atomic, assign, getter=isDetectionOn) BOOL detectionOn;
-@property (atomic, assign, getter=isTrackingOn) BOOL trackingOn;
-
 @property (atomic, assign, getter=isActive) BOOL active;
 
+@property (atomic, copy, nullable) MotionDataOperationsFactory operationFatoryHandler;
 
-@property (atomic, copy, nullable) void(^detectHandler)(VLTMotionDetectResult * _Nonnull);
 
 /**  
  * @property errorHandler

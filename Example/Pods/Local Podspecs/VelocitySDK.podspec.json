@@ -19,7 +19,8 @@
   "public_header_files": [
     "Framework/VelocitySDK.h",
     "VelocitySDK/VLTErrors.h",
-    "VelocitySDK/VLTManager.h"
+    "VelocitySDK/VLTManager.h",
+    "VelocitySDK/Core/VLTMotionDetectResult.h"
   ],
   "source_files": [
     "Framework/VelocitySDK.h",

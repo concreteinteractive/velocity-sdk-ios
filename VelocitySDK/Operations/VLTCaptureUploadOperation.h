@@ -6,9 +6,9 @@
 //  Copyright © 2017 Veloctity. All rights reserved.
 //
 
-#import "VLTCaptureOperation.h"
+#import "VLTMotionDataOperation.h"
 
-@interface VLTCaptureUploadOperation : VLTCaptureOperation
+@interface VLTCaptureUploadOperation : VLTMotionDataOperation
 
 @property (atomic, strong, readonly) NSError *error;
 @property (atomic, copy) void(^onError)(NSError *);

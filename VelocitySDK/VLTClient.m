@@ -20,6 +20,7 @@
 #import "VLTMotionDetectOperation.h"
 #import "VLTCaptureUploadOperation.h"
 #import "VLTLabeledDataUploadOperation.h"
+#import "VLTMotionDataOperation.h"
 
 static void * VLTIsActiveKVOContext = &VLTIsActiveKVOContext;
 
@@ -32,6 +33,7 @@ static const NSTimeInterval LabeledDataMaxTimeInterval = 300;
 @property (atomic, strong) dispatch_source_t hitTimer;
 @property (atomic, assign, getter=isInProgress) BOOL inProgress;
 @property (atomic, assign) UInt32 sequenceIndex;
+@property (atomic, assign) UInt32 labeledSequenceIndex;
 
 @property (nonatomic, strong) NSOperationQueue *processingQueue;
 
@@ -117,7 +119,7 @@ static const NSTimeInterval LabeledDataMaxTimeInterval = 300;
 - (void)startHitTimer
 {
     [self invalidateHitTimer];
-    [[VLTCore queue] addOperationWithBlock:^{
+    [self.processingQueue addOperationWithBlock:^{
         vlt_weakify(self);
         self.hitTimer = [VLTCore timer:self.recordingConfig.captureInterval
                                handler:^{
@@ -129,7 +131,7 @@ static const NSTimeInterval LabeledDataMaxTimeInterval = 300;
 
 - (void)invalidateHitTimer
 {
-    [[VLTCore queue] addOperationWithBlock:^{
+    [self.processingQueue addOperationWithBlock:^{
         if (self.hitTimer != nil) {
             dispatch_source_cancel(self.hitTimer);
             self.hitTimer = nil;
@@ -158,9 +160,15 @@ static const NSTimeInterval LabeledDataMaxTimeInterval = 300;
         return;
     }
 
+    MotionDataOperationsFactory factoryHandler = self.operationFatoryHandler;
+    if (!factoryHandler) {
+        return;
+    }
+
+
     self.inProgress = YES;
     vlt_weakify(self);
-    [[VLTCore queue] addOperationWithBlock:^{
+    [self.processingQueue addOperationWithBlock:^{
         vlt_strongify(self);
 
         NSTimeInterval sampleSize = self.recordingConfig.sampleSize;
@@ -169,44 +177,11 @@ static const NSTimeInterval LabeledDataMaxTimeInterval = 300;
             self.sequenceIndex = self.sequenceIndex + 1;
 
             NSArray<VLTData *> *datas = [self.recorder dataForTimeInterval:sampleSize];
-            VLTPBDetectMotionRequest *motionReq = nil;
-
-            if (self.isDetectionOn) {
-                motionReq = [VLTProtobufHelper detectMotionRequestFromDatas:datas
-                                                               impressionId:[VLTUserDataStore shared].impressionId
-                                                                 modelNames:@[]
-                                                                        ifa:[VLTConfig IFA]
-                                                                     userId:[VLTUserDataStore shared].userId
-                                                              sequenceIndex:seqIndex];
-                [self runDetectionWithMotionRequest:motionReq];
-            }
-
-            if (self.isTrackingOn) {
-                VLTPBCapture *capture = [VLTProtobufHelper captureFromDatas:datas
-                                                                        ifa:[VLTConfig IFA]
-                                                              sequenceIndex:seqIndex
-                                                               impressionId:[VLTUserDataStore shared].impressionId];
-                [self runOperationWithCaptureRequest:capture];
-            }
+            NSArray<VLTMotionDataOperation *> * operations = factoryHandler(datas, seqIndex);
+            [self.processingQueue addOperations:operations waitUntilFinished:YES];
         }
         self.inProgress = NO;
     }];
-}
-
-- (void)runDetectionWithMotionRequest:(VLTPBDetectMotionRequest *)motionRequest
-{
-    VLTMotionDetectOperation *motionDetectOperation = [[VLTMotionDetectOperation alloc] initWithMotionRequest:motionRequest];
-    motionDetectOperation.onMotionDetect = self.detectHandler;
-    motionDetectOperation.onError = self.errorHandler;
-
-    [self.processingQueue addOperations:@[motionDetectOperation] waitUntilFinished:YES];
-}
-
-- (void)runOperationWithCaptureRequest:(VLTPBCapture *)captureRequest
-{
-    VLTCaptureUploadOperation *op = [[VLTCaptureUploadOperation alloc] initWithCaptureRequest:captureRequest];
-    op.onError = self.errorHandler;
-    [self.processingQueue addOperations:@[op] waitUntilFinished:YES];
 }
 
 - (void)pushMotionDataWithLabels:(nonnull NSArray<NSString *> *)labels
@@ -222,21 +197,17 @@ static const NSTimeInterval LabeledDataMaxTimeInterval = 300;
         return;
     }
 
-    [[VLTCore queue] addOperationWithBlock:^{
+    [self.processingQueue addOperationWithBlock:^{
+        UInt32 seqIndex = self.labeledSequenceIndex;
+        self.labeledSequenceIndex = self.labeledSequenceIndex + 1;
+        
         NSArray<VLTData *> *motionData = [self.recorder dataForTimeInterval:LabeledDataMaxTimeInterval];
         VLTLabeledDataUploadOperation *op = [[VLTLabeledDataUploadOperation alloc] initWithMotionData:motionData
+                                                                                        sequenceIndex:seqIndex
                                                                                                labels:labels];
-        op.onSuccess = ^{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                vlt_invoke_block(success);
-            });
-        };
-        op.onError = ^(NSError *error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                vlt_invoke_block(failure, error);
-            });
-        };
-        [op start];
+        op.onSuccess = success;
+        op.onError = failure;
+        [self.processingQueue addOperations:@[op] waitUntilFinished:YES];
     }];
 }
 

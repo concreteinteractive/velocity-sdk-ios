@@ -6,11 +6,11 @@
 //  Copyright © 2017 Veloctity. All rights reserved.
 //
 
-#import "VLTDetectOperation.h"
+#import "VLTMotionDataOperation.h"
 
 @class VLTMotionDetectResult;
 
-@interface VLTMotionDetectOperation : VLTDetectOperation
+@interface VLTMotionDetectOperation : VLTMotionDataOperation
 
 @property (atomic, strong, readonly) VLTMotionDetectResult *result;
 @property (atomic, strong, readonly) NSError *error;
