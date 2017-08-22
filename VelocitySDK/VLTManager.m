@@ -115,4 +115,13 @@ NSString * const VLTMotionDriving = @"driving";
     return operations;
 }
 
++ (void)labelCurrentMotionWith:(nonnull NSArray<NSString *> *)labels
+{
+    [[VLTManager shared].client pushMotionDataWithLabels:labels
+                                                 success:^{}
+                                                 failure:^(NSError * _Nullable error) {
+                                                     NSLog(@"[VelocitySDK] error: markCurrentMotionAs %@ failed.", labels);
+                                                 }];
+}
+
 @end

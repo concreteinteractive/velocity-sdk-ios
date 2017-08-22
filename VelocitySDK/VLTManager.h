@@ -54,6 +54,10 @@
  */
 + (BOOL)isDetectionEnabled;
 
+/**
+ * @brief Mark current motion with given labels
+ */
++ (void)labelCurrentMotionWith:(nonnull NSArray<NSString *> *)labels;
 
 /*!
  @brief Sets user id, which should uniquely identify user
