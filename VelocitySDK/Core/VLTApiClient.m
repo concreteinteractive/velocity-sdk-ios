@@ -36,11 +36,51 @@ typedef NS_ENUM(NSInteger, VLTApiStatusCode) {
     VLTApiStatusCodeTokenNoAccess = 403,
 };
 
+@interface VLTApiJSONResponseSerializer : AFJSONResponseSerializer
+@end
+
+@interface VLTApiProtobufResponseSerializer : AFHTTPResponseSerializer
+@end
+
 @interface VLTApiClient()
 
 @property (nonatomic, copy, nonnull) NSString *baseUrl;
 @property (nonatomic, copy, nonnull) NSString *apiToken;
+@property (nonatomic, copy, nonnull) NSString *cookie;
 
+- (void)setCookieFromResponse:(NSHTTPURLResponse *)response;
+@end
+
+@implementation VLTApiJSONResponseSerializer
+- (BOOL)validateResponse:(nullable NSHTTPURLResponse *)response
+                    data:(nullable NSData *)data
+                   error:(NSError * _Nullable __autoreleasing *)error
+{
+    [VLTApiClient.shared setCookieFromResponse:response];
+    return [super validateResponse:response data:data error:error];
+}
+@end
+
+@implementation VLTApiProtobufResponseSerializer
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.acceptableContentTypes = [[NSSet alloc] initWithObjects:@"application/x-protobuf",
+                                                                     @"application/json",
+                                                                     @"text/html",
+                                                                     nil];
+    }
+    return self;
+}
+
+- (BOOL)validateResponse:(nullable NSHTTPURLResponse *)response
+                    data:(nullable NSData *)data
+                   error:(NSError * _Nullable __autoreleasing *)error
+{
+    [VLTApiClient.shared setCookieFromResponse:response];
+    return [super validateResponse:response data:data error:error];
+}
 @end
 
 @implementation VLTApiClient
@@ -66,6 +106,11 @@ typedef NS_ENUM(NSInteger, VLTApiStatusCode) {
     return self;
 }
 
+- (void)setCookieFromResponse:(NSHTTPURLResponse *)response
+{
+    self.cookie = response.allHeaderFields[@"Set-Cookie"];
+}
+
 - (void)setApiToken:(NSString *)token
 {
     _apiToken = [token copy];
@@ -77,7 +122,7 @@ typedef NS_ENUM(NSInteger, VLTApiStatusCode) {
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:url];
     [manager setCompletionQueue:[[VLTCore queue] underlyingQueue]];
     manager.requestSerializer = [AFJSONRequestSerializer serializerWithWritingOptions:NSJSONWritingPrettyPrinted];
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer = [VLTApiJSONResponseSerializer serializer];
     return manager;
 }
 
@@ -120,7 +165,7 @@ typedef NS_ENUM(NSInteger, VLTApiStatusCode) {
     NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:sessionConfig];
     [manager setCompletionQueue:[[VLTCore queue] underlyingQueue]];
-    manager.responseSerializer = [self protobufResponseSerializer];
+    manager.responseSerializer = [[VLTApiProtobufResponseSerializer alloc] init];
 
     NSDictionary *params = @{SessionIDKey: [VLTConfig sessionID]};
     NSMutableURLRequest *req = [self requestWithMethod:@"POST" endpoint:@"motions/capture/v2" parameters:params error:nil];
@@ -285,6 +330,10 @@ typedef NS_ENUM(NSInteger, VLTApiStatusCode) {
     if (self.apiToken) {
         NSString *tokenField = [NSString stringWithFormat:@"Token token=\"%@\"", self.apiToken];
         [request setValue:tokenField forHTTPHeaderField:@"Authorization"];
+    }
+    
+    if (self.cookie) {
+        [request setValue:self.cookie forHTTPHeaderField:@"Cookie"];
     }
 
     [request setValue:[self userAgent] forHTTPHeaderField:@"User-Agent"];

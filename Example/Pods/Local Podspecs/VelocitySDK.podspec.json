@@ -1,6 +1,6 @@
 {
   "name": "VelocitySDK",
-  "version": "1.2",
+  "version": "1.2.1",
   "summary": "The open source library for Velocity SDK.",
   "homepage": "https://www.vlcty.net/",
   "license": "MIT",
@@ -9,7 +9,7 @@
   },
   "source": {
     "git": "https://github.com/concreteinteractive/velocity-sdk-ios.git",
-    "tag": "1.2",
+    "tag": "1.2.1",
     "submodules": true
   },
   "platforms": {
