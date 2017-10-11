@@ -8,7 +8,7 @@
     "Concrete Interactive": "start@concreteinteractive.com"
   },
   "source": {
-    "git": "https://github.com/concreteinteractive/velocity-sdk-ios.git",
+    "git": "https://github.com/velocity-inc/velocity-sdk-ios.git",
     "tag": "1.2",
     "submodules": true
   },
