@@ -15,6 +15,8 @@
 #import "VLTParkedDetectOperation.h"
 #import "VLTMacros.h"
 #import "VLTCoreMotionActivityTracker.h"
+#import "VLTDataThrottler.h"
+#import <AFNetworking/AFNetworkReachabilityManager.h>
 
 NSString * const VLTMotionWalking = @"walking";
 NSString * const VLTMotionDriving = @"driving";
@@ -27,6 +29,7 @@ NSString * const VLTMotionDriving = @"driving";
 @property (atomic, assign, getter=isDetectionOn) BOOL detectionOn;
 @property (atomic, copy) void(^detectionHandler)(VLTMotionDetectResult * _Nonnull);
 
+@property (nonatomic) VLTDataThrottler *trackingThrottler;
 @end
 
 @implementation VLTManager
@@ -80,12 +83,24 @@ NSString * const VLTMotionDriving = @"driving";
 
 + (void)setTrackingEnabled:(BOOL)enabled
 {
-    [VLTManager shared].trackingOn = NO;
+    [VLTManager shared].trackingOn = enabled;
 }
 
 + (BOOL)isTrackingEnabled
 {
     return [VLTManager shared].isTrackingOn;
+}
+
++ (void)setTrackingDataLimit:(NSInteger)bytesCount
+{
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+    [VLTManager shared].trackingThrottler = [[VLTDataThrottler alloc] initWithLimit:bytesCount
+                                                                reachabilityManager:[AFNetworkReachabilityManager sharedManager]];
+}
+
++ (BOOL)isTrackingDataLimitReached
+{
+    return [[VLTManager shared].trackingThrottler isLimitReached];
 }
 
 + (void)setDetectionEnabled:(BOOL)enabled handler:(nonnull void(^)(VLTMotionDetectResult * _Nonnull))handler
@@ -110,12 +125,21 @@ NSString * const VLTMotionDriving = @"driving";
 - (NSArray<VLTMotionDataOperation *> *)operationWith:(NSArray<VLTData *> *)motionData sequenceIndex:(UInt32)sequenceIndex
 {
     NSMutableArray<VLTMotionDataOperation *> *operations = [[NSMutableArray alloc] init];
-    if (self.isTrackingOn) {
+    if (self.isTrackingOn && ![self.trackingThrottler shouldThrottle]) {
         VLTCaptureUploadOperation *captureOp = [[VLTCaptureUploadOperation alloc] initWithMotionData:motionData
                                                                                        sequenceIndex:sequenceIndex];
-        captureOp.onError = ^(NSError *error) {
-            NSLog(@"[VelocitySDK] Capture error: %@", error);
+        vlt_weakify(self);
+        void (^increaseSentData)(NSUInteger) = ^void(NSUInteger bytesSent) {
+            vlt_strongify(self);
+            [self.trackingThrottler increaseSentDataBy:bytesSent];
         };
+        
+        captureOp.onSuccess = increaseSentData;
+        captureOp.onError = ^(NSUInteger bytesSent, NSError *error) {
+            NSLog(@"[VelocitySDK] Capture error: %@", error);
+            increaseSentData(bytesSent);
+        };
+        
         [operations addObject:captureOp];
     }
 

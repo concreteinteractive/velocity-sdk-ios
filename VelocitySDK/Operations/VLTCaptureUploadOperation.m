@@ -34,15 +34,18 @@
                                                           impressionId:[VLTUserDataStore shared].impressionId];
     vlt_weakify(self);
     [[VLTApiClient shared] uploadForTracking:captureRequest
-                                     success:^{
+                                     success:^(NSUInteger bytesSent) {
                                          vlt_strongify(self);
                                          [self markAsFinished];
+                                         dispatch_async(dispatch_get_main_queue(), ^{
+                                             vlt_invoke_block(self.onSuccess, bytesSent);
+                                         });
                                      }
-                                     failure:^(NSError * _Nonnull error) {
+                                     failure:^(NSUInteger bytesSent, NSError * _Nonnull error) {
                                          vlt_strongify(self);
                                          self.error = error;
                                          dispatch_async(dispatch_get_main_queue(), ^{
-                                             vlt_invoke_block(self.onError, error);
+                                             vlt_invoke_block(self.onError, bytesSent, error);
                                          });
                                          [self markAsFinished];
                                      }];

@@ -113,8 +113,8 @@ typedef NS_ENUM(NSInteger, VLTApiStatusCode) {
 }
 
 - (void)uploadForTracking:(nonnull VLTPBCapture *)capture
-                  success:(nullable void (^)(void))success
-                  failure:(nullable void (^)(NSError *_Nonnull error))failure
+                  success:(nullable void (^)(NSUInteger bytesSent))success
+                  failure:(nullable void (^)(NSUInteger bytesSent, NSError *_Nonnull error))failure
 {
     NSData *data = [capture data];
     NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -126,17 +126,18 @@ typedef NS_ENUM(NSInteger, VLTApiStatusCode) {
     NSMutableURLRequest *req = [self requestWithMethod:@"POST" endpoint:@"motions/capture/v2" parameters:params error:nil];
     [self setProtobufContentType:req];
     [req setHTTPBody:data];
-
-    [[manager dataTaskWithRequest:req
+    
+    __block NSURLSessionTask *task = [manager dataTaskWithRequest:req
                    uploadProgress:nil
                  downloadProgress:nil
                 completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
                     if (!error) {
-                        vlt_invoke_block(success);
+                        vlt_invoke_block(success, task.countOfBytesSent);
                     } else {
-                        vlt_invoke_block(failure, [self apiErrorFromError:error response:response]);
+                        vlt_invoke_block(failure, task.countOfBytesSent, [self apiErrorFromError:error response:response]);
                     }
-                }] resume];
+                }];
+    [task resume];
 }
 
 - (void)uploadMotionData:(nonnull VLTPBCapture *)capture

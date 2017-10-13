@@ -11,6 +11,7 @@
 @interface VLTCaptureUploadOperation : VLTMotionDataOperation
 
 @property (atomic, strong, readonly) NSError *error;
-@property (atomic, copy) void(^onError)(NSError *);
+@property (atomic, copy) void(^onError)(NSUInteger bytesSent, NSError *);
+@property (atomic, copy) void(^onSuccess)(NSUInteger bytesSent);
 
 @end
