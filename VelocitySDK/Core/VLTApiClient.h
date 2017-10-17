@@ -24,8 +24,8 @@
               failure:(nullable void (^)(NSError *_Nonnull error))failure;
 
 - (void)uploadForTracking:(nonnull VLTPBCapture *)capture
-                  success:(nullable void (^)(void))success
-                  failure:(nullable void (^)(NSError *_Nonnull error))failure;
+                  success:(nullable void (^)(NSUInteger bytesSent))success
+                  failure:(nullable void (^)(NSUInteger bytesSent, NSError *_Nonnull error))failure;
 
 - (void)markGoalAsCompleted:(nonnull NSString *)goalId
                     eventId:(nonnull NSString *)eventId

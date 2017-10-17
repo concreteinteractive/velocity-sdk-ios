@@ -43,6 +43,17 @@
 + (BOOL)isTrackingEnabled;
 
 /**
+ @brief Sets limit for tracking data
+ * @param bytesCount - max bytes sent for tracking during one calendar day using celular
+ */
++ (void)setTrackingDataLimit:(NSInteger)bytesCount;
+
+/**
+ @brief Returns whether tracking data reached it's threshold
+ */
++ (BOOL)isTrackingDataLimitReached;
+
+/**
  * @brief Enabled or disable detection
  * @param enabled - bool flag which indicates whether tracking should be enabled
  * @param handler - handler, which is invoked when detection occurs

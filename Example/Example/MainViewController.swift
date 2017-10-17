@@ -22,6 +22,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     @IBAction func toggleDetection() {
         VLTManager.setEnabled(!VLTManager.isEnabled())
+        VLTManager.setTrackingEnabled(true)
+        VLTManager.setTrackingDataLimit(100000)
         VLTManager.setDetectionEnabled(VLTManager.isEnabled(), handler: { (result) in
             print("Received result: \(result.toDictionary())")
         })

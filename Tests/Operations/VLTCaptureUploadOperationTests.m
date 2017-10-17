@@ -44,11 +44,16 @@
     OCMExpect([self.apiClientMock uploadForTracking:OCMOCK_ANY
                                             success:OCMOCK_ANY
                                             failure:OCMOCK_ANY]).andDo(^(NSInvocation *invocation) {
-        void (^successBlock)();
+        void (^successBlock)(NSUInteger bytesCount);
         [invocation getArgument:&successBlock atIndex:3];
-        successBlock();
+        successBlock(20);
     });
     op = [[VLTCaptureUploadOperation alloc] initWithMotionData:@[] sequenceIndex:1];
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Error handler invoked"];
+    
+    op.onSuccess = ^(NSUInteger bytesCount) {
+        [expectation fulfill];
+    };
     [op start];
     [op waitUntilFinished];
     OCMVerifyAll(self.apiClientClassMock);
@@ -56,15 +61,15 @@
     OCMExpect([self.apiClientMock uploadForTracking:OCMOCK_ANY
                                             success:OCMOCK_ANY
                                             failure:OCMOCK_ANY]).andDo(^(NSInvocation *invocation) {
-        void (^errorBlock)(NSError *error);
+        void (^errorBlock)(NSUInteger bytesCount, NSError *error);
         [invocation getArgument:&errorBlock atIndex:4];
-        errorBlock([NSError errorWithDomain:@"Tests" code:1 userInfo:nil]);
+        errorBlock(20, [NSError errorWithDomain:@"Tests" code:1 userInfo:nil]);
     });
-    XCTestExpectation *expectation = [self expectationWithDescription:@"Error handler invoked"];
+    XCTestExpectation *errorExpectation = [self expectationWithDescription:@"Error handler invoked"];
 
     op = [[VLTCaptureUploadOperation alloc] initWithMotionData:@[] sequenceIndex:1];
-    op.onError = ^(NSError *error) {
-        [expectation fulfill];
+    op.onError = ^(NSUInteger bytesCount, NSError *error) {
+        [errorExpectation fulfill];
     };
     [op start];
     [op waitUntilFinished];
