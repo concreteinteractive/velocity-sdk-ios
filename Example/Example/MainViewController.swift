@@ -9,11 +9,14 @@
 import UIKit
 
 
-class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate {
 
     @IBOutlet var tableView: UITableView!
-
     @IBOutlet var trackingButton: UIButton!
+    @IBOutlet weak var infoLabel: UILabel!
+    
+    private let locationManager = CLLocationManager()
+    var totalLocationsReceived: Int64 = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,13 +31,36 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             print("Received result: \(result.toDictionary())")
         })
         updateButtonTitle()
+        
+        setupLocationManager()
+    }
+    
+    func setupLocationManager() {
+        locationManager.delegate = self
+        if CLLocationManager.authorizationStatus() != .authorizedAlways {
+            locationManager.requestAlwaysAuthorization()
+        } else {
+            startLocationUpdates()
+        }
+        locationManager.requestAlwaysAuthorization()
     }
 
+    func startLocationUpdates() {
+        locationManager.allowsBackgroundLocationUpdates = true
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
+    }
+    
     func updateButtonTitle() {
         let trackingTitle = VLTManager.isEnabled() ? "Stop" : "Start";
         trackingButton.setTitle(trackingTitle, for: .normal)
     }
 
+    func updateInfoLabel() {
+        let locationsText = "Locations count: \(totalLocationsReceived)"
+        let dataText = "tracking data limit reached: \(VLTManager.isTrackingDataLimitReached())"
+        infoLabel.text = locationsText + ", " + dataText
+    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 0
@@ -46,5 +72,16 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return cell!
     }
 
+    //MARK: locations
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        startLocationUpdates()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        VLTGPS.locationManager(manager, didUpdate: locations)
+        totalLocationsReceived += 1
+        updateInfoLabel()
+    }
 }
 

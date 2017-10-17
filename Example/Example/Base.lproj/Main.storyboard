@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="O5h-X7-J5x">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="O5h-X7-J5x">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -14,7 +14,7 @@
         <scene sceneID="Dkp-rz-adl">
             <objects>
                 <navigationController id="O5h-X7-J5x" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Jmq-Gs-W0g">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Jmq-Gs-W0g">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -73,28 +73,39 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="qBG-bc-iqI">
-                                <rect key="frame" x="0.0" y="84" width="375" height="583"/>
+                                <rect key="frame" x="0.0" y="84" width="375" height="563"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="Pma-J9-Riy" id="zQj-5p-g8v"/>
                                     <outlet property="delegate" destination="Pma-J9-Riy" id="wPh-9g-Jxs"/>
                                 </connections>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bc3-xD-nhZ">
+                                <rect key="frame" x="8" y="647" width="359" height="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottomMargin" secondItem="qBG-bc-iqI" secondAttribute="bottom" id="0d3-9H-6l7"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="qBG-bc-iqI" secondAttribute="bottom" constant="20" id="0d3-9H-6l7"/>
+                            <constraint firstAttribute="trailing" secondItem="Bc3-xD-nhZ" secondAttribute="trailing" constant="8" id="2QB-h9-qoq"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="Bc3-xD-nhZ" secondAttribute="bottom" id="8Rr-P5-g3v"/>
                             <constraint firstItem="LtS-1u-DZx" firstAttribute="leading" secondItem="LgK-OJ-rvh" secondAttribute="leading" id="9KE-f3-hao"/>
                             <constraint firstAttribute="trailing" secondItem="qBG-bc-iqI" secondAttribute="trailing" id="Ha3-oJ-cUp"/>
                             <constraint firstItem="LtS-1u-DZx" firstAttribute="top" secondItem="6CM-TY-802" secondAttribute="bottom" id="XD1-LL-ZNV"/>
                             <constraint firstItem="qBG-bc-iqI" firstAttribute="leading" secondItem="LgK-OJ-rvh" secondAttribute="leading" id="eL4-iL-PPZ"/>
                             <constraint firstAttribute="trailing" secondItem="LtS-1u-DZx" secondAttribute="trailing" id="jjL-kS-wNC"/>
+                            <constraint firstItem="Bc3-xD-nhZ" firstAttribute="leading" secondItem="LgK-OJ-rvh" secondAttribute="leading" constant="8" id="mBK-16-eqj"/>
+                            <constraint firstItem="Bc3-xD-nhZ" firstAttribute="top" secondItem="qBG-bc-iqI" secondAttribute="bottom" id="vDj-mm-TS4"/>
                             <constraint firstItem="qBG-bc-iqI" firstAttribute="top" secondItem="LtS-1u-DZx" secondAttribute="bottom" id="zOP-yy-t3e"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="aKi-79-Ze1"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="infoLabel" destination="Bc3-xD-nhZ" id="uTO-23-xSd"/>
                         <outlet property="tableView" destination="qBG-bc-iqI" id="NaW-P4-Qpf"/>
                         <outlet property="trackingButton" destination="Ma4-fO-NZ7" id="Yl2-o4-EIb"/>
                     </connections>
