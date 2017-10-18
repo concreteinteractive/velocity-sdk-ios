@@ -12,6 +12,8 @@
 		ADAB68621DDBC3D3001D49DA /* EmbeddedModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAB68611DDBC3D3001D49DA /* EmbeddedModelTests.swift */; };
 		ADAB68701DDBCEA6001D49DA /* VLTDBTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAB686F1DDBCEA6001D49DA /* VLTDBTests.swift */; };
 		ADB3F1F71F3494F1001A191D /* VelocitySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB3F1F61F3494F1001A191D /* VelocitySDK.framework */; };
+		ADE29A791F973BAF00E12224 /* LabelingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE29A771F973BAF00E12224 /* LabelingViewController.swift */; };
+		ADE29A7A1F973BAF00E12224 /* LabelingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADE29A781F973BAF00E12224 /* LabelingViewController.xib */; };
 		ADEA522A1DD9FB3900F8F82B /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = ADEA52291DD9FB3900F8F82B /* libsqlite3.tbd */; };
 		ADEC72D11DD9C0BC0058193A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEC72D01DD9C0BC0058193A /* AppDelegate.swift */; };
 		ADEC72D31DD9C0BC0058193A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEC72D21DD9C0BC0058193A /* MainViewController.swift */; };
@@ -37,6 +39,8 @@
 		ADAB68611DDBC3D3001D49DA /* EmbeddedModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmbeddedModelTests.swift; sourceTree = "<group>"; };
 		ADAB686F1DDBCEA6001D49DA /* VLTDBTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VLTDBTests.swift; sourceTree = "<group>"; };
 		ADB3F1F61F3494F1001A191D /* VelocitySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VelocitySDK.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Example-fbuvbfmdunudbcezvyupcdvqphok/Build/Products/Debug-iphonesimulator/VelocitySDK.framework"; sourceTree = "<group>"; };
+		ADE29A771F973BAF00E12224 /* LabelingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelingViewController.swift; sourceTree = "<group>"; };
+		ADE29A781F973BAF00E12224 /* LabelingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LabelingViewController.xib; sourceTree = "<group>"; };
 		ADEA52291DD9FB3900F8F82B /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		ADEC72CD1DD9C0BC0058193A /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADEC72D01DD9C0BC0058193A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -112,6 +116,8 @@
 				ADEC72D91DD9C0BC0058193A /* LaunchScreen.storyboard */,
 				ADEC72DC1DD9C0BC0058193A /* Info.plist */,
 				ADEC72F31DD9E9100058193A /* Example-Bridging-Header.h */,
+				ADE29A771F973BAF00E12224 /* LabelingViewController.swift */,
+				ADE29A781F973BAF00E12224 /* LabelingViewController.xib */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -185,7 +191,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0810;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Vytautas Galaunia";
 				TargetAttributes = {
 					ADEC72CC1DD9C0BC0058193A = {
@@ -230,6 +236,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADE29A7A1F973BAF00E12224 /* LabelingViewController.xib in Resources */,
 				ADEC72DB1DD9C0BC0058193A /* LaunchScreen.storyboard in Resources */,
 				ADEC72D81DD9C0BC0058193A /* Assets.xcassets in Resources */,
 				ADEC72D61DD9C0BC0058193A /* Main.storyboard in Resources */,
@@ -309,6 +316,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ADEC72D31DD9C0BC0058193A /* MainViewController.swift in Sources */,
+				ADE29A791F973BAF00E12224 /* LabelingViewController.swift in Sources */,
 				ADEC72D11DD9C0BC0058193A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -361,7 +369,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -369,7 +379,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -414,7 +428,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -422,7 +438,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
