@@ -21,6 +21,10 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         self.updateButtonTitle()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Labeling",
+                                                            style: .plain,
+                                                            target: self,
+                                                            action: #selector(openLabeling))
     }
 
     @IBAction func toggleDetection() {
@@ -50,7 +54,19 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
     }
-    
+
+    func openLabeling() {
+        if VLTManager.isEnabled() {
+            let vc = LabelingViewController()
+            navigationController?.pushViewController(vc, animated: true)
+        } else {
+            let alert = UIAlertController(title: "Error", message: "Tracking must be enabled", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+            }))
+            present(alert, animated: true, completion: nil)
+        }
+    }
+
     func updateButtonTitle() {
         let trackingTitle = VLTManager.isEnabled() ? "Stop" : "Start";
         trackingButton.setTitle(trackingTitle, for: .normal)

@@ -160,7 +160,7 @@ typedef NS_ENUM(NSInteger, VLTApiStatusCode) {
                                                  parameters:params
                                                        data:data
                                                       error:&error];
-    if (req != nil) {
+    if (req == nil) {
         vlt_invoke_block(failure, error);
         return;
     }

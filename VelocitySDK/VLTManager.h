@@ -71,6 +71,13 @@
 + (void)labelCurrentMotionWith:(nonnull NSArray<NSString *> *)labels;
 
 /**
+ * @brief Mark current motion with given labels
+ * @param completion - invoked when request is completed, success flag indicates that error occured
+ */
++ (void)labelCurrentMotionWith:(nonnull NSArray<NSString *> *)labels
+                    completion:(nonnull void(^)(BOOL success))completion;
+
+/**
  @brief Sets user id, which should uniquely identify user
  @param userId string, which uniquely identifying user
  */
