@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name              = "VelocitySDK"
-  s.version           = "1.2.1"
+  s.version           = "1.2.2"
   s.summary           = "The open source library for Velocity SDK."
   s.homepage          = "https://www.vlcty.net/"
   s.license           = 'MIT'

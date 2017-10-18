@@ -7,7 +7,7 @@ PODS:
   - AFNetworking/Security (3.1.0)
   - AFNetworking/Serialization (3.1.0)
   - ProtocolBuffers (1.9.11)
-  - VelocitySDK (1.2.1):
+  - VelocitySDK (1.2.2):
     - AFNetworking/NSURLSession
     - ProtocolBuffers
 
@@ -21,7 +21,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   ProtocolBuffers: d509225eb2ea43d9582a59e94348fcf86e2abd65
-  VelocitySDK: 25fb35899dcc165f93ce6d9b3fc34d3f118be922
+  VelocitySDK: 4ac04010558f8c88d79672cb6232301b99cb4a82
 
 PODFILE CHECKSUM: 561d80425ccf4ffeaefe703e154a3afdefd5fb27
 
