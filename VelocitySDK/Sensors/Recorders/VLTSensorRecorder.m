@@ -47,7 +47,7 @@
         _updateInterval = interval;
         _keepTimeInBuffer = timeInBuffer;
         _buffer = [[NSMutableArray alloc] init];
-        _concurrent_queue = dispatch_queue_create("com.concreteinteractive.vlcty", DISPATCH_QUEUE_CONCURRENT);
+        _concurrent_queue = dispatch_queue_create("net.vlcty.recorder", DISPATCH_QUEUE_CONCURRENT);
     }
     return self;
 }

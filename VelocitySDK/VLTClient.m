@@ -185,7 +185,7 @@ static const NSTimeInterval LabeledDataMaxTimeInterval = 300;
 }
 
 - (void)pushMotionDataWithLabels:(nonnull NSArray<NSString *> *)labels
-                         success:(void(^)())success
+                         success:(void(^)(void))success
                          failure:(void(^)(NSError *error))failure
 {
     if (!self.recordingConfig.pushLabeledDataOn) {

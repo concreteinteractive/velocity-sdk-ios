@@ -48,7 +48,7 @@
                                             labels:OCMOCK_ANY
                                            success:OCMOCK_ANY
                                            failure:OCMOCK_ANY]).andDo(^(NSInvocation *invocation) {
-        void (^successBlock)();
+        void (^successBlock)(void);
         [invocation getArgument:&successBlock atIndex:4];
         successBlock();
     });

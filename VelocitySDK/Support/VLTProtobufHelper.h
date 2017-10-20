@@ -14,6 +14,7 @@
 @class VLTPBSample;
 @class VLTData;
 @class VLTPBDetectMotionRequest;
+@class VLTPBHandshakeRequest;
 
 @interface VLTProtobufHelper : NSObject
 
@@ -32,5 +33,9 @@
 + (nonnull VLTPBSensor *)sensorFromData:(nonnull VLTData *)data;
 
 + (nonnull VLTPBSample *)sampleToVLTPBSample:(nonnull id <VLTSample> )sample;
+
++ (nonnull VLTPBHandshakeRequest *)handshakeRequestWithAuthToken:(nonnull NSString *)authToken
+                                                            idfa:(nonnull NSString *)idfa
+                                                          userId:(nonnull NSString *)userId;
 
 @end

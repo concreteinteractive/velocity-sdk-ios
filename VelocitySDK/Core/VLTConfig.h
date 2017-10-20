@@ -22,6 +22,7 @@
 + (NSString *)libVersion;
 + (NSString *)IFA;
 + (NSString *)sessionID;
++ (NSString *)defaultUserID;
 + (BOOL)trackingEnabled;
 
 @end

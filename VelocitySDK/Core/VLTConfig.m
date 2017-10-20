@@ -13,6 +13,7 @@ static const NSTimeInterval VLTSensorsUpdateInterval = 0.001;
 static const NSTimeInterval VLTSensorsBufferSize = 50.0;
 static const NSTimeInterval VLTUploadTimeInterval = 3;
 static NSString * const VLTLearningModelName = @"Pipeliner Main";
+static NSString * const VLTDefaultUserIDKey = @"net.vlcty.default_user_id";
 
 @implementation VLTConfig
 
@@ -100,6 +101,19 @@ static NSString * const VLTLearningModelName = @"Pipeliner Main";
         sessionID = [[NSUUID UUID] UUIDString];
     });
     return sessionID;
+}
+
+
++ (NSString *)defaultUserID
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSString *userID = [ud stringForKey:VLTDefaultUserIDKey];
+    if (!userID) {
+        userID = [[NSUUID UUID] UUIDString];
+        [ud setValue:userID forKey:VLTDefaultUserIDKey];
+        [ud synchronize];
+    }
+    return userID;
 }
 
 + (NSString *)IFA
