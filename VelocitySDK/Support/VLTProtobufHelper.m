@@ -7,7 +7,7 @@
 //
 
 #import "VLTProtobufHelper.h"
-#import "Velocity.pb.h"
+#import "Velocity.pbobjc.h"
 #import "VLTErrors.h"
 #import "VLTData.h"
 #import "VLTMacros.h"
@@ -25,16 +25,15 @@
         [sensors addObject:[VLTProtobufHelper sensorFromData:data]];
     }
 
-    VLTPBCaptureBuilder *builder = [[VLTPBCaptureBuilder alloc] init];
-    [builder setSensorsArray:sensors];
-    [builder setIfa:ifa];
-    [builder setTimestamp:[NSDate date].timeIntervalSince1970];
-    [builder setPlatform:VLTPBPlatformTypeIos];
-    [builder setSequenceIndex:seqIndex];
-    [builder setImpressionId:impressionId];
-    [builder setAppId:[[NSBundle mainBundle] bundleIdentifier]];
-
-    VLTPBCapture *capture = [builder build];
+    VLTPBCapture *capture = [[VLTPBCapture alloc] init];
+    capture.sensorsArray = sensors;
+    capture.ifa = ifa;
+    capture.timestamp = [NSDate date].timeIntervalSince1970;
+    capture.platform = VLTPBPlatformType_Ios;
+    capture.sequenceIndex = seqIndex;
+    capture.impressionId = impressionId;
+    capture.appId = [[NSBundle mainBundle] bundleIdentifier];
+    
     return capture;
 }
 
@@ -50,49 +49,69 @@
         [sensors addObject:[VLTProtobufHelper sensorFromData:data]];
     }
 
-    VLTPBDetectMotionRequestBuilder *builder = [[VLTPBDetectMotionRequestBuilder alloc] init];
-    [builder setId:impressionId];
-    [builder setUserId:userId];
-    [builder setModelNameArray:modelNames];
-    [builder setSensorsArray:sensors];
-    [builder setSequenceIndex:seqIndex];
-    [builder setPlatform:VLTPBPlatformTypeIos];
-    [builder setTimestamp:[NSDate date].timeIntervalSince1970];
-
-    VLTPBDetectMotionRequest *motionRequest = [builder build];
+    VLTPBDetectMotionRequest *motionRequest = [[VLTPBDetectMotionRequest alloc] init];
+    motionRequest.id_p = impressionId;
+    motionRequest.userId = userId;
+    motionRequest.modelNameArray = [modelNames mutableCopy];
+    motionRequest.sensorsArray = sensors;
+    motionRequest.sequenceIndex = seqIndex;
+    motionRequest.platform = VLTPBPlatformType_Ios;
+    motionRequest.timestamp = [NSDate date].timeIntervalSince1970;
     return motionRequest;
 }
 
 + (nonnull VLTPBSensor *)sensorFromData:(nonnull VLTData *)data
 {
-    VLTPBSensorBuilder *builder = [[VLTPBSensorBuilder alloc] init];
+
+    VLTPBSensor *sensor = [[VLTPBSensor alloc] init];
     switch (data.sensorType) {
         case VLTSensorTypeAcc:
-            [builder setType:VLTPBSensorTypeAccel];
+            sensor.type = VLTPBSensor_Type_Accel;
             break;
         case VLTSensorTypeGyro:
-            [builder setType:VLTPBSensorTypeGyro];
+            sensor.type = VLTPBSensor_Type_Gyro;
             break;
         case VLTSensorTypeGPS:
-            [builder setType:VLTPBSensorTypeGps];
+            sensor.type = VLTPBSensor_Type_Gps;
             break;
         default:
             DLog(@"sensorFromData: builder type is not supported");
             break;
     }
 
+    NSMutableArray<VLTPBSample*> *samples = [[NSMutableArray alloc] init];
     for (id <VLTSample> sample in data.values) {
-        [builder addSamples:[VLTProtobufHelper sampleToVLTPBSample:sample]];
+        [samples addObject:[VLTProtobufHelper sampleToVLTPBSample:sample]];
     }
-    return [builder build];
+    sensor.samplesArray = samples;
+    return sensor;
 }
 
 + (nonnull VLTPBSample *)sampleToVLTPBSample:(nonnull id <VLTSample> )sample
 {
-    VLTPBSampleBuilder *builder = [[VLTPBSampleBuilder alloc] init];
-    [builder setTimestamp:sample.timestamp];
-    [builder setValuesArray:sample.values];
-    return [builder build];
+    GPBFloatArray *floatsArray = [[GPBFloatArray alloc] init];
+    [sample.values enumerateObjectsUsingBlock:^(NSNumber * _Nonnull number, NSUInteger idx, BOOL * _Nonnull stop) {
+        [floatsArray addValue:[number floatValue]];
+    }];
+
+    VLTPBSample *pbSample = [[VLTPBSample alloc] init];
+    pbSample.timestamp = sample.timestamp;
+    pbSample.valuesArray = floatsArray;
+    return pbSample;
+}
+
+
++ (nonnull VLTPBHandshakeRequest *)handshakeRequestWithAuthToken:(nonnull NSString *)authToken
+                                                            idfa:(nonnull NSString *)idfa
+                                                          userId:(nonnull NSString *)userId
+{
+    VLTPBHandshakeRequest *request = [[VLTPBHandshakeRequest alloc] init];
+    request.authToken = authToken;
+    request.idfa = idfa;
+    request.userId = userId;
+    request.appId = [[NSBundle mainBundle] bundleIdentifier];
+    request.platform = VLTPBPlatformType_Ios;
+    return request;
 }
 
 @end

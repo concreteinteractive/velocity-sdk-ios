@@ -36,6 +36,7 @@
 {
     self = [super init];
     if (self) {
+        _userId = [VLTConfig defaultUserID];
         _impressionId = [[NSUUID UUID] UUIDString];
     }
     return self;

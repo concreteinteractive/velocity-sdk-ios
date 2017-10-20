@@ -7,7 +7,7 @@
 //
 
 #import "VLTDrivingDetectOperation.h"
-#import "Velocity.pb.h"
+#import "Velocity.pbobjc.h"
 #import "VLTSampleBuilder.h"
 #import "VLTData.h"
 #import "VLTSample.h"
@@ -30,7 +30,7 @@ static Float32 VLTSpeedThreshold = 4;
     self.speedThreshold = VLTSpeedThreshold;
 
     NSUInteger gpsDataIndex = [self.motionData indexOfObjectPassingTest:^BOOL(VLTData *data, NSUInteger idx, BOOL *stop) {
-        return data.sensorType == VLTPBSensorTypeGps;
+        return data.sensorType == VLTPBSensor_Type_Gps;
     }];
 
     if (gpsDataIndex == NSNotFound) {

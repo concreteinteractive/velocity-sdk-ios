@@ -7,7 +7,7 @@
 //
 
 #import "VLTOperation.h"
-#import "Velocity.pb.h"
+#import "Velocity.pbobjc.h"
 #import "VLTMacros.h"
 
 @interface VLTOperation ()

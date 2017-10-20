@@ -10,7 +10,7 @@
 #import <AFNetworking/AFHTTPSessionManager.h>
 
 #import "VLTApiClient.h"
-#import "Velocity.pb.h"
+#import "Velocity.pbobjc.h"
 #import "VLTProtobufHelper.h"
 #import "VLTErrors.h"
 #import "VLTMacros.h"

@@ -9,7 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "VLTDrivingDetectOperation.h"
 #import <OCMock/OCMock.h>
-#import "Velocity.pb.h"
+#import "Velocity.pbobjc.h"
 #import "VLTSampleBuilder.h"
 #import "VLTData.h"
 

@@ -34,7 +34,7 @@ typedef  NSArray<VLTMotionDataOperation *> * _Nonnull (^MotionDataOperationsFact
  * @param failure dblock, which is invoked if upload fails
  **/
 - (void)pushMotionDataWithLabels:(nonnull NSArray<NSString *> *)labels
-                         success:(nullable void(^)())success
+                         success:(nullable void(^)(void))success
                          failure:(nullable void(^)(NSError * _Nullable error))failure;
 
 @end
