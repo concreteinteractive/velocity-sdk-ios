@@ -14,10 +14,11 @@
 #import "VLTConfig.h"
 #import "VLTUserDataStore.h"
 #import "Velocity.pbobjc.h"
-#import <SocketRocket/SocketRocket.h>
 #import "VLTErrors.h"
 
 @import SocketRocket;
+
+static NSString * const VLTWsApiClientUrl = @"https://sdk.vlcty.net/api/ws";
 
 @interface VLTWsApiClient () <SRWebSocketDelegate>
 
@@ -25,24 +26,30 @@
 
 @property (nonatomic, assign) NSUInteger queueSize;
 @property (nonatomic, strong) id<ListQueue> queue;
+@property (nonatomic, strong) dispatch_queue_t delegateQueue;
 
 @property (atomic, strong) SRWebSocket *ws;
 @property (atomic, assign) BOOL handshakeCompleted;
+
+
+
+@property (atomic, assign, getter=isOpen) BOOL open;
+@property (atomic, assign, getter=isClosed) BOOL closed;
 
 @end
 
 @implementation VLTWsApiClient
 
-- (nonnull instancetype)initWithUrl:(nonnull NSURL *)url
-                          authToken:(nonnull NSString *)authToken
-                          queueSize:(NSUInteger)queueSize
+- (nonnull instancetype)initWithQueueSize:(NSUInteger)queueSize
 {
     self = [super init];
     if (self) {
-        _authToken = authToken;
+        _delegateQueue = dispatch_queue_create("net.vlcty.ws.delegate", DISPATCH_QUEUE_SERIAL);
         _queueSize = queueSize;
         _queue = [[FifoListQueue alloc] init];
+        NSURL *url = [NSURL URLWithString:VLTWsApiClientUrl];
         _ws = [[SRWebSocket alloc] initWithURL:url];
+        [_ws setDelegateDispatchQueue:_delegateQueue];
         _ws.delegate = self;
     }
     return self;
@@ -70,6 +77,7 @@
 
 - (void)webSocketDidOpen:(SRWebSocket *)webSocket
 {
+    self.open = YES;
     vlt_invoke_block(self.onOpen);
 }
 
@@ -78,6 +86,8 @@
            reason:(NSString *)reason
          wasClean:(BOOL)wasClean
 {
+    self.closed = YES;
+    webSocket.delegate = nil;
     vlt_invoke_block(self.onClose, code, reason);
 }
 
@@ -89,20 +99,27 @@
 
 #pragma mark -
 
-- (void)open
+- (void)openWithAuthToken:(nonnull NSString *)authToken
 {
+    self.authToken = authToken;
     [self.ws open];
 }
 
+- (void)close
+{
+    [self.ws close];
+}
 
-- (void)handshakeWithSuccess:(nonnull VLTWsApiHandshakeSuccess)success failure:(nonnull VLTWsApiFailure)failure
+- (NSUInteger)handshakeWithSuccess:(nonnull VLTWsApiHandshakeSuccess)success
+                           failure:(nonnull VLTWsApiFailure)failure
 {
     VLTPBHandshakeRequest *handshakeReq;
     handshakeReq = [VLTProtobufHelper handshakeRequestWithAuthToken:self.authToken
                                                                idfa:[VLTConfig IFA]
                                                              userId:[VLTUserDataStore shared].userId];
+    NSData *data = [handshakeReq data];
     vlt_weakify(self);
-    [self sendData:[handshakeReq data]
+    [self sendData:data
            success:^(NSData * _Nonnull data) {
                NSError *error = nil;
                VLTPBHandshakeResponse *response = [[VLTPBHandshakeResponse alloc] initWithData:data error:&error];
@@ -110,18 +127,53 @@
                    vlt_invoke_block(failure, error);
                    return;
                }
-
                vlt_strongify(self);
                self.handshakeCompleted = YES;
                vlt_invoke_block(success, response);
            } failure:^(NSError * _Nonnull error) {
                vlt_invoke_block(failure, error);
            }];
+    return [data length];
 }
 
-- (void)sendData:(NSData *)data
+- (NSUInteger)motionDetect:(nonnull VLTPBRequest *)request
+                   success:(nonnull VLTWsApiRequestSuccess)success
+                   failure:(nonnull VLTWsApiFailure)failure
 {
-    [self.ws send:data];
+    NSData *data = [request data];
+    [self sendData:data success:^(NSData * _Nonnull data) {
+        NSError *error = nil;
+        VLTPBResponse *response = [[VLTPBResponse alloc] initWithData:data error:&error];
+        if (!response) {
+            vlt_invoke_block(failure, error);
+            return;
+        }
+        vlt_invoke_block(success, response);
+    } failure:^(NSError * _Nonnull error) {
+        vlt_invoke_block(failure, error);
+    }];
+    return [data length];
+}
+
+- (NSUInteger)captureUpload:(nonnull VLTPBRequest *)request
+                    success:(nonnull VLTWsApiRequestSuccess)success
+                    failure:(nonnull VLTWsApiFailure)failure
+{
+    request.modelNamesArray = [NSMutableArray new];
+    NSData *data = [request data];
+    [self sendData:data
+           success:^(NSData * _Nonnull data) {
+               NSError *error = nil;
+               VLTPBResponse *response = [[VLTPBResponse alloc] initWithData:data error:&error];
+               if (!response) {
+                   vlt_invoke_block(failure, error);
+                   return;
+               }
+               vlt_invoke_block(success, response);
+           } failure:^(NSError * _Nonnull error) {
+               vlt_invoke_block(failure, error);
+           }];
+    return [data length];
 }
 
 - (void)sendData:(NSData *)data

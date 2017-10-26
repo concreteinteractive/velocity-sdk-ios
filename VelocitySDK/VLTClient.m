@@ -17,14 +17,16 @@
 #import "VLTProtobufHelper.h"
 #import "VLTConfig.h"
 #import "VLTOperation.h"
-#import "VLTMotionDetectOperation.h"
-#import "VLTCaptureUploadOperation.h"
+#import "VLTHTTPMotionDetectOperation.h"
+#import "VLTHTTPCaptureUploadOperation.h"
 #import "VLTLabeledDataUploadOperation.h"
 #import "VLTMotionDataOperation.h"
+#import "VLTWsApiClient.h"
 
 static void * VLTIsActiveKVOContext = &VLTIsActiveKVOContext;
 
 static const NSTimeInterval LabeledDataMaxTimeInterval = 300;
+static const NSUInteger VLTWsApiQueueSize = 10;
 
 @interface VLTClient ()
 
@@ -34,6 +36,7 @@ static const NSTimeInterval LabeledDataMaxTimeInterval = 300;
 @property (atomic, assign, getter=isInProgress) BOOL inProgress;
 @property (atomic, assign) UInt32 sequenceIndex;
 @property (atomic, assign) UInt32 labeledSequenceIndex;
+@property (atomic, strong) VLTWsApiClient *wsApiClient;
 
 @property (nonatomic, strong) NSOperationQueue *processingQueue;
 
@@ -41,6 +44,7 @@ static const NSTimeInterval LabeledDataMaxTimeInterval = 300;
 
 @implementation VLTClient
 
+@synthesize authToken = _authToken;
 @synthesize active = _active;
 
 - (instancetype)init
@@ -49,10 +53,10 @@ static const NSTimeInterval LabeledDataMaxTimeInterval = 300;
     if (self) {
         _processingQueue = [[NSOperationQueue alloc] init];
         _processingQueue.suspended = NO;
+        [self initializeWsApiClient];
     }
     return self;
 }
-
 
 - (void)setActive:(BOOL)active
 {
@@ -73,23 +77,61 @@ static const NSTimeInterval LabeledDataMaxTimeInterval = 300;
 - (void)handleIsActiveChange
 {
     if (self.isActive) {
+        [self reinitializeWsApiClient];
         [self startMotionSensing];
     } else {
         [self stopMotionSensing];
+        [self closeWsApiClientIfNeeded];
     }
+}
+
+- (void)initializeWsApiClient
+{
+    [self closeWsApiClientIfNeeded];
+    vlt_weakify(self);
+    self.wsApiClient = [[VLTWsApiClient alloc] initWithQueueSize:VLTWsApiQueueSize];
+    [self.wsApiClient setOnClose:^(NSInteger code, NSString * _Nonnull reason) {
+        DLog(@"WS Closed: %ld [%@]", (long)code, reason);
+    }];
+    [self.wsApiClient setOnError:^(NSError * _Nonnull error) {
+        DLog(@"WS error: %@", error);
+        vlt_strongify(self);
+        [self reinitializeWsApiClient];
+        [self startMotionSensing];
+    }];
+    [self.wsApiClient setOnPong:^(NSData * _Nullable pongPayload) {
+        DLog(@"WS API Client PONG: %@", [[NSString alloc] initWithData:pongPayload encoding:NSUTF8StringEncoding]);
+    }];
+}
+
+- (void)closeWsApiClientIfNeeded
+{
+    if (self.wsApiClient && !self.wsApiClient.isClosed) {
+        [self.wsApiClient close];
+    }
+}
+
+- (void)reinitializeWsApiClient
+{
+    [self stopMotionSensing];
+    [self initializeWsApiClient];
 }
 
 - (void)startMotionSensing
 {
     vlt_weakify(self);
-    [[VLTUserDataStore shared] updateConfigWithSuccess:^(VLTRecordingConfig * _Nonnull config) {
+    [self.wsApiClient setOnOpen:^{
         vlt_strongify(self);
-        self.recordingConfig = config;
-        [self startRecording];
-    } failure:^(NSError * _Nonnull error) {
-        vlt_strongify(self);
-        [self handleError:error];
+        [self.wsApiClient handshakeWithSuccess:^(VLTPBHandshakeResponse * _Nonnull response) {
+            vlt_strongify(self);
+            self.recordingConfig = [[VLTRecordingConfig alloc] initWithHandshakeResponse:response];
+            [self startRecording];
+        } failure:^(NSError * _Nonnull error) {
+            vlt_strongify(self);
+            [self handleError:error];
+        }];
     }];
+    [self.wsApiClient openWithAuthToken:self.authToken];
 }
 
 - (void)stopMotionSensing
@@ -177,7 +219,7 @@ static const NSTimeInterval LabeledDataMaxTimeInterval = 300;
             self.sequenceIndex = self.sequenceIndex + 1;
 
             NSArray<VLTData *> *datas = [self.recorder dataForTimeInterval:sampleSize];
-            NSArray<VLTMotionDataOperation *> * operations = factoryHandler(datas, seqIndex);
+            NSArray<VLTMotionDataOperation *> * operations = factoryHandler(self.wsApiClient, datas, seqIndex);
             [self.processingQueue addOperations:operations waitUntilFinished:YES];
         }
         self.inProgress = NO;
@@ -198,12 +240,10 @@ static const NSTimeInterval LabeledDataMaxTimeInterval = 300;
     }
 
     [self.processingQueue addOperationWithBlock:^{
-        UInt32 seqIndex = self.labeledSequenceIndex;
         self.labeledSequenceIndex = self.labeledSequenceIndex + 1;
         
         NSArray<VLTData *> *motionData = [self.recorder dataForTimeInterval:LabeledDataMaxTimeInterval];
         VLTLabeledDataUploadOperation *op = [[VLTLabeledDataUploadOperation alloc] initWithMotionData:motionData
-                                                                                        sequenceIndex:seqIndex
                                                                                                labels:labels];
         op.onSuccess = success;
         op.onError = failure;

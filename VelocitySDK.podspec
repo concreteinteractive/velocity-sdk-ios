@@ -26,7 +26,6 @@ Pod::Spec.new do |s|
   end
   s.frameworks          = 'UIKit', 'CoreData'
   s.module_name         = 'VelocitySDK'
-
   s.dependency 'AFNetworking/NSURLSession'
   s.dependency 'Protobuf', '~> 3.4.0'
   s.dependency 'SocketRocket', '~> 0.4.2'

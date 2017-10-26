@@ -24,10 +24,9 @@
 @implementation VLTLabeledDataUploadOperation
 
 - (nonnull instancetype)initWithMotionData:(nonnull NSArray<VLTData *> *)motionData
-                             sequenceIndex:(UInt32)sequenceIndex
                                     labels:(nonnull NSArray<NSString *> *)labels;
 {
-    self = [super initWithMotionData:motionData sequenceIndex:sequenceIndex];
+    self = [super initWithMotionData:motionData];
     if (self) {
         _labels = labels;
     }
@@ -44,7 +43,7 @@
     VLTPBCapture *capture = [VLTProtobufHelper captureFromDatas:self.motionData
                                                             ifa:[VLTConfig IFA]
                                                   sequenceIndex:1
-                                                   impressionId:[VLTUserDataStore shared].impressionId];
+                                                   impressionId:[[VLTUserDataStore shared] sessionId]];
     vlt_weakify(self);
     [[VLTApiClient shared] uploadMotionData:capture
                                      labels:self.labels

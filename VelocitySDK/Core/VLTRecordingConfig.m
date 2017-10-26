@@ -8,6 +8,7 @@
 
 #import "VLTRecordingConfig.h"
 #import "VLTErrors.h"
+#import "Velocity.pbobjc.h"
 
 @interface VLTRecordingConfig ()
 
@@ -20,42 +21,14 @@
 
 @implementation VLTRecordingConfig
 
-+ (instancetype)configWithDictionary:(NSDictionary *)dictionary error:(NSError **)error
-{
-    NSTimeInterval sampleSize = [dictionary[@"sample_size"] doubleValue];
-    NSTimeInterval captureInterval = [dictionary[@"capture_interval"] doubleValue];
-    BOOL detectMotionOn = [dictionary[@"detect_motion_enabled"] boolValue];
-    BOOL pushLabeledDataOn = [dictionary[@"push_labeled_data_enabled"] boolValue];
-
-    if (sampleSize > 0 && captureInterval > 0) {
-        VLTRecordingConfig *config = [[VLTRecordingConfig alloc] initSampleSize:sampleSize
-                                                                       interval:captureInterval
-                                                               detectioMotionOn:detectMotionOn
-                                                              pushLabeledDataOn:pushLabeledDataOn];
-        return config;
-    }
-
-    if (error != NULL) {
-        NSDictionary *uInfo;
-        uInfo = @{NSLocalizedDescriptionKey : @"Sample and capture interval needs to be greater than 0"};
-        *error = [NSError errorWithDomain:VLTErrorDomain
-                                     code:VLTParseError
-                                 userInfo:uInfo];
-    }
-    return nil;
-}
-
-- (nonnull instancetype)initSampleSize:(NSTimeInterval)sampleSize
-                              interval:(NSTimeInterval)captureInterval
-                      detectioMotionOn:(BOOL)detectMotionOn
-                     pushLabeledDataOn:(BOOL)pushLabeledDataOn
+- (nonnull instancetype)initWithHandshakeResponse:(VLTPBHandshakeResponse *)handshakeResponse
 {
     self = [super init];
     if (self) {
-        _sampleSize = sampleSize;
-        _captureInterval = captureInterval;
-        _detectMotionOn = detectMotionOn;
-        _pushLabeledDataOn = pushLabeledDataOn;
+        _sampleSize = handshakeResponse.sampleSize;
+        _captureInterval = handshakeResponse.captureInterval;
+        _detectMotionOn = handshakeResponse.canLabelMotion;
+        _pushLabeledDataOn = handshakeResponse.canLabelMotion;
     }
     return self;
 }

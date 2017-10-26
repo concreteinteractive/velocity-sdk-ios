@@ -22,7 +22,7 @@
 - (void)testOperationExecutionWithEmptyDetectRequest
 {
     VLTData *gpsData = [[VLTData alloc] initWithSensorType:VLTSensorTypeGPS values:@[]];
-    VLTDrivingDetectOperation *op = [[VLTDrivingDetectOperation alloc] initWithMotionData:@[gpsData] sequenceIndex:1];
+    VLTDrivingDetectOperation *op = [[VLTDrivingDetectOperation alloc] initWithMotionData:@[gpsData]];
 
     [op start];
     [op waitUntilFinished];

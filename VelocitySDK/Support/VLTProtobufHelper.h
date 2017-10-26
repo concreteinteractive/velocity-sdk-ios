@@ -38,4 +38,6 @@
                                                             idfa:(nonnull NSString *)idfa
                                                           userId:(nonnull NSString *)userId;
 
++ (nonnull NSArray<VLTPBSample *> *)sensorsFromMotionData:(nonnull NSArray <VLTData *> *)datas;
+
 @end

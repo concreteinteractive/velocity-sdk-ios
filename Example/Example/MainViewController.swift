@@ -18,6 +18,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     private let locationManager = CLLocationManager()
     var totalLocationsReceived: Int64 = 0
 
+    var results = [VLTMotionDetectResult]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.updateButtonTitle()
@@ -31,7 +33,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         VLTManager.setEnabled(!VLTManager.isEnabled())
         VLTManager.setTrackingEnabled(true)
         VLTManager.setTrackingDataLimit(100000)
-        VLTManager.setDetectionEnabled(VLTManager.isEnabled(), handler: { (result) in
+        VLTManager.setDetectionEnabled(VLTManager.isEnabled(), handler: { [weak self] (result) in
+            self?.addResult(result: result)
             print("Received result: \(result.toDictionary())")
         })
         updateButtonTitle()
@@ -55,7 +58,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         locationManager.startUpdatingLocation()
     }
 
-    func openLabeling() {
+    @objc func openLabeling() {
         if VLTManager.isEnabled() {
             let vc = LabelingViewController()
             navigationController?.pushViewController(vc, animated: true)
@@ -79,12 +82,17 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return results.count;
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let identifier = "CellIdentifier";
-        let cell = tableView.dequeueReusableCell(withIdentifier: identifier)
+        var cell = tableView.dequeueReusableCell(withIdentifier: identifier)
+        if cell == nil {
+            cell = UITableViewCell(style: .default, reuseIdentifier: identifier)
+        }
+        let r = results[indexPath.row];
+        cell?.textLabel?.text = "Walking: \(r.isWalking) Parked: \(r.isParked) Driving: \(r.isDriving)"
         return cell!
     }
 
@@ -98,6 +106,16 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         VLTGPS.locationManager(manager, didUpdate: locations)
         totalLocationsReceived += 1
         updateInfoLabel()
+    }
+
+    //MARK: resutls
+
+    func addResult(result: VLTMotionDetectResult) {
+        results.insert(result, at: 0);
+        if (results.count > 100) {
+            results.removeLast();
+        }
+        tableView.reloadData();
     }
 }
 
