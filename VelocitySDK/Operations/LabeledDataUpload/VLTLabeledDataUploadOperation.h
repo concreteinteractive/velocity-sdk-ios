@@ -19,7 +19,6 @@
 @property (atomic, copy, nullable) void(^onError)(NSError * _Nonnull);
 
 - (nonnull instancetype)initWithMotionData:(nonnull NSArray<VLTData *> *)motionData
-                             sequenceIndex:(UInt32)sequenceIndex
                                     labels:(nonnull NSArray<NSString *> *)labels;
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "VLTMotionDetectOperation.h"
+#import "VLTHTTPMotionDetectOperation.h"
 
 @interface VLTDrivingDetectOperation : VLTMotionDataOperation
 

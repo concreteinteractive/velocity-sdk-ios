@@ -93,17 +93,6 @@ static NSString * const VLTDefaultUserIDKey = @"net.vlcty.default_user_id";
     return [bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
 }
 
-+ (NSString *)sessionID
-{
-    static NSString *sessionID = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sessionID = [[NSUUID UUID] UUIDString];
-    });
-    return sessionID;
-}
-
-
 + (NSString *)defaultUserID
 {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];

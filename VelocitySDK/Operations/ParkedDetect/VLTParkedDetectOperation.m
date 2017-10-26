@@ -10,7 +10,7 @@
 #import "VLTDrivingDetectOperation.h"
 #import "VLTMotionDetectResult.h"
 #import "VLTMacros.h"
-#import "VLTMotionDetectOperation.h"
+#import "VLTHTTPMotionDetectOperation.h"
 #import "VLTCoreMotionActivityTracker.h"
 #import <CoreMotion/CoreMotion.h>
 
@@ -22,10 +22,20 @@ static NSString * const VLTParkedDetectOperationLastResultDefaultsKey = @"VLTPar
 
 @property (atomic, strong) VLTMotionDetectResult *result;
 @property (atomic, strong) NSError *error;
+@property (nonatomic, assign) UInt32 sequenceIndex;
 
 @end
 
 @implementation VLTParkedDetectOperation
+
+- (nonnull instancetype)initWithMotionData:(nonnull NSArray<VLTData *> *)motionData sequenceIndex:(UInt32)sequenceIndex
+{
+    self = [super initWithMotionData:motionData];
+    if (self) {
+        _sequenceIndex = sequenceIndex;
+    }
+    return self;
+}
 
 - (BOOL)isAsynchronous
 {
@@ -34,13 +44,12 @@ static NSString * const VLTParkedDetectOperationLastResultDefaultsKey = @"VLTPar
 
 - (VLTDrivingDetectOperation *)drivingDetectOperation
 {
-    return [[VLTDrivingDetectOperation alloc] initWithMotionData:self.motionData
-                                                   sequenceIndex:self.sequenceIndex];
+    return [[VLTDrivingDetectOperation alloc] initWithMotionData:self.motionData];
 }
 
-- (VLTMotionDetectOperation *)motionDetectOperation
+- (VLTHTTPMotionDetectOperation *)motionDetectOperation
 {
-    return [[VLTMotionDetectOperation alloc] initWithMotionData:self.motionData
+    return [[VLTHTTPMotionDetectOperation alloc] initWithMotionData:self.motionData
                                                   sequenceIndex:self.sequenceIndex];
 }
 
@@ -61,7 +70,7 @@ static NSString * const VLTParkedDetectOperationLastResultDefaultsKey = @"VLTPar
                                                                      VLTMotionDetectResultWalkingKey: @NO,
                                                                      }];
     } else {
-        VLTMotionDetectOperation *detectOp = [self motionDetectOperation];
+        VLTHTTPMotionDetectOperation *detectOp = [self motionDetectOperation];
         [detectOp start];
         [detectOp waitUntilFinished];
 

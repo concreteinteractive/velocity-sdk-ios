@@ -53,7 +53,7 @@
         successBlock();
     });
 
-    op = [[VLTLabeledDataUploadOperation alloc] initWithMotionData:motionData sequenceIndex:1  labels:@[@"TEST_LABEL"]];
+    op = [[VLTLabeledDataUploadOperation alloc] initWithMotionData:motionData labels:@[@"TEST_LABEL"]];
     op.onSuccess = ^{
         [successExpectation fulfill];
     };
@@ -71,7 +71,7 @@
     });
     XCTestExpectation *failureExpectation = [self expectationWithDescription:@"Error handler invoked"];
 
-    op = [[VLTLabeledDataUploadOperation alloc] initWithMotionData:motionData sequenceIndex:1 labels:@[@"TEST_LABEL"]];
+    op = [[VLTLabeledDataUploadOperation alloc] initWithMotionData:motionData labels:@[@"TEST_LABEL"]];
     op.onError = ^(NSError *error) {
         [failureExpectation fulfill];
     };

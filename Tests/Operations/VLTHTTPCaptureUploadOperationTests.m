@@ -1,5 +1,5 @@
 //
-//  VLTCaptureUploadOperationTests.m
+//  VLTHTTPCaptureUploadOperationTests.m
 //  VelocitySDK
 //
 //  Created by Vytautas Galaunia on 18/08/2017.
@@ -9,16 +9,16 @@
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
 #import "VLTApiClient.h"
-#import "VLTCaptureUploadOperation.h"
+#import "VLTHTTPCaptureUploadOperation.h"
 
-@interface VLTCaptureUploadOperationTests : XCTestCase
+@interface VLTHTTPCaptureUploadOperationTests : XCTestCase
 
 @property (nonatomic) id apiClientClassMock;
 @property (nonatomic) id apiClientMock;
 
 @end
 
-@implementation VLTCaptureUploadOperationTests
+@implementation VLTHTTPCaptureUploadOperationTests
 
 - (void)setUp
 {
@@ -39,7 +39,7 @@
 
 - (void)testOperationExecution
 {
-    VLTCaptureUploadOperation *op;
+    VLTHTTPCaptureUploadOperation *op;
 
     OCMExpect([self.apiClientMock uploadForTracking:OCMOCK_ANY
                                             success:OCMOCK_ANY
@@ -48,7 +48,7 @@
         [invocation getArgument:&successBlock atIndex:3];
         successBlock(20);
     });
-    op = [[VLTCaptureUploadOperation alloc] initWithMotionData:@[] sequenceIndex:1];
+    op = [[VLTHTTPCaptureUploadOperation alloc] initWithMotionData:@[] sequenceIndex:1];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Error handler invoked"];
     
     op.onSuccess = ^(NSUInteger bytesCount) {
@@ -67,7 +67,7 @@
     });
     XCTestExpectation *errorExpectation = [self expectationWithDescription:@"Error handler invoked"];
 
-    op = [[VLTCaptureUploadOperation alloc] initWithMotionData:@[] sequenceIndex:1];
+    op = [[VLTHTTPCaptureUploadOperation alloc] initWithMotionData:@[] sequenceIndex:1];
     op.onError = ^(NSUInteger bytesCount, NSError *error) {
         [errorExpectation fulfill];
     };

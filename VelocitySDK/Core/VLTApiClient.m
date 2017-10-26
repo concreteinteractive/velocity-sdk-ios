@@ -18,8 +18,10 @@
 #import "VLTConfig.h"
 #import "VLTCore.h"
 #import "VLTMotionDetectResult.h"
+#import "VLTUserDataStore.h"
 
-static NSString * const VLTApiClientBaseUrl = @"https://sdk.vlcty.net/api/";
+//static NSString * const VLTApiClientBaseUrl = @"https://sdk.vlcty.net/api/";
+static NSString * const VLTApiClientBaseUrl = @"http://192.168.1.250:8080/api/";
 
 static NSString * const VLTAcceptJSONValue = @"application/vnd.sdk.velocity.v1+json";
 static NSString * const VLTAcceptProtobufValue = @"application/vnd.sdk.velocity.v1+octet-stream";
@@ -81,37 +83,6 @@ typedef NS_ENUM(NSInteger, VLTApiStatusCode) {
     return manager;
 }
 
-- (void)configWithIFA:(nullable NSString *)ifa
-              success:(nullable void (^)(VLTRecordingConfig * _Nonnull config))success
-              failure:(nullable void (^)(NSError *_Nonnull error))failure
-{
-    NSDictionary *params = @{
-                             SessionIDKey: [VLTConfig sessionID],
-                             UserIDKey: ifa,
-                             AppIDKey: [[NSBundle mainBundle] bundleIdentifier],
-                             };
-
-    NSURLRequest *req = [self jsonRequestWithMethod:@"GET" endpoint:@"motions/config" parameters:params error:nil];
-    [[[self jsonManager] dataTaskWithRequest:req
-                              uploadProgress:nil
-                            downloadProgress:nil
-                           completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
-                               if (error != nil) {
-                                   vlt_invoke_block(failure, [self apiErrorFromError:error response:response]);
-                                   return;
-                               }
-
-                               NSError *modelError = nil;
-                               VLTRecordingConfig *config = [VLTRecordingConfig configWithDictionary:responseObject
-                                                                                               error:&modelError];
-                               if (config != nil) {
-                                   vlt_invoke_block(success, config);
-                               } else {
-                                   vlt_invoke_block(failure, modelError);
-                               }
-                           }] resume];
-}
-
 - (void)uploadForTracking:(nonnull VLTPBCapture *)capture
                   success:(nullable void (^)(NSUInteger bytesSent))success
                   failure:(nullable void (^)(NSUInteger bytesSent, NSError *_Nonnull error))failure
@@ -122,7 +93,7 @@ typedef NS_ENUM(NSInteger, VLTApiStatusCode) {
     [manager setCompletionQueue:[[VLTCore queue] underlyingQueue]];
     manager.responseSerializer = [self protobufResponseSerializer];
 
-    NSDictionary *params = @{SessionIDKey: [VLTConfig sessionID]};
+    NSDictionary *params = @{SessionIDKey: [[VLTUserDataStore shared] sessionId]};
     NSMutableURLRequest *req = [self requestWithMethod:@"POST" endpoint:@"motions/capture/v2" parameters:params error:nil];
     [self setProtobufContentType:req];
     [req setHTTPBody:data];
@@ -132,9 +103,9 @@ typedef NS_ENUM(NSInteger, VLTApiStatusCode) {
                  downloadProgress:nil
                 completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
                     if (!error) {
-                        vlt_invoke_block(success, task.countOfBytesSent);
+                        vlt_invoke_block(success, (NSUInteger)task.countOfBytesSent);
                     } else {
-                        vlt_invoke_block(failure, task.countOfBytesSent, [self apiErrorFromError:error response:response]);
+                        vlt_invoke_block(failure, (NSUInteger)task.countOfBytesSent, [self apiErrorFromError:error response:response]);
                     }
                 }];
     [task resume];
@@ -210,7 +181,7 @@ typedef NS_ENUM(NSInteger, VLTApiStatusCode) {
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:sessionConfig];
     [manager setCompletionQueue:[[VLTCore queue] underlyingQueue]];
 
-    NSDictionary *params = @{SessionIDKey: [VLTConfig sessionID]};
+    NSDictionary *params = @{SessionIDKey: [[VLTUserDataStore shared] sessionId]};
     NSMutableURLRequest *req = [self requestWithMethod:@"POST" endpoint:@"motions/detect" parameters:params error:nil];
     req.timeoutInterval = 20;
     [self setProtobufContentType:req];

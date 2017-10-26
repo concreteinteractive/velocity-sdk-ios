@@ -10,11 +10,13 @@
 
 @class VLTMotionDataOperation;
 @class VLTData;
+@class VLTWsApiClient;
 
-typedef  NSArray<VLTMotionDataOperation *> * _Nonnull (^MotionDataOperationsFactory)(NSArray<VLTData *> * _Nonnull motionData, UInt32 sequenceIndex);
+typedef  NSArray<VLTMotionDataOperation *> * _Nonnull (^MotionDataOperationsFactory)(VLTWsApiClient * _Nonnull wsApiClient, NSArray<VLTData *> * _Nonnull motionData, UInt32 sequenceIndex);
 
 @interface VLTClient : NSObject
 
+@property (atomic, strong, nullable) NSString *authToken;
 @property (atomic, assign, getter=isActive) BOOL active;
 
 @property (atomic, copy, nullable) MotionDataOperationsFactory operationFatoryHandler;

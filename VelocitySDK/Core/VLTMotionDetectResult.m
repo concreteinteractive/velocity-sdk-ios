@@ -23,16 +23,24 @@ NSString * const VLTMotionDetectResultParkedKey = @"parked";
 
 @implementation VLTMotionDetectResult
 
-- (nonnull instancetype)initWithDictionary:(nonnull NSDictionary *)dict
+- (nonnull instancetype)initWithWalking:(BOOL)walking driving:(BOOL)driving parked:(BOOL)parked;
 {
     self = [super init];
     if (self) {
         _timestamp = [NSDate date];
-        _walking = [dict[VLTMotionDetectResultWalkingKey] boolValue] ?: false;
-        _driving = [dict[VLTMotionDetectResultDrivingKey] boolValue] ?: false;
-        _parked = [dict[VLTMotionDetectResultParkedKey] boolValue] ?: false;
+        _walking = walking;
+        _driving = driving;
+        _parked = parked;
     }
     return self;
+}
+
+- (nonnull instancetype)initWithDictionary:(nonnull NSDictionary *)dict
+{
+    BOOL walking = [dict[VLTMotionDetectResultWalkingKey] boolValue] ?: false;
+    BOOL driving = [dict[VLTMotionDetectResultDrivingKey] boolValue] ?: false;
+    BOOL parked = [dict[VLTMotionDetectResultParkedKey] boolValue] ?: false;
+    return [self initWithWalking:walking driving:driving parked:parked];
 }
 
 - (nonnull NSDictionary *)toDictionary

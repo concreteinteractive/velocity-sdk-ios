@@ -11,7 +11,6 @@
 
 @interface VLTMotionDataOperation ()
 
-@property (nonatomic, assign) UInt32 sequenceIndex;
 @property (nonatomic, strong, nonnull) NSArray<VLTData *> *motionData;
 
 @end
@@ -19,12 +18,10 @@
 @implementation VLTMotionDataOperation
 
 - (nonnull instancetype)initWithMotionData:(nonnull NSArray<VLTData *> *)motionData
-                             sequenceIndex:(UInt32)sequenceIndex
 {
     self = [super init];
     if (self) {
         _motionData = motionData;
-        _sequenceIndex = sequenceIndex;
     }
     return self;
 }

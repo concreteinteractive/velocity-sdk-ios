@@ -14,12 +14,29 @@
 #import "VLTMotionDetectResult.h"
 #import "VLTMacros.h"
 #import "VLTData.h"
-#import "VLTMotionDetectOperation.h"
+#import "VLTHTTPMotionDetectOperation.h"
+#import "Velocity.pbobjc.h"
+#import "VLTWsApiClient.h"
+
+@import SocketRocket;
+
+@interface VLTWsApiClient (Tests) <SRWebSocketDelegate>
+
+@property (atomic, strong) SRWebSocket *ws;
+
+@end
+
+@interface VLTClient (Tests)
+
+@property (atomic, strong) VLTWsApiClient *wsApiClient;
+
+@end
 
 @interface VLTClientTests : XCTestCase
 
 @property (nonatomic) id apiClientClassMock;
 @property (nonatomic) id apiClientMock;
+@property (nonatomic) id wsMock;
 @property (nonatomic) VLTClient *client;
 
 @end
@@ -34,17 +51,6 @@
     self.apiClientClassMock = OCMClassMock([VLTApiClient class]);
     OCMStub([self.apiClientClassMock shared]).andReturn(self.apiClientMock);
 
-    VLTRecordingConfig *cfg = [[VLTRecordingConfig alloc] initSampleSize:2
-                                                                interval:2
-                                                        detectioMotionOn:YES
-                                                       pushLabeledDataOn:YES];
-    OCMStub([self.apiClientMock configWithIFA:[OCMArg any]
-                                      success:[OCMArg any]
-                                      failure:[OCMArg any]]).andDo(^(NSInvocation *invocation) {
-        void (^successBlock)(VLTRecordingConfig *config);
-        [invocation getArgument:&successBlock atIndex:3];
-        successBlock(cfg);
-    });
     OCMStub([self.apiClientMock detect:[OCMArg any]
                                success:[OCMArg any]
                                failure:[OCMArg any]]).andDo(^(NSInvocation *invocation) {
@@ -55,6 +61,28 @@
                                                                          VLTMotionDetectResultWalkingKey : @YES,
                                                                          VLTMotionDetectResultDrivingKey : @NO,
                                                                          }]);
+    });
+
+    self.client = [[VLTClient alloc] init];
+    [self.client setAuthToken:@"TESTS"];
+
+
+    self.client.wsApiClient = OCMPartialMock(self.client.wsApiClient);
+    self.wsMock = OCMPartialMock(self.client.wsApiClient.ws);
+    OCMStub([self.wsMock open]).andDo(^(NSInvocation *invocation){
+        [self.client.wsApiClient webSocketDidOpen:self.wsMock];
+    });
+    OCMStub([self.client.wsApiClient handshakeWithSuccess:[OCMArg any]
+                                                  failure:[OCMArg any]]).andDo(^(NSInvocation *invocation) {
+        void (^successBlock)(VLTPBHandshakeResponse *response);
+        [invocation getArgument:&successBlock atIndex:2];
+
+        VLTPBHandshakeResponse *handshakeResponse = [[VLTPBHandshakeResponse alloc] init];
+        handshakeResponse.sampleSize = 2;
+        handshakeResponse.captureInterval = 2;
+        handshakeResponse.canDetectMotion = YES;
+        handshakeResponse.canLabelMotion = YES;
+        successBlock(handshakeResponse);
     });
 }
 
@@ -69,12 +97,12 @@
 - (void)testActive
 {
     XCTestExpectation *expectation = [self expectationWithDescription:@"Detect handler invoked"];
-    self.client = [[VLTClient alloc] init];
+    self.client.active = YES;
 
     vlt_weakify(self);
     __block BOOL alreadyFulfilled = NO;
-    self.client.operationFatoryHandler = ^NSArray<VLTMotionDataOperation *> *(NSArray<VLTData *> * motionData, UInt32 sequenceIndex) {
-        VLTMotionDetectOperation *op = [[VLTMotionDetectOperation alloc] initWithMotionData:motionData
+    self.client.operationFatoryHandler = ^NSArray<VLTMotionDataOperation *> *(VLTWsApiClient *wsApiClient, NSArray<VLTData *> * motionData, UInt32 sequenceIndex) {
+        VLTHTTPMotionDetectOperation *op = [[VLTHTTPMotionDetectOperation alloc] initWithMotionData:motionData
                                                                               sequenceIndex:sequenceIndex];
         op.onMotionDetect = ^(VLTMotionDetectResult *result) {
             vlt_strongify(self);
@@ -88,7 +116,7 @@
 
         return @[op];
     };
-    self.client.active = YES;
+
     [self waitForExpectations:@[expectation] timeout:5];
 }
 
@@ -105,7 +133,6 @@
 
     XCTestExpectation *successExpectation = [self expectationWithDescription:@"Success handler invoked"];
 
-    self.client = [[VLTClient alloc] init];
     self.client.active = YES;
     [self.client pushMotionDataWithLabels:@[@"test-motion"]
                                   success:^{

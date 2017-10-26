@@ -9,9 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @class VLTPBHandshakeResponse;
-
+@class VLTPBRequest;
+@class VLTPBResponse;
 
 typedef  void (^VLTWsApiHandshakeSuccess)(VLTPBHandshakeResponse * _Nonnull response);
+typedef  void (^VLTWsApiRequestSuccess)(VLTPBResponse * _Nonnull response);
 typedef  void (^VLTWsApiSuccess)(NSData * _Nonnull data);
 typedef  void (^VLTWsApiFailure)(NSError * _Nonnull error);
 
@@ -23,31 +25,30 @@ typedef  void (^VLTWsApiOnError)(NSError * _Nonnull error);
 
 @interface VLTWsApiClient : NSObject
 
-@property (nonnull, copy, readonly) NSString *authToken;
+@property (copy, readonly, nullable) NSString *authToken;
 
-@property (nonnull, copy) VLTWsApiOnOpen onOpen;
-@property (nonnull, copy) VLTWsApiOnClose onClose;
-@property (nonnull, copy) VLTWsApiOnPong onPong;
-@property (nonnull, copy) VLTWsApiOnError onError;
+@property (atomic, copy, nullable) VLTWsApiOnOpen onOpen;
+@property (atomic, copy, nullable) VLTWsApiOnClose onClose;
+@property (atomic, copy, nullable) VLTWsApiOnPong onPong;
+@property (atomic, copy, nullable) VLTWsApiOnError onError;
 
-- (nonnull instancetype)initWithUrl:(nonnull NSURL *)url
-                          authToken:(nonnull NSString *)authToken
-                          queueSize:(NSUInteger)queueSize;
+@property (atomic, assign, readonly, getter=isOpen) BOOL open;
+@property (atomic, assign, readonly, getter=isClosed) BOOL closed;
 
-- (void)open;
+- (nonnull instancetype)initWithQueueSize:(NSUInteger)queueSize;
 
-- (void)handshakeWithSuccess:(nonnull VLTWsApiHandshakeSuccess)success failure:(nonnull VLTWsApiFailure)failure;
+- (void)openWithAuthToken:(nonnull NSString *)authToken;
+- (void)close;
 
-/**
- *  Sends data without response
- */
-- (void)sendData:(nonnull NSData *)data;
+- (NSUInteger)handshakeWithSuccess:(nonnull VLTWsApiHandshakeSuccess)success
+                           failure:(nonnull VLTWsApiFailure)failure;
 
-/**
- *  Sends data and expects to receive a response
- */
-- (void)sendData:(nonnull NSData *)data
-         success:(nonnull VLTWsApiSuccess)success
-         failure:(nonnull VLTWsApiFailure)failure;
+- (NSUInteger)motionDetect:(nonnull VLTPBRequest *)request
+                   success:(nonnull VLTWsApiRequestSuccess)success
+                   failure:(nonnull VLTWsApiFailure)failure;
+
+- (NSUInteger)captureUpload:(nonnull VLTPBRequest *)request
+                    success:(nonnull VLTWsApiRequestSuccess)success
+                    failure:(nonnull VLTWsApiFailure)failure;
 
 @end

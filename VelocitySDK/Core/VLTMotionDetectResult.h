@@ -20,6 +20,7 @@ extern NSString * _Nonnull const VLTMotionDetectResultParkedKey;
 @property (nonatomic, readonly, getter=isParked) BOOL parked;
 
 - (nonnull instancetype)initWithDictionary:(nonnull NSDictionary *)dict;
+- (nonnull instancetype)initWithWalking:(BOOL)walking driving:(BOOL)driving parked:(BOOL)parked;
 - (nonnull NSDictionary *)toDictionary;
 
 @end

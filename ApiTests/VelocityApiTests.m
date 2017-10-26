@@ -12,7 +12,7 @@
 #import "VLTSimpleSample.h"
 #import "VLTData.h"
 #import "VLTProtobufHelper.h"
-#import "Velocity.pb.h"
+#import "Velocity.pbobjc.h"
 
 @interface VLTApiClient ()
 

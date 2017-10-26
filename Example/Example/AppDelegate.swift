@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        VLTManager.setApiToken("3vXU3d-rb-XHDUb4WDfg")
+        VLTManager.setApiToken("rotKyJBZG9chux_PnSj4")
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
         window?.rootViewController = vc
         return true
