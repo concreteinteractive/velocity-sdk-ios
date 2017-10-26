@@ -16,7 +16,7 @@
 @interface VLTUserDataStore ()
 
 @property (atomic,  strong, nullable) VLTRecordingConfig *recordingConfig;
-@property (atomic,  strong) NSString *impressionId;
+@property (atomic,  strong, nonnull) NSString *sessionId;
 
 @end
 
@@ -37,23 +37,9 @@
     self = [super init];
     if (self) {
         _userId = [VLTConfig defaultUserID];
-        _impressionId = [[NSUUID UUID] UUIDString];
+        _sessionId = [[NSUUID UUID] UUIDString];
     }
     return self;
-}
-
-- (void)updateConfigWithSuccess:(nullable void (^)(VLTRecordingConfig * _Nonnull config))success
-                        failure:(nullable void (^)(NSError *_Nonnull error))failure
-{
-    vlt_weakify(self);
-    [[VLTApiClient shared] configWithIFA:[VLTConfig IFA]
-                                 success:^(VLTRecordingConfig *config) {
-                                     vlt_strongify(self);
-                                     self.recordingConfig = config;
-                                     vlt_invoke_block(success, config);
-                                 } failure:^(NSError *error) {
-                                     vlt_invoke_block(failure, error);
-                                 }];
 }
 
 @end

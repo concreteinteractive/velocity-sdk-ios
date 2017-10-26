@@ -19,10 +19,6 @@
 
 - (void)setApiToken:(nonnull NSString *)token;
 
-- (void)configWithIFA:(nullable NSString *)ifa
-              success:(nullable void (^)(VLTRecordingConfig * _Nonnull config))success
-              failure:(nullable void (^)(NSError *_Nonnull error))failure;
-
 - (void)uploadForTracking:(nonnull VLTPBCapture *)capture
                   success:(nullable void (^)(NSUInteger bytesSent))success
                   failure:(nullable void (^)(NSUInteger bytesSent, NSError *_Nonnull error))failure;

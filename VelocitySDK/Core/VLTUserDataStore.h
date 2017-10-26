@@ -15,12 +15,8 @@
 @property (atomic,  strong, nullable) NSString *userId;
 @property (atomic,  assign, getter=isGpsEnabled) BOOL gpsEnabled;
 @property (atomic,  strong, readonly, nullable) VLTRecordingConfig *recordingConfig;
-@property (atomic,  strong, readonly, nonnull) NSString *impressionId;
-
+@property (atomic,  strong, readonly, nonnull) NSString *sessionId;
 
 + (nonnull instancetype)shared;
-
-- (void)updateConfigWithSuccess:(nullable void (^)(VLTRecordingConfig * _Nonnull config))success
-                        failure:(nullable void (^)(NSError *_Nonnull error))failure;
 
 @end

@@ -100,6 +100,15 @@
     return pbSample;
 }
 
++ (nonnull NSArray<VLTPBSample *> *)sensorsFromMotionData:(nonnull NSArray <VLTData *> *)datas;
+{
+    NSMutableArray <VLTPBSensor *> *sensors = [NSMutableArray array];
+    for (VLTData *data in datas) {
+        [sensors addObject:[VLTProtobufHelper sensorFromData:data]];
+    }
+    return [sensors copy];
+}
+
 
 + (nonnull VLTPBHandshakeRequest *)handshakeRequestWithAuthToken:(nonnull NSString *)authToken
                                                             idfa:(nonnull NSString *)idfa

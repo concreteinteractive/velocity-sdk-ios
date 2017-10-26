@@ -1,12 +1,12 @@
 //
-//  VLTMotionDetectOperation.m
+//  VLTHTTPMotionDetectOperation.m
 //  VelocitySDK
 //
 //  Created by Vytautas Galaunia on 17/08/2017.
 //  Copyright © 2017 Veloctity. All rights reserved.
 //
 
-#import "VLTMotionDetectOperation.h"
+#import "VLTHTTPMotionDetectOperation.h"
 #import "VLTApiClient.h"
 #import "VLTMacros.h"
 #import "VLTMotionDetectResult.h"
@@ -14,14 +14,25 @@
 #import "VLTConfig.h"
 #import "VLTUserDataStore.h"
 
-@interface VLTMotionDetectOperation ()
+@interface VLTHTTPMotionDetectOperation ()
 
 @property (atomic, strong) VLTMotionDetectResult *result;
 @property (atomic, strong) NSError *error;
 
+@property (nonatomic, assign) UInt32 sequenceIndex;
+
 @end
 
-@implementation VLTMotionDetectOperation
+@implementation VLTHTTPMotionDetectOperation
+
+- (nonnull instancetype)initWithMotionData:(nonnull NSArray<VLTData *> *)motionData sequenceIndex:(UInt32)sequenceIndex
+{
+    self = [super initWithMotionData:motionData];
+    if (self) {
+        _sequenceIndex = sequenceIndex;
+    }
+    return self;
+}
 
 - (BOOL)isAsynchronous
 {
@@ -30,10 +41,9 @@
 
 - (void)processMotionData
 {
-
     VLTPBDetectMotionRequest *motionRequest = nil;
     motionRequest = [VLTProtobufHelper detectMotionRequestFromDatas:self.motionData
-                                                       impressionId:[VLTUserDataStore shared].impressionId
+                                                       impressionId:[VLTUserDataStore shared].sessionId
                                                          modelNames:@[]
                                                                 ifa:[VLTConfig IFA]
                                                              userId:[VLTUserDataStore shared].userId

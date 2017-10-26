@@ -8,7 +8,7 @@
 
 #import <XCTest/XCTest.h>
 #import "VLTDrivingDetectOperation.h"
-#import "VLTMotionDetectOperation.h"
+#import "VLTHTTPMotionDetectOperation.h"
 #import "VLTParkedDetectOperation.h"
 #import "VLTData.h"
 #import "VLTMotionDetectResult.h"
@@ -17,7 +17,7 @@
 @interface VLTParkedDetectOperation (Tests)
 
 - (VLTDrivingDetectOperation *)drivingDetectOperation;
-- (VLTMotionDetectOperation *)motionDetectOperation;
+- (VLTHTTPMotionDetectOperation *)motionDetectOperation;
 
 @end
 
@@ -87,7 +87,7 @@
                                                                                         VLTMotionDetectResultWalkingKey: @YES,
                                                                                         }];
 
-    VLTMotionDetectOperation *detectOp = [[VLTMotionDetectOperation alloc] init];
+    VLTHTTPMotionDetectOperation *detectOp = [[VLTHTTPMotionDetectOperation alloc] init];
     detectOp = OCMPartialMock(detectOp);
     OCMStub([detectOp start]).andDo(nil);
     OCMStub([detectOp waitUntilFinished]).andDo(nil);
