@@ -15,6 +15,7 @@
 #import "VLTManager.h"
 #import "VLTGPS.h"
 #import "VLTMotionDetectResult.h"
+#import "Velocity.pbobjc.h"
 
 FOUNDATION_EXPORT double VelocitySDKVersionNumber;
 FOUNDATION_EXPORT const unsigned char VelocitySDKVersionString[];
