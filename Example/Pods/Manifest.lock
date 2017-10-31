@@ -6,10 +6,17 @@ PODS:
   - AFNetworking/Reachability (3.1.0)
   - AFNetworking/Security (3.1.0)
   - AFNetworking/Serialization (3.1.0)
-  - ProtocolBuffers (1.9.11)
+  - Protobuf (3.4.0)
+  - SocketRocket (0.4.2)
   - VelocitySDK (1.2.2):
     - AFNetworking/NSURLSession
-    - ProtocolBuffers
+    - Protobuf (~> 3.4.0)
+    - SocketRocket (~> 0.4.2)
+    - VelocitySDK/no-arc (= 1.2.2)
+  - VelocitySDK/no-arc (1.2.2):
+    - AFNetworking/NSURLSession
+    - Protobuf (~> 3.4.0)
+    - SocketRocket (~> 0.4.2)
 
 DEPENDENCIES:
   - VelocitySDK (from `../`)
@@ -20,8 +27,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  ProtocolBuffers: d509225eb2ea43d9582a59e94348fcf86e2abd65
-  VelocitySDK: 4ac04010558f8c88d79672cb6232301b99cb4a82
+  Protobuf: 03eef2ee0b674770735cf79d9c4d3659cf6908e8
+  SocketRocket: ffe08119b00ef982f6c37052a4705a057c8494ad
+  VelocitySDK: 50cba2d697bc716c874f08867612a5b186ff1485
 
 PODFILE CHECKSUM: 561d80425ccf4ffeaefe703e154a3afdefd5fb27
 

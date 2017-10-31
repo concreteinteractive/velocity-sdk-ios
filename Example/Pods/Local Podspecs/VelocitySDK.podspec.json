@@ -25,9 +25,11 @@
   ],
   "source_files": [
     "Framework/VelocitySDK.h",
-    "VelocitySDK/**/*.{h,m}",
-    "vendor/velocity-protobuf/lib/objc/*.{h,m}"
+    "VelocitySDK/**/*.{h,m}"
   ],
+  "pod_target_xcconfig": {
+    "GCC_PREPROCESSOR_DEFINITIONS": "$(inherited) GPB_USE_PROTOBUF_FRAMEWORK_IMPORTS=1"
+  },
   "frameworks": [
     "UIKit",
     "CoreData"
@@ -37,8 +39,18 @@
     "AFNetworking/NSURLSession": [
 
     ],
-    "ProtocolBuffers": [
-
+    "Protobuf": [
+      "~> 3.4.0"
+    ],
+    "SocketRocket": [
+      "~> 0.4.2"
     ]
-  }
+  },
+  "subspecs": [
+    {
+      "name": "no-arc",
+      "requires_arc": false,
+      "source_files": "vendor/velocity-protobuf/lib/objc/*.{h,m}"
+    }
+  ]
 }
