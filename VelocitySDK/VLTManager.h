@@ -19,6 +19,12 @@
 + (void)setApiToken:(nonnull NSString *)token;
 
 /**
+ @brief Sets user id, which should uniquely identify user
+ @param userId string, which uniquely identifying user
+ */
++ (void)setUserId:(nullable NSString *)userId;
+
+/**
  * @brief Enables/Disabled VelocitySDK
  * @param enabled - bool flag which indicates if VelocitySDK should be enabled/disabled
  **/
@@ -29,7 +35,6 @@
  * @return BOOL flag, which indicates if SDK is enabled
  **/
 + (BOOL)isEnabled;
-
 
 /**
  * @brief Enabled or disable tracking
@@ -76,12 +81,6 @@
  */
 + (void)labelCurrentMotionWith:(nonnull NSArray<NSString *> *)labels
                     completion:(nonnull void(^)(BOOL success))completion;
-
-/**
- @brief Sets user id, which should uniquely identify user
- @param userId string, which uniquely identifying user
- */
-+ (void)setUserId:(nullable NSString *)userId;
 
 /**
  @brief Control the state of core motion activity tracking
