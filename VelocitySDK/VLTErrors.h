@@ -2,8 +2,8 @@
 //  VLTErrors.h
 //  Velocity
 //
-//  Created by Antanas Majus on 10/25/16.
-//  Copyright © 2016 Veloctity. All rights reserved.
+//  
+//  Copyright © 2016 VLCTY, Inc. All rights reserved.
 //
 
 #ifndef VLTErrors_h

@@ -2,8 +2,8 @@
 //  VelocityApiTests.m
 //  VelocityApiTests
 //
-//  Created by Vytautas Galaunia on 23/02/2017.
-//  Copyright © 2017 Veloctity. All rights reserved.
+//  
+//  Copyright © 2017 VLCTY, Inc. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>

@@ -2,8 +2,8 @@
 //  VLTDataThrottlerTests.m
 //  VelocitySDK
 //
-//  Created by Antanas Majus on 10/13/17.
-//  Copyright © 2017 Veloctity. All rights reserved.
+//  
+//  Copyright © 2017 VLCTY, Inc. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>

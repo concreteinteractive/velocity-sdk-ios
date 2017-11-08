@@ -2,8 +2,8 @@
 //  VLTHTTPCaptureUploadOperationTests.m
 //  VelocitySDK
 //
-//  Created by Vytautas Galaunia on 18/08/2017.
-//  Copyright © 2017 Veloctity. All rights reserved.
+//  
+//  Copyright © 2017 VLCTY, Inc. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
