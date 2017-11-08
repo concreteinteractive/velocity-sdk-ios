@@ -2,8 +2,8 @@
 //  VLTGyroSensorRecorder.m
 //  Velocity
 //
-//  Created by Vytautas Galaunia on 21/10/16.
-//  Copyright © 2016 Veloctity. All rights reserved.
+//  
+//  Copyright © 2016 VLCTY, Inc. All rights reserved.
 //
 
 #import "VLTGyroSensorRecorder.h"

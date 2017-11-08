@@ -846,8 +846,9 @@
 		B914941D1DB8AFBB007D941B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = VLT;
 				LastUpgradeCheck = 0910;
-				ORGANIZATIONNAME = Veloctity;
+				ORGANIZATIONNAME = "VLCTY, Inc";
 				TargetAttributes = {
 					AD178C791E6EEA8400F8B187 = {
 						CreatedOnToolsVersion = 8.2.1;

@@ -2,8 +2,8 @@
 //  VLTMotion.h
 //  Velocity
 //
-//  Created by Antanas Majus on 10/21/16.
-//  Copyright © 2016 Veloctity. All rights reserved.
+//  
+//  Copyright © 2016 VLCTY, Inc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

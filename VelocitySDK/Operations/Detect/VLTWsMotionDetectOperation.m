@@ -2,8 +2,8 @@
 //  VLTWsMotionDetectOperation.m
 //  VelocitySDK iOS
 //
-//  Created by Vytautas Galaunia on 25/10/2017.
-//  Copyright © 2017 Veloctity. All rights reserved.
+//  
+//  Copyright © 2017 VLCTY, Inc. All rights reserved.
 //
 
 #import "VLTWsMotionDetectOperation.h"

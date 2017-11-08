@@ -2,8 +2,8 @@
 //  VLTNotification.h
 //  Velocity
 //
-//  Created by Vytautas Galaunia on 16/11/2016.
-//  Copyright © 2016 Veloctity. All rights reserved.
+//  
+//  Copyright © 2016 VLCTY, Inc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
