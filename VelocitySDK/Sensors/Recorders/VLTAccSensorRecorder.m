@@ -2,7 +2,7 @@
 //  VLTAccSensorRecorder.m
 //  Velocity
 //
-//  
+//
 //  Copyright © 2016 VLCTY, Inc. All rights reserved.
 //
 
@@ -31,14 +31,15 @@
 - (void)startRecording
 {
     self.motionManager.accelerometerUpdateInterval = self.updateInterval;
-    __weak VLTAccSensorRecorder *weakSelf = self;
-    [self.motionManager startAccelerometerUpdatesToQueue:[VLTCore queue]
-                                             withHandler:^(CMAccelerometerData * _Nullable accelerometerData, NSError * _Nullable error) {
-                                                 if (accelerometerData) {
-                                                     id <VLTSample> sample = [VLTSampleBuilder sampleFrom:accelerometerData];
-                                                     [weakSelf addSample:sample];
-                                                 }
-                                             }];
+    __weak VLTAccSensorRecorder *weakSelf          = self;
+    [self.motionManager
+        startAccelerometerUpdatesToQueue:[VLTCore queue]
+                             withHandler:^(CMAccelerometerData *_Nullable accelerometerData, NSError *_Nullable error) {
+                                 if (accelerometerData) {
+                                     id<VLTSample> sample = [VLTSampleBuilder sampleFrom:accelerometerData];
+                                     [weakSelf addSample:sample];
+                                 }
+                             }];
 }
 
 - (void)stopRecording

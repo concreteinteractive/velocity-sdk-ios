@@ -2,15 +2,15 @@
 //  VLTLabeledDataUploadOperation.m
 //  VelocitySDK
 //
-//  
+//
 //  Copyright © 2017 VLCTY, Inc. All rights reserved.
 //
 
 #import "VLTLabeledDataUploadOperation.h"
-#import "VLTMacros.h"
 #import "VLTApiClient.h"
-#import "VLTProtobufHelper.h"
 #import "VLTConfig.h"
+#import "VLTMacros.h"
+#import "VLTProtobufHelper.h"
 #import "VLTUserDataStore.h"
 
 @interface VLTLabeledDataUploadOperation ()
@@ -46,24 +46,24 @@
                                                    impressionId:[[VLTUserDataStore shared] sessionId]];
     vlt_weakify(self);
     [[VLTApiClient shared] uploadMotionData:capture
-                                     labels:self.labels
-                                    success:^{
-                                        vlt_strongify(self);
-                                        self.success = YES;
-                                        dispatch_async(dispatch_get_main_queue(), ^{
-                                            vlt_invoke_block(self.onSuccess);
-                                        });
-                                        [self markAsFinished];
-                                    }
-                                    failure:^(NSError * _Nonnull error) {
-                                        vlt_strongify(self);
-                                        self.success = NO;
-                                        self.error = error;
-                                        dispatch_async(dispatch_get_main_queue(), ^{
-                                            vlt_invoke_block(self.onError, error);
-                                        });
-                                        [self markAsFinished];
-                                    }];
+        labels:self.labels
+        success:^{
+            vlt_strongify(self);
+            self.success = YES;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                vlt_invoke_block(self.onSuccess);
+            });
+            [self markAsFinished];
+        }
+        failure:^(NSError *_Nonnull error) {
+            vlt_strongify(self);
+            self.success = NO;
+            self.error   = error;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                vlt_invoke_block(self.onError, error);
+            });
+            [self markAsFinished];
+        }];
 }
 
 @end

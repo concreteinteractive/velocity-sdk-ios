@@ -2,15 +2,15 @@
 //  VLTMotionDetectResult.m
 //  VelocitySDK
 //
-//  
+//
 //  Copyright © 2017 VLCTY, Inc. All rights reserved.
 //
 
 #import "VLTMotionDetectResult.h"
 
-NSString * const VLTMotionDetectResultWalkingKey = @"walking";
-NSString * const VLTMotionDetectResultDrivingKey = @"driving";
-NSString * const VLTMotionDetectResultParkedKey = @"parked";
+NSString *const VLTMotionDetectResultWalkingKey = @"walking";
+NSString *const VLTMotionDetectResultDrivingKey = @"driving";
+NSString *const VLTMotionDetectResultParkedKey  = @"parked";
 
 @interface VLTMotionDetectResult ()
 
@@ -28,9 +28,9 @@ NSString * const VLTMotionDetectResultParkedKey = @"parked";
     self = [super init];
     if (self) {
         _timestamp = [NSDate date];
-        _walking = walking;
-        _driving = driving;
-        _parked = parked;
+        _walking   = walking;
+        _driving   = driving;
+        _parked    = parked;
     }
     return self;
 }
@@ -39,17 +39,17 @@ NSString * const VLTMotionDetectResultParkedKey = @"parked";
 {
     BOOL walking = [dict[VLTMotionDetectResultWalkingKey] boolValue] ?: false;
     BOOL driving = [dict[VLTMotionDetectResultDrivingKey] boolValue] ?: false;
-    BOOL parked = [dict[VLTMotionDetectResultParkedKey] boolValue] ?: false;
+    BOOL parked  = [dict[VLTMotionDetectResultParkedKey] boolValue] ?: false;
     return [self initWithWalking:walking driving:driving parked:parked];
 }
 
 - (nonnull NSDictionary *)toDictionary
 {
     return @{
-             VLTMotionDetectResultWalkingKey: @(self.isWalking),
-             VLTMotionDetectResultDrivingKey: @(self.isDriving),
-             VLTMotionDetectResultParkedKey: @(self.isParked),
-             };
+        VLTMotionDetectResultWalkingKey: @(self.isWalking),
+        VLTMotionDetectResultDrivingKey: @(self.isDriving),
+        VLTMotionDetectResultParkedKey: @(self.isParked),
+    };
 }
 
 @end

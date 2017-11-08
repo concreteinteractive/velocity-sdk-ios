@@ -2,15 +2,15 @@
 //  VLTGPS.m
 //  VelocitySDK
 //
-//  
+//
 //  Copyright © 2017 VLCTY, Inc. All rights reserved.
 //
 
 #import "VLTGPS.h"
 #import "VLTUserDataStore.h"
 
-NSString * const VLTGPSLocationUpdateNotification = @"VLTGPSLocationUpdateNotification";
-NSString * const VLTGPSLocationsKey = @"VLTGPSLocationsKey";
+NSString *const VLTGPSLocationUpdateNotification = @"VLTGPSLocationUpdateNotification";
+NSString *const VLTGPSLocationsKey               = @"VLTGPSLocationsKey";
 
 @implementation VLTGPS
 
@@ -19,8 +19,8 @@ NSString * const VLTGPSLocationsKey = @"VLTGPSLocationsKey";
     [[NSNotificationCenter defaultCenter] postNotificationName:VLTGPSLocationUpdateNotification
                                                         object:[self class]
                                                       userInfo:@{
-                                                                 VLTGPSLocationsKey : locations,
-                                                                 }];
+                                                          VLTGPSLocationsKey: locations,
+                                                      }];
 }
 
 + (BOOL)isEnabled

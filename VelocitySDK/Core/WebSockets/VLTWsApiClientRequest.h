@@ -13,8 +13,8 @@
 
 @property (nonatomic, strong, readonly) NSData *data;
 @property (nonatomic, assign, readonly) BOOL withResponse;
-@property (nonatomic, copy, readonly)  VLTWsApiSuccess success;
-@property (nonatomic, copy, readonly)  VLTWsApiFailure failure;
+@property (nonatomic, copy, readonly) VLTWsApiSuccess success;
+@property (nonatomic, copy, readonly) VLTWsApiFailure failure;
 
 - (instancetype)initWithData:(NSData *)data success:(VLTWsApiSuccess)success failure:(VLTWsApiFailure)failure;
 

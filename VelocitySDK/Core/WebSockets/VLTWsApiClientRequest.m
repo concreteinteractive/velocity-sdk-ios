@@ -2,7 +2,7 @@
 //  VLTWsApiClientRequest.m
 //  VelocitySDK iOS
 //
-//  
+//
 //  Copyright © 2017 VLCTY, Inc. All rights reserved.
 //
 
@@ -11,8 +11,8 @@
 @interface VLTWsApiClientRequest ()
 
 @property (nonatomic, strong) NSData *data;
-@property (nonatomic, copy)  VLTWsApiSuccess success;
-@property (nonatomic, copy)  VLTWsApiFailure failure;
+@property (nonatomic, copy) VLTWsApiSuccess success;
+@property (nonatomic, copy) VLTWsApiFailure failure;
 
 @end
 
@@ -22,7 +22,7 @@
 {
     self = [super init];
     if (self) {
-        _data = data;
+        _data    = data;
         _success = success;
         _failure = failure;
     }

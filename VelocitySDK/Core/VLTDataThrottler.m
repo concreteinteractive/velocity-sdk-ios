@@ -2,14 +2,14 @@
 //  VLTDataThrottler.m
 //  VelocitySDK
 //
-//  
+//
 //  Copyright © 2017 VLCTY, Inc. All rights reserved.
 //
 
 #import "VLTDataThrottler.h"
 #import <AFNetworking/AFNetworkReachabilityManager.h>
 
-static NSString * const VLTDataThrottlerKey = @"VLTDataThrottlerKey";
+static NSString *const VLTDataThrottlerKey = @"VLTDataThrottlerKey";
 
 @interface VLTDataThrottler ()
 @property (nonatomic) NSUInteger bytesCountLimit;
@@ -20,13 +20,14 @@ static NSString * const VLTDataThrottlerKey = @"VLTDataThrottlerKey";
 
 @implementation VLTDataThrottler
 
-- (instancetype)initWithLimit:(NSUInteger)bytesCount reachabilityManager:(AFNetworkReachabilityManager *)reachabilityManager
+- (instancetype)initWithLimit:(NSUInteger)bytesCount
+          reachabilityManager:(AFNetworkReachabilityManager *)reachabilityManager
 {
     self = [super init];
     if (self) {
-        self.bytesCountLimit = bytesCount;
+        self.bytesCountLimit     = bytesCount;
         NSDictionary *storedDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:VLTDataThrottlerKey];
-        self.sentDataDict = [NSMutableDictionary dictionaryWithDictionary:storedDict];
+        self.sentDataDict        = [NSMutableDictionary dictionaryWithDictionary:storedDict];
         self.reachabilityManager = reachabilityManager;
     }
     return self;
@@ -51,17 +52,17 @@ static NSString * const VLTDataThrottlerKey = @"VLTDataThrottlerKey";
     if (!self.reachabilityManager.isReachableViaWWAN) {
         return;
     }
-    
-    NSString *todaysKey = self.todaysKey;
-    NSUInteger sentBytesCount = [self.sentDataDict[todaysKey] unsignedIntegerValue] + bytesCount;
+
+    NSString *todaysKey          = self.todaysKey;
+    NSUInteger sentBytesCount    = [self.sentDataDict[todaysKey] unsignedIntegerValue] + bytesCount;
     self.sentDataDict[todaysKey] = @(sentBytesCount);
-    
-    for (NSString* key in self.sentDataDict.allKeys) {
+
+    for (NSString *key in self.sentDataDict.allKeys) {
         if (![key isEqual:todaysKey]) {
             [self.sentDataDict removeObjectForKey:key];
         }
     }
-    
+
     [[NSUserDefaults standardUserDefaults] setValue:self.sentDataDict forKey:VLTDataThrottlerKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
@@ -71,11 +72,12 @@ static NSString * const VLTDataThrottlerKey = @"VLTDataThrottlerKey";
     return [NSString stringWithFormat:@"%f", self.beginningOfTodayTimestamp];
 }
 
--(NSTimeInterval)beginningOfTodayTimestamp
+- (NSTimeInterval)beginningOfTodayTimestamp
 {
-    NSDate *date = [NSDate date];
+    NSDate *date         = [NSDate date];
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *components = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:date];
+    NSDateComponents *components =
+        [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:date];
     return [[calendar dateFromComponents:components] timeIntervalSince1970];
 }
 

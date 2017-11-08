@@ -74,3 +74,5 @@ VLTManager.labelCurrentMotion(with: tags) { [weak self] (success) in
     //Labels sent
 })
 ```
+
+### Code formatting

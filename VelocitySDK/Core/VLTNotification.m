@@ -2,7 +2,7 @@
 //  VLTNotification.m
 //  Velocity
 //
-//  
+//
 //  Copyright © 2016 VLCTY, Inc. All rights reserved.
 //
 
@@ -31,18 +31,16 @@
     }
 
     NSDictionary *data = userInfo[VLTDataKey];
-    if (!data[VLTNotificationIdKey] ||
-        !data[VLTActivityNameKey] ||
-        !data[VLTMessageKey]) {
+    if (!data[VLTNotificationIdKey] || !data[VLTActivityNameKey] || !data[VLTMessageKey]) {
         return nil;
     }
-    
+
     self = [super init];
     if (self) {
-        _isSilent = [userInfo[VLTApsKey][VLTContentAvailableKey] boolValue] ?: false;
-        _activityName = data[VLTActivityNameKey];
+        _isSilent       = [userInfo[VLTApsKey][VLTContentAvailableKey] boolValue] ?: false;
+        _activityName   = data[VLTActivityNameKey];
         _notificationId = [NSString stringWithFormat:@"%@", data[VLTNotificationIdKey]];
-        _message = data[VLTMessageKey];
+        _message        = data[VLTMessageKey];
     }
     return self;
 }

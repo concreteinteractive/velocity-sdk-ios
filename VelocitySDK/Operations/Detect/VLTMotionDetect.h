@@ -2,7 +2,7 @@
 //  VLTMotionDetect.h
 //  VelocitySDK iOS
 //
-//  
+//
 //  Copyright © 2017 VLCTY, Inc. All rights reserved.
 //
 
@@ -15,7 +15,7 @@
 @property (atomic, strong, readonly) VLTMotionDetectResult *result;
 @property (atomic, strong, readonly) NSError *error;
 
-@property (atomic, copy) void(^onMotionDetect)(VLTMotionDetectResult *);
-@property (atomic, copy) void(^onError)(NSError *);
+@property (atomic, copy) void (^onMotionDetect)(VLTMotionDetectResult *);
+@property (atomic, copy) void (^onError)(NSError *);
 
 @end

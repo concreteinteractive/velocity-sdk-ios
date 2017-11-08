@@ -1,0 +1,34 @@
+BasedOnStyle: None
+AlignTrailingComments: true
+AlignConsecutiveAssignments: true
+BreakBeforeBraces: Linux
+ColumnLimit: 120
+IndentWidth: 4
+KeepEmptyLinesAtTheStartOfBlocks: true
+ObjCSpaceAfterProperty: true
+ObjCSpaceBeforeProtocolList: true
+ObjCBlockIndentWidth: 4
+PointerBindsToType: false
+SpacesBeforeTrailingComments: 1
+TabWidth: 4
+UseTab: Never
+SortIncludes: true
+IncludeCategories:
+  - Regex:           '^"(llvm|llvm-c|clang|clang-c)/'
+    Priority:        3
+  - Regex:           '^(<|"(gtest|gmock|isl|json)/)'
+    Priority:        1
+  - Regex:           '.*'
+    Priority:        2
+AlignEscapedNewlines: Left
+AllowAllParametersOfDeclarationOnNextLine: false
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortBlocksOnASingleLine: false
+BinPackArguments: false
+BreakBeforeTernaryOperators: true
+IndentWrappedFunctionNames: true
+MaxEmptyLinesToKeep: 1
+ReflowComments: true
+SpaceAfterCStyleCast: false
+SpaceBeforeAssignmentOperators: true
+SpacesInContainerLiterals: false

@@ -2,7 +2,7 @@
 //  VLTRecordingConfig.m
 //  Velocity
 //
-//  
+//
 //  Copyright © 2017 VLCTY, Inc. All rights reserved.
 //
 
@@ -25,9 +25,9 @@
 {
     self = [super init];
     if (self) {
-        _sampleSize = handshakeResponse.sampleSize;
-        _captureInterval = handshakeResponse.captureInterval;
-        _detectMotionOn = handshakeResponse.canLabelMotion;
+        _sampleSize        = handshakeResponse.sampleSize;
+        _captureInterval   = handshakeResponse.captureInterval;
+        _detectMotionOn    = handshakeResponse.canLabelMotion;
         _pushLabeledDataOn = handshakeResponse.canLabelMotion;
     }
     return self;

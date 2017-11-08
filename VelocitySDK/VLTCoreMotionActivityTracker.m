@@ -2,7 +2,7 @@
 //  VLTCoreMotionActivityTracker.m
 //  VelocitySDK
 //
-//  
+//
 //  Copyright © 2017 VLCTY, Inc. All rights reserved.
 //
 
@@ -42,17 +42,13 @@
 
 - (void)setEnabled:(BOOL)enabled
 {
-    @synchronized (self) {
-        _enabled = enabled;
-    }
+    @synchronized(self) { _enabled = enabled; }
     [self updateAfterStateChange];
 }
 
 - (BOOL)isEnabled
 {
-    @synchronized (self) {
-        return _enabled;
-    }
+    @synchronized(self) { return _enabled; }
 }
 
 - (void)updateAfterStateChange
@@ -61,7 +57,7 @@
         if (self.enabled) {
             vlt_weakify(self);
             [self.motionActivityManager startActivityUpdatesToQueue:[VLTCore queue]
-                                                        withHandler:^(CMMotionActivity * _Nullable activity) {
+                                                        withHandler:^(CMMotionActivity *_Nullable activity) {
                                                             vlt_strongify(self);
                                                             self.recentActivity = activity;
                                                         }];
@@ -70,8 +66,5 @@
         }
     });
 }
-
-
-
 
 @end

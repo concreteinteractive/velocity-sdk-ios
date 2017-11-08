@@ -2,15 +2,15 @@
 //  VLTMotionDetectResult.h
 //  VelocitySDK
 //
-//  
+//
 //  Copyright © 2017 VLCTY, Inc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-extern NSString * _Nonnull const VLTMotionDetectResultWalkingKey;
-extern NSString * _Nonnull const VLTMotionDetectResultDrivingKey;
-extern NSString * _Nonnull const VLTMotionDetectResultParkedKey;
+extern NSString *_Nonnull const VLTMotionDetectResultWalkingKey;
+extern NSString *_Nonnull const VLTMotionDetectResultDrivingKey;
+extern NSString *_Nonnull const VLTMotionDetectResultParkedKey;
 
 @interface VLTMotionDetectResult : NSObject
 

@@ -2,7 +2,7 @@
 //  VLTMotionRecoring.h
 //  Velocity
 //
-//  
+//
 //  Copyright © 2016 VLCTY, Inc. All rights reserved.
 //
 

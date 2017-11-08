@@ -11,6 +11,6 @@
 @protocol VLTSample <NSObject>
 
 @property (nonatomic, readonly) NSTimeInterval timestamp;
-@property (nonatomic, readonly) NSArray <NSNumber *> *values;
+@property (nonatomic, readonly) NSArray<NSNumber *> *values;
 
 @end

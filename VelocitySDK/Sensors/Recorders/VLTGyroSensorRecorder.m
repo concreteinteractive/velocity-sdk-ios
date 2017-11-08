@@ -2,14 +2,14 @@
 //  VLTGyroSensorRecorder.m
 //  Velocity
 //
-//  
+//
 //  Copyright © 2016 VLCTY, Inc. All rights reserved.
 //
 
 #import "VLTGyroSensorRecorder.h"
 #import <CoreMotion/CoreMotion.h>
-#import "VLTSampleBuilder.h"
 #import "VLTCore.h"
+#import "VLTSampleBuilder.h"
 
 @interface VLTGyroSensorRecorder ()
 
@@ -31,11 +31,11 @@
 - (void)startRecording
 {
     __weak VLTGyroSensorRecorder *weakSelf = self;
-    self.motionManager.gyroUpdateInterval = self.updateInterval;
+    self.motionManager.gyroUpdateInterval  = self.updateInterval;
     [self.motionManager startGyroUpdatesToQueue:[VLTCore queue]
-                                    withHandler:^(CMGyroData * _Nullable gyroData, NSError * _Nullable error) {
+                                    withHandler:^(CMGyroData *_Nullable gyroData, NSError *_Nullable error) {
                                         if (gyroData) {
-                                            id <VLTSample> sample = [VLTSampleBuilder sampleFrom:gyroData];
+                                            id<VLTSample> sample = [VLTSampleBuilder sampleFrom:gyroData];
                                             [weakSelf addSample:sample];
                                         }
                                     }];

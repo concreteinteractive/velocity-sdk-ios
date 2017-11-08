@@ -2,23 +2,23 @@
 //  VLTWsApiClient.m
 //  VelocitySDK iOS
 //
-//  
+//
 //  Copyright © 2017 VLCTY, Inc. All rights reserved.
 //
 
 #import "VLTWsApiClient.h"
 #import "FifoListQueue.h"
-#import "VLTWsApiClientRequest.h"
+#import "VLTConfig.h"
+#import "VLTErrors.h"
 #import "VLTMacros.h"
 #import "VLTProtobufHelper.h"
-#import "VLTConfig.h"
 #import "VLTUserDataStore.h"
+#import "VLTWsApiClientRequest.h"
 #import "Velocity.pbobjc.h"
-#import "VLTErrors.h"
 
 @import SocketRocket;
 
-static NSString * const VLTWsApiClientUrl = @"https://sdk.vlcty.net/api/ws";
+static NSString *const VLTWsApiClientUrl = @"https://sdk.vlcty.net/api/ws";
 
 @interface VLTWsApiClient () <SRWebSocketDelegate>
 
@@ -30,8 +30,6 @@ static NSString * const VLTWsApiClientUrl = @"https://sdk.vlcty.net/api/ws";
 
 @property (atomic, strong) SRWebSocket *ws;
 @property (atomic, assign) BOOL handshakeCompleted;
-
-
 
 @property (atomic, assign, getter=isOpen) BOOL open;
 @property (atomic, assign, getter=isClosed) BOOL closed;
@@ -45,10 +43,10 @@ static NSString * const VLTWsApiClientUrl = @"https://sdk.vlcty.net/api/ws";
     self = [super init];
     if (self) {
         _delegateQueue = dispatch_queue_create("net.vlcty.ws.delegate", DISPATCH_QUEUE_SERIAL);
-        _queueSize = queueSize;
-        _queue = [[FifoListQueue alloc] init];
-        NSURL *url = [NSURL URLWithString:VLTWsApiClientUrl];
-        _ws = [[SRWebSocket alloc] initWithURL:url];
+        _queueSize     = queueSize;
+        _queue         = [[FifoListQueue alloc] init];
+        NSURL *url     = [NSURL URLWithString:VLTWsApiClientUrl];
+        _ws            = [[SRWebSocket alloc] initWithURL:url];
         [_ws setDelegateDispatchQueue:_delegateQueue];
         _ws.delegate = self;
     }
@@ -82,17 +80,16 @@ static NSString * const VLTWsApiClientUrl = @"https://sdk.vlcty.net/api/ws";
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket
- didCloseWithCode:(NSInteger)code
-           reason:(NSString *)reason
-         wasClean:(BOOL)wasClean
+    didCloseWithCode:(NSInteger)code
+              reason:(NSString *)reason
+            wasClean:(BOOL)wasClean
 {
-    self.closed = YES;
+    self.closed        = YES;
     webSocket.delegate = nil;
     vlt_invoke_block(self.onClose, code, reason);
 }
 
-- (void)webSocket:(SRWebSocket *)webSocket
-   didReceivePong:(NSData *)pongPayload
+- (void)webSocket:(SRWebSocket *)webSocket didReceivePong:(NSData *)pongPayload
 {
     vlt_invoke_block(self.onPong, pongPayload);
 }
@@ -110,8 +107,7 @@ static NSString * const VLTWsApiClientUrl = @"https://sdk.vlcty.net/api/ws";
     [self.ws close];
 }
 
-- (NSUInteger)handshakeWithSuccess:(nonnull VLTWsApiHandshakeSuccess)success
-                           failure:(nonnull VLTWsApiFailure)failure
+- (NSUInteger)handshakeWithSuccess:(nonnull VLTWsApiHandshakeSuccess)success failure:(nonnull VLTWsApiFailure)failure
 {
     VLTPBHandshakeRequest *handshakeReq;
     handshakeReq = [VLTProtobufHelper handshakeRequestWithAuthToken:self.authToken
@@ -120,19 +116,20 @@ static NSString * const VLTWsApiClientUrl = @"https://sdk.vlcty.net/api/ws";
     NSData *data = [handshakeReq data];
     vlt_weakify(self);
     [self sendData:data
-           success:^(NSData * _Nonnull data) {
-               NSError *error = nil;
-               VLTPBHandshakeResponse *response = [[VLTPBHandshakeResponse alloc] initWithData:data error:&error];
-               if (!response) {
-                   vlt_invoke_block(failure, error);
-                   return;
-               }
-               vlt_strongify(self);
-               self.handshakeCompleted = YES;
-               vlt_invoke_block(success, response);
-           } failure:^(NSError * _Nonnull error) {
-               vlt_invoke_block(failure, error);
-           }];
+        success:^(NSData *_Nonnull data) {
+            NSError *error                   = nil;
+            VLTPBHandshakeResponse *response = [[VLTPBHandshakeResponse alloc] initWithData:data error:&error];
+            if (!response) {
+                vlt_invoke_block(failure, error);
+                return;
+            }
+            vlt_strongify(self);
+            self.handshakeCompleted = YES;
+            vlt_invoke_block(success, response);
+        }
+        failure:^(NSError *_Nonnull error) {
+            vlt_invoke_block(failure, error);
+        }];
     return [data length];
 }
 
@@ -141,17 +138,19 @@ static NSString * const VLTWsApiClientUrl = @"https://sdk.vlcty.net/api/ws";
                    failure:(nonnull VLTWsApiFailure)failure
 {
     NSData *data = [request data];
-    [self sendData:data success:^(NSData * _Nonnull data) {
-        NSError *error = nil;
-        VLTPBResponse *response = [[VLTPBResponse alloc] initWithData:data error:&error];
-        if (!response) {
-            vlt_invoke_block(failure, error);
-            return;
+    [self sendData:data
+        success:^(NSData *_Nonnull data) {
+            NSError *error          = nil;
+            VLTPBResponse *response = [[VLTPBResponse alloc] initWithData:data error:&error];
+            if (!response) {
+                vlt_invoke_block(failure, error);
+                return;
+            }
+            vlt_invoke_block(success, response);
         }
-        vlt_invoke_block(success, response);
-    } failure:^(NSError * _Nonnull error) {
-        vlt_invoke_block(failure, error);
-    }];
+        failure:^(NSError *_Nonnull error) {
+            vlt_invoke_block(failure, error);
+        }];
     return [data length];
 }
 
@@ -160,35 +159,32 @@ static NSString * const VLTWsApiClientUrl = @"https://sdk.vlcty.net/api/ws";
                     failure:(nonnull VLTWsApiFailure)failure
 {
     request.modelNamesArray = [NSMutableArray new];
-    NSData *data = [request data];
+    NSData *data            = [request data];
     [self sendData:data
-           success:^(NSData * _Nonnull data) {
-               NSError *error = nil;
-               VLTPBResponse *response = [[VLTPBResponse alloc] initWithData:data error:&error];
-               if (!response) {
-                   vlt_invoke_block(failure, error);
-                   return;
-               }
-               vlt_invoke_block(success, response);
-           } failure:^(NSError * _Nonnull error) {
-               vlt_invoke_block(failure, error);
-           }];
+        success:^(NSData *_Nonnull data) {
+            NSError *error          = nil;
+            VLTPBResponse *response = [[VLTPBResponse alloc] initWithData:data error:&error];
+            if (!response) {
+                vlt_invoke_block(failure, error);
+                return;
+            }
+            vlt_invoke_block(success, response);
+        }
+        failure:^(NSError *_Nonnull error) {
+            vlt_invoke_block(failure, error);
+        }];
     return [data length];
 }
 
-- (void)sendData:(NSData *)data
-         success:(VLTWsApiSuccess)success
-         failure:(VLTWsApiFailure)failure
+- (void)sendData:(NSData *)data success:(VLTWsApiSuccess)success failure:(VLTWsApiFailure)failure
 {
     if (self.queue.count > self.queueSize) {
         NSError *error = [NSError errorWithDomain:VLTErrorDomain code:VLTApiWsQueueIsFullError userInfo:nil];
         [self webSocket:self.ws didFailWithError:error];
         return;
     }
-    
-    VLTWsApiClientRequest *req = [[VLTWsApiClientRequest alloc] initWithData:data
-                                                                     success:success
-                                                                     failure:failure];
+
+    VLTWsApiClientRequest *req = [[VLTWsApiClientRequest alloc] initWithData:data success:success failure:failure];
     [self.queue add:req];
     [self.ws send:data];
 }

@@ -2,7 +2,7 @@
 //  VLTConfig.m
 //  Velocity
 //
-//  
+//
 //  Copyright © 2016 VLCTY, Inc. All rights reserved.
 //
 
@@ -10,10 +10,10 @@
 #import "VLTMacros.h"
 
 static const NSTimeInterval VLTSensorsUpdateInterval = 0.001;
-static const NSTimeInterval VLTSensorsBufferSize = 50.0;
-static const NSTimeInterval VLTUploadTimeInterval = 3;
-static NSString * const VLTLearningModelName = @"Pipeliner Main";
-static NSString * const VLTDefaultUserIDKey = @"net.vlcty.default_user_id";
+static const NSTimeInterval VLTSensorsBufferSize     = 50.0;
+static const NSTimeInterval VLTUploadTimeInterval    = 3;
+static NSString *const VLTLearningModelName          = @"Pipeliner Main";
+static NSString *const VLTDefaultUserIDKey           = @"net.vlcty.default_user_id";
 
 @implementation VLTConfig
 
@@ -44,7 +44,7 @@ static NSString * const VLTDefaultUserIDKey = @"net.vlcty.default_user_id";
     }
 
     NSError *createError = nil;
-    BOOL success = [[NSFileManager defaultManager] createDirectoryAtPath:path
+    BOOL success         = [[NSFileManager defaultManager] createDirectoryAtPath:path
                                              withIntermediateDirectories:YES
                                                               attributes:nil
                                                                    error:&createError];
@@ -96,7 +96,7 @@ static NSString * const VLTDefaultUserIDKey = @"net.vlcty.default_user_id";
 + (NSString *)defaultUserID
 {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    NSString *userID = [ud stringForKey:VLTDefaultUserIDKey];
+    NSString *userID   = [ud stringForKey:VLTDefaultUserIDKey];
     if (!userID) {
         userID = [[NSUUID UUID] UUIDString];
         [ud setValue:userID forKey:VLTDefaultUserIDKey];
@@ -107,13 +107,15 @@ static NSString * const VLTDefaultUserIDKey = @"net.vlcty.default_user_id";
 
 + (NSString *)IFA
 {
-    NSString *ifa = @"00000000-0000-0000-0000-000000000000";
+    NSString *ifa                  = @"00000000-0000-0000-0000-000000000000";
     Class ASIdentifierManagerClass = NSClassFromString(@"ASIdentifierManager");
     if (ASIdentifierManagerClass) {
         SEL sharedManagerSelector = NSSelectorFromString(@"sharedManager");
-        id sharedManager = ((id (*)(id, SEL))[ASIdentifierManagerClass methodForSelector:sharedManagerSelector])(ASIdentifierManagerClass, sharedManagerSelector);
+        id sharedManager = ((id(*)(id, SEL))[ASIdentifierManagerClass methodForSelector:sharedManagerSelector])(
+            ASIdentifierManagerClass, sharedManagerSelector);
         SEL advertisingIdentifierSelector = NSSelectorFromString(@"advertisingIdentifier");
-        NSUUID *uuid = ((NSUUID* (*)(id, SEL))[sharedManager methodForSelector:advertisingIdentifierSelector])(sharedManager, advertisingIdentifierSelector);
+        NSUUID *uuid = ((NSUUID * (*)(id, SEL))[sharedManager methodForSelector:advertisingIdentifierSelector])(
+            sharedManager, advertisingIdentifierSelector);
         ifa = [uuid UUIDString];
     }
     return ifa;
@@ -124,15 +126,17 @@ static NSString * const VLTDefaultUserIDKey = @"net.vlcty.default_user_id";
     Class ASIdentifierManagerClass = NSClassFromString(@"ASIdentifierManager");
     if (ASIdentifierManagerClass) {
         SEL sharedManagerSelector = NSSelectorFromString(@"sharedManager");
-        id sharedManager = ((id (*)(id, SEL))[ASIdentifierManagerClass methodForSelector:sharedManagerSelector])(ASIdentifierManagerClass, sharedManagerSelector);
+        id sharedManager = ((id(*)(id, SEL))[ASIdentifierManagerClass methodForSelector:sharedManagerSelector])(
+            ASIdentifierManagerClass, sharedManagerSelector);
         SEL advertisingTrackingEnabledSelector = NSSelectorFromString(@"isAdvertisingTrackingEnabled");
-        BOOL isTrackingEnabled = ((BOOL (*)(id, SEL))[sharedManager methodForSelector:advertisingTrackingEnabledSelector])(sharedManager, advertisingTrackingEnabledSelector);
+        BOOL isTrackingEnabled =
+            ((BOOL(*)(id, SEL))[sharedManager methodForSelector:advertisingTrackingEnabledSelector])(
+                sharedManager, advertisingTrackingEnabledSelector);
         if (isTrackingEnabled) {
             return YES;
         }
     }
     return NO;
-
 }
 
 @end

@@ -2,12 +2,12 @@
 //  VLTDate.h
 //  Velocity
 //
-//  
+//
 //  Copyright © 2017 VLCTY, Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import <CoreMotion/CoreMotion.h>
+#import <Foundation/Foundation.h>
 
 @interface VLTDate : NSObject
 

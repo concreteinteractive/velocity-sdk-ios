@@ -2,7 +2,7 @@
 //  VLTDataThrottler.h
 //  VelocitySDK
 //
-//  
+//
 //  Copyright © 2017 VLCTY, Inc. All rights reserved.
 //
 
@@ -12,7 +12,8 @@
 
 @interface VLTDataThrottler : NSObject
 
-- (instancetype)initWithLimit:(NSUInteger)bytesCount reachabilityManager:(AFNetworkReachabilityManager *)reachabilityManager;
+- (instancetype)initWithLimit:(NSUInteger)bytesCount
+          reachabilityManager:(AFNetworkReachabilityManager *)reachabilityManager;
 
 - (BOOL)shouldThrottle;
 - (BOOL)isLimitReached;
