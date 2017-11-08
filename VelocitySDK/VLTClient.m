@@ -2,36 +2,36 @@
 //  VLTClient.m
 //  VelocitySDK
 //
-//  
+//
 //  Copyright © 2017 VLCTY, Inc. All rights reserved.
 //
 
 #import "VLTClient.h"
-#import "VLTMotionRecorder.h"
+#import "VLTConfig.h"
+#import "VLTCore.h"
 #import "VLTErrors.h"
+#import "VLTHTTPCaptureUploadOperation.h"
+#import "VLTHTTPMotionDetectOperation.h"
+#import "VLTLabeledDataUploadOperation.h"
+#import "VLTMacros.h"
+#import "VLTMotionDataOperation.h"
+#import "VLTMotionRecorder.h"
+#import "VLTOperation.h"
+#import "VLTProtobufHelper.h"
+#import "VLTRecordingConfig.h"
 #import "VLTSensorBuilder.h"
 #import "VLTUserDataStore.h"
-#import "VLTCore.h"
-#import "VLTRecordingConfig.h"
-#import "VLTMacros.h"
-#import "VLTProtobufHelper.h"
-#import "VLTConfig.h"
-#import "VLTOperation.h"
-#import "VLTHTTPMotionDetectOperation.h"
-#import "VLTHTTPCaptureUploadOperation.h"
-#import "VLTLabeledDataUploadOperation.h"
-#import "VLTMotionDataOperation.h"
 #import "VLTWsApiClient.h"
 
-static void * VLTIsActiveKVOContext = &VLTIsActiveKVOContext;
+static void *VLTIsActiveKVOContext = &VLTIsActiveKVOContext;
 
 static const NSTimeInterval LabeledDataMaxTimeInterval = 300;
-static const NSUInteger VLTWsApiQueueSize = 10;
+static const NSUInteger VLTWsApiQueueSize              = 10;
 
 @interface VLTClient ()
 
 @property (atomic, strong) VLTRecordingConfig *recordingConfig;
-@property (atomic, strong) id <VLTMotionRecorder> recorder;
+@property (atomic, strong) id<VLTMotionRecorder> recorder;
 @property (atomic, strong) dispatch_source_t hitTimer;
 @property (atomic, assign, getter=isInProgress) BOOL inProgress;
 @property (atomic, assign) UInt32 sequenceIndex;
@@ -45,13 +45,13 @@ static const NSUInteger VLTWsApiQueueSize = 10;
 @implementation VLTClient
 
 @synthesize authToken = _authToken;
-@synthesize active = _active;
+@synthesize active    = _active;
 
 - (instancetype)init
 {
     self = [super init];
     if (self) {
-        _processingQueue = [[NSOperationQueue alloc] init];
+        _processingQueue           = [[NSOperationQueue alloc] init];
         _processingQueue.suspended = NO;
         [self initializeWsApiClient];
     }
@@ -60,18 +60,14 @@ static const NSUInteger VLTWsApiQueueSize = 10;
 
 - (void)setActive:(BOOL)active
 {
-    @synchronized (self) {
-        _active = active;
-    }
+    @synchronized(self) { _active = active; }
 
     [self handleIsActiveChange];
 }
 
 - (BOOL)isActive
 {
-    @synchronized (self) {
-        return _active;
-    }
+    @synchronized(self) { return _active; }
 }
 
 - (void)handleIsActiveChange
@@ -90,16 +86,16 @@ static const NSUInteger VLTWsApiQueueSize = 10;
     [self closeWsApiClientIfNeeded];
     vlt_weakify(self);
     self.wsApiClient = [[VLTWsApiClient alloc] initWithQueueSize:VLTWsApiQueueSize];
-    [self.wsApiClient setOnClose:^(NSInteger code, NSString * _Nonnull reason) {
+    [self.wsApiClient setOnClose:^(NSInteger code, NSString *_Nonnull reason) {
         DLog(@"WS Closed: %ld [%@]", (long)code, reason);
     }];
-    [self.wsApiClient setOnError:^(NSError * _Nonnull error) {
+    [self.wsApiClient setOnError:^(NSError *_Nonnull error) {
         DLog(@"WS error: %@", error);
         vlt_strongify(self);
         [self reinitializeWsApiClient];
         [self startMotionSensing];
     }];
-    [self.wsApiClient setOnPong:^(NSData * _Nullable pongPayload) {
+    [self.wsApiClient setOnPong:^(NSData *_Nullable pongPayload) {
         DLog(@"WS API Client PONG: %@", [[NSString alloc] initWithData:pongPayload encoding:NSUTF8StringEncoding]);
     }];
 }
@@ -122,14 +118,15 @@ static const NSUInteger VLTWsApiQueueSize = 10;
     vlt_weakify(self);
     [self.wsApiClient setOnOpen:^{
         vlt_strongify(self);
-        [self.wsApiClient handshakeWithSuccess:^(VLTPBHandshakeResponse * _Nonnull response) {
+        [self.wsApiClient handshakeWithSuccess:^(VLTPBHandshakeResponse *_Nonnull response) {
             vlt_strongify(self);
             self.recordingConfig = [[VLTRecordingConfig alloc] initWithHandshakeResponse:response];
             [self startRecording];
-        } failure:^(NSError * _Nonnull error) {
-            vlt_strongify(self);
-            [self handleError:error];
-        }];
+        }
+            failure:^(NSError *_Nonnull error) {
+                vlt_strongify(self);
+                [self handleError:error];
+            }];
     }];
     [self.wsApiClient openWithAuthToken:self.authToken];
 }
@@ -163,7 +160,7 @@ static const NSUInteger VLTWsApiQueueSize = 10;
     [self invalidateHitTimer];
     [self.processingQueue addOperationWithBlock:^{
         vlt_weakify(self);
-        self.hitTimer = [VLTCore timer:5 //self.recordingConfig.captureInterval
+        self.hitTimer = [VLTCore timer:5 // self.recordingConfig.captureInterval
                                handler:^{
                                    vlt_strongify(self);
                                    [self capture];
@@ -207,7 +204,6 @@ static const NSUInteger VLTWsApiQueueSize = 10;
         return;
     }
 
-
     self.inProgress = YES;
     vlt_weakify(self);
     [self.processingQueue addOperationWithBlock:^{
@@ -215,11 +211,11 @@ static const NSUInteger VLTWsApiQueueSize = 10;
 
         NSTimeInterval sampleSize = self.recordingConfig.sampleSize;
         if ([self.recorder availableTimeInBuffer] > sampleSize) {
-            UInt32 seqIndex = self.sequenceIndex;
+            UInt32 seqIndex    = self.sequenceIndex;
             self.sequenceIndex = self.sequenceIndex + 1;
 
-            NSArray<VLTData *> *datas = [self.recorder dataForTimeInterval:sampleSize];
-            NSArray<VLTMotionDataOperation *> * operations = factoryHandler(self.wsApiClient, datas, seqIndex);
+            NSArray<VLTData *> *datas                     = [self.recorder dataForTimeInterval:sampleSize];
+            NSArray<VLTMotionDataOperation *> *operations = factoryHandler(self.wsApiClient, datas, seqIndex);
             [self.processingQueue addOperations:operations waitUntilFinished:YES];
         }
         self.inProgress = NO;
@@ -227,13 +223,13 @@ static const NSUInteger VLTWsApiQueueSize = 10;
 }
 
 - (void)pushMotionDataWithLabels:(nonnull NSArray<NSString *> *)labels
-                         success:(void(^)(void))success
-                         failure:(void(^)(NSError *error))failure
+                         success:(void (^)(void))success
+                         failure:(void (^)(NSError *error))failure
 {
     if (!self.recordingConfig.pushLabeledDataOn) {
         NSDictionary *uInfo = @{
-                                NSLocalizedDescriptionKey: @"Labeled data push is off on this client.",
-                                };
+            NSLocalizedDescriptionKey: @"Labeled data push is off on this client.",
+        };
         NSError *error = [NSError errorWithDomain:VLTErrorDomain code:VLTClientError userInfo:uInfo];
         vlt_invoke_block(failure, error);
         return;
@@ -241,15 +237,14 @@ static const NSUInteger VLTWsApiQueueSize = 10;
 
     [self.processingQueue addOperationWithBlock:^{
         self.labeledSequenceIndex = self.labeledSequenceIndex + 1;
-        
+
         NSArray<VLTData *> *motionData = [self.recorder dataForTimeInterval:LabeledDataMaxTimeInterval];
-        VLTLabeledDataUploadOperation *op = [[VLTLabeledDataUploadOperation alloc] initWithMotionData:motionData
-                                                                                               labels:labels];
+        VLTLabeledDataUploadOperation *op =
+            [[VLTLabeledDataUploadOperation alloc] initWithMotionData:motionData labels:labels];
         op.onSuccess = success;
-        op.onError = failure;
+        op.onError   = failure;
         [self.processingQueue addOperations:@[op] waitUntilFinished:YES];
     }];
 }
-
 
 @end

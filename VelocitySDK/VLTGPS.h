@@ -2,18 +2,17 @@
 //  VLTGPS.h
 //  VelocitySDK
 //
-//  
+//
 //  Copyright © 2017 VLCTY, Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import <Foundation/Foundation.h>
 
-extern NSString * _Nonnull const VLTGPSLocationUpdateNotification;
-extern NSString * _Nonnull const VLTGPSLocationsKey;
+extern NSString *_Nonnull const VLTGPSLocationUpdateNotification;
+extern NSString *_Nonnull const VLTGPSLocationsKey;
 
 @interface VLTGPS : NSObject
-
 
 /**
  * @brief A point for GPS intergration, you should invoke it from your delegate of CLLocationManger

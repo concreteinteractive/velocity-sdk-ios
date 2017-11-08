@@ -2,13 +2,12 @@
 //  VLTSensorRecorder.m
 //  Velocity
 //
-//  
+//
 //  Copyright © 2016 VLCTY, Inc. All rights reserved.
 //
 
 #import "VLTSensorRecorder.h"
 #import "VLTData.h"
-
 
 @interface VLTSensorRecorder ()
 
@@ -43,39 +42,33 @@
 {
     self = [super init];
     if (self) {
-        _sensorType = type;
-        _updateInterval = interval;
+        _sensorType       = type;
+        _updateInterval   = interval;
         _keepTimeInBuffer = timeInBuffer;
-        _buffer = [[NSMutableArray alloc] init];
+        _buffer           = [[NSMutableArray alloc] init];
         _concurrent_queue = dispatch_queue_create("net.vlcty.recorder", DISPATCH_QUEUE_CONCURRENT);
     }
     return self;
 }
 
-- (void)startRecording
-{
+- (void)startRecording {}
 
-}
-
-- (void)stopRecording
-{
-
-}
+- (void)stopRecording {}
 
 - (void)addSample:(nonnull id<VLTSample>)sample
 {
     dispatch_barrier_async(self.concurrent_queue, ^{
-        id <VLTSample> firstSample = self.buffer.firstObject;
+        id<VLTSample> firstSample = self.buffer.firstObject;
 
         [self.buffer addObject:sample];
-        
+
         if (firstSample) {
             while (sample.timestamp - firstSample.timestamp > self.keepTimeInBuffer && self.buffer.count > 0) {
                 [self.buffer removeObjectAtIndex:0];
                 firstSample = self.buffer.firstObject;
             }
         }
-        
+
         if (firstSample) {
             self.availableTimeInBuffer = sample.timestamp - firstSample.timestamp;
         } else {
@@ -84,7 +77,7 @@
     });
 }
 
-- (NSArray <id<VLTSample>> *)copiedSamples
+- (NSArray<id<VLTSample>> *)copiedSamples
 {
     __block NSArray<id<VLTSample>> *samples = nil;
     dispatch_sync(self.concurrent_queue, ^{
@@ -95,22 +88,21 @@
 
 - (nonnull NSArray<VLTData *> *)dataForTimeInterval:(NSTimeInterval)interval
 {
-    NSArray <id<VLTSample>> *samples = [self copiedSamples];
-    NSArray <id<VLTSample>> *results = @[];
-    id <VLTSample> lastObject = [samples lastObject];
+    NSArray<id<VLTSample>> *samples = [self copiedSamples];
+    NSArray<id<VLTSample>> *results = @[];
+    id<VLTSample> lastObject        = [samples lastObject];
     if (lastObject) {
         NSTimeInterval timestampLimit = lastObject.timestamp - interval;
         for (NSInteger i = (samples.count - 1); i >= 0; i--) {
-            id <VLTSample> sample = samples[i];
+            id<VLTSample> sample = samples[i];
             if (sample.timestamp < timestampLimit) {
                 results = [samples subarrayWithRange:NSMakeRange(i, samples.count - i)];
                 break;
             }
         }
     }
-    
-    VLTData *data = [[VLTData alloc] initWithSensorType:self.sensorType
-                                                 values:results];
+
+    VLTData *data = [[VLTData alloc] initWithSensorType:self.sensorType values:results];
 
     return @[data];
 }

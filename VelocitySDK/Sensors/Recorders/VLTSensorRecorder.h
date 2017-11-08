@@ -2,14 +2,14 @@
 //  VLTSensorRecorder.h
 //  Velocity
 //
-//  
+//
 //  Copyright © 2016 VLCTY, Inc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "VLTSensorTypes.h"
-#import "VLTSample.h"
 #import "VLTMotionRecorder.h"
+#import "VLTSample.h"
+#import "VLTSensorTypes.h"
 
 @class VLTData;
 

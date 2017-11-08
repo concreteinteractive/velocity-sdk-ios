@@ -2,7 +2,7 @@
 //  VLTMultiSensorRecorder.m
 //  Velocity
 //
-//  
+//
 //  Copyright © 2016 VLCTY, Inc. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 @interface VLTMultiMotionRecorder ()
 
-@property (nonatomic, strong) NSArray<id<VLTMotionRecorder>> * motionRecorders;
+@property (nonatomic, strong) NSArray<id<VLTMotionRecorder>> *motionRecorders;
 
 @end
 
@@ -20,9 +20,8 @@
 #pragma clang diagnostic ignored "-Wobjc-designated-initializers"
 - (instancetype)init
 {
-    @throw [NSException exceptionWithName:@"NOT_SUPPORTED"
-                                   reason:@"PLEASE USE: -initWithMotionRecorders:"
-                                 userInfo:nil];
+    @throw
+        [NSException exceptionWithName:@"NOT_SUPPORTED" reason:@"PLEASE USE: -initWithMotionRecorders:" userInfo:nil];
 }
 #pragma clang diagnostic pop
 

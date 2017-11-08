@@ -2,13 +2,13 @@
 //  VLTOperation.m
 //  VelocitySDK
 //
-//  
+//
 //  Copyright © 2017 VLCTY, Inc. All rights reserved.
 //
 
 #import "VLTOperation.h"
-#import "Velocity.pbobjc.h"
 #import "VLTMacros.h"
+#import "Velocity.pbobjc.h"
 
 @interface VLTOperation ()
 
@@ -31,7 +31,7 @@
     [self willChangeValueForKey:NSStringFromSelector(@selector(isExecuting))];
     [self willChangeValueForKey:NSStringFromSelector(@selector(isFinished))];
     self.operationExecuting = NO;
-    self.operationFinished = YES;
+    self.operationFinished  = YES;
     [self didChangeValueForKey:NSStringFromSelector(@selector(isExecuting))];
     [self didChangeValueForKey:NSStringFromSelector(@selector(isFinished))];
 }

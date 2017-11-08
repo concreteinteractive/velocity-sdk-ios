@@ -2,16 +2,16 @@
 //  VLTDrivingDetectOperation.m
 //  VelocitySDK
 //
-// 
+//
 //  Copyright © 2017 VLCTY, Inc. All rights reserved.
 //
 
 #import "VLTDrivingDetectOperation.h"
-#import "Velocity.pbobjc.h"
-#import "VLTSampleBuilder.h"
+#import <CoreLocation/CoreLocation.h>
 #import "VLTData.h"
 #import "VLTSample.h"
-#import <CoreLocation/CoreLocation.h>
+#import "VLTSampleBuilder.h"
+#import "Velocity.pbobjc.h"
 
 static Float32 VLTSpeedThreshold = 4;
 
@@ -29,9 +29,10 @@ static Float32 VLTSpeedThreshold = 4;
 {
     self.speedThreshold = VLTSpeedThreshold;
 
-    NSUInteger gpsDataIndex = [self.motionData indexOfObjectPassingTest:^BOOL(VLTData *data, NSUInteger idx, BOOL *stop) {
-        return data.sensorType == VLTPBSensor_Type_Gps;
-    }];
+    NSUInteger gpsDataIndex =
+        [self.motionData indexOfObjectPassingTest:^BOOL(VLTData *data, NSUInteger idx, BOOL *stop) {
+            return data.sensorType == VLTPBSensor_Type_Gps;
+        }];
 
     if (gpsDataIndex == NSNotFound) {
         return;
@@ -39,8 +40,8 @@ static Float32 VLTSpeedThreshold = 4;
 
     VLTData *gpsData = self.motionData[gpsDataIndex];
 
-    CLLocation *prevLocation = nil;
-    double totalDistance = 0;
+    CLLocation *prevLocation      = nil;
+    double totalDistance          = 0;
     NSTimeInterval totalTimeInSec = 0;
     for (id<VLTSample> sample in gpsData.values) {
         CLLocation *location = [self locationFromSample:sample];
@@ -48,7 +49,7 @@ static Float32 VLTSpeedThreshold = 4;
         if (location.horizontalAccuracy < 0) {
             continue;
         }
-        
+
         if (prevLocation) {
             totalDistance += [location distanceFromLocation:prevLocation];
             totalTimeInSec += fabs([location.timestamp timeIntervalSinceDate:prevLocation.timestamp]);
@@ -56,7 +57,7 @@ static Float32 VLTSpeedThreshold = 4;
         prevLocation = location;
     }
     self.averageSpeed = totalDistance / totalTimeInSec;
-    self.isDriving = self.averageSpeed >= self.speedThreshold;
+    self.isDriving    = self.averageSpeed >= self.speedThreshold;
 }
 
 - (CLLocation *)locationFromSample:(id<VLTSample>)sample
@@ -65,13 +66,13 @@ static Float32 VLTSpeedThreshold = 4;
         return nil;
     }
 
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:sample.timestamp];
+    NSDate *date                  = [NSDate dateWithTimeIntervalSince1970:sample.timestamp];
     CLLocationCoordinate2D coords = CLLocationCoordinate2DMake([sample.values[VLTSampleLatitudeIndex] doubleValue],
                                                                [sample.values[VLTSampleLongitudeIndex] doubleValue]);
-    CLLocationDistance altitude = [sample.values[VLTSampleAltitudeIndex] doubleValue];
-    CLLocationAccuracy hAccuracy = [sample.values[VLTSampleHorizontalAccuracyIndex] doubleValue];
-    CLLocationSpeed speed = [sample.values[VLTSampleSpeedIndex] doubleValue];
-    CLLocation *location = [[CLLocation alloc] initWithCoordinate:coords
+    CLLocationDistance altitude   = [sample.values[VLTSampleAltitudeIndex] doubleValue];
+    CLLocationAccuracy hAccuracy  = [sample.values[VLTSampleHorizontalAccuracyIndex] doubleValue];
+    CLLocationSpeed speed         = [sample.values[VLTSampleSpeedIndex] doubleValue];
+    CLLocation *location          = [[CLLocation alloc] initWithCoordinate:coords
                                                          altitude:altitude
                                                horizontalAccuracy:hAccuracy
                                                  verticalAccuracy:kCLLocationAccuracyThreeKilometers

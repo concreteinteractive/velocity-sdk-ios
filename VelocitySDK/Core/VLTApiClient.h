@@ -2,7 +2,7 @@
 //  VLTApiClient.h
 //  Velocity
 //
-//  
+//
 //  Copyright © 2016 VLCTY, Inc. All rights reserved.
 //
 
@@ -29,8 +29,8 @@
                     failure:(nullable void (^)(NSError *_Nonnull error))failure;
 
 - (void)detect:(nonnull VLTPBDetectMotionRequest *)detectMotionRequest
-       success:(nullable void (^)(VLTMotionDetectResult * _Nonnull result))success
-       failure:(nullable void (^)(NSError * _Nonnull error))failure;
+       success:(nullable void (^)(VLTMotionDetectResult *_Nonnull result))success
+       failure:(nullable void (^)(NSError *_Nonnull error))failure;
 
 - (void)uploadMotionData:(nonnull VLTPBCapture *)capture
                   labels:(nonnull NSArray<NSString *> *)labels

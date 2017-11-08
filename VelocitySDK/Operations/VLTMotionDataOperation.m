@@ -2,7 +2,7 @@
 //  VLTMotionDataOperation.m
 //  VelocitySDK
 //
-//  
+//
 //  Copyright © 2017 VLCTY, Inc. All rights reserved.
 //
 
@@ -39,9 +39,6 @@
     }
 }
 
-- (void)processMotionData
-{
-    
-}
+- (void)processMotionData {}
 
 @end

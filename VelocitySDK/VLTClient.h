@@ -12,7 +12,10 @@
 @class VLTData;
 @class VLTWsApiClient;
 
-typedef  NSArray<VLTMotionDataOperation *> * _Nonnull (^MotionDataOperationsFactory)(VLTWsApiClient * _Nonnull wsApiClient, NSArray<VLTData *> * _Nonnull motionData, UInt32 sequenceIndex);
+typedef NSArray<VLTMotionDataOperation *> *_Nonnull (^MotionDataOperationsFactory)(
+    VLTWsApiClient *_Nonnull wsApiClient,
+    NSArray<VLTData *> *_Nonnull motionData,
+    UInt32 sequenceIndex);
 
 @interface VLTClient : NSObject
 
@@ -21,13 +24,12 @@ typedef  NSArray<VLTMotionDataOperation *> * _Nonnull (^MotionDataOperationsFact
 
 @property (atomic, copy, nullable) MotionDataOperationsFactory operationFatoryHandler;
 
-
-/**  
+/**
  * @property errorHandler
  * @brief Block is invoked when error occurs
  * In case of error occurance, active right away is set to false
  **/
-@property (atomic, copy, nullable) void(^errorHandler)(NSError * _Nullable);
+@property (atomic, copy, nullable) void (^errorHandler)(NSError *_Nullable);
 
 /**
  * @brief Sends at max last 5min of recorded data with given labels
@@ -36,7 +38,7 @@ typedef  NSArray<VLTMotionDataOperation *> * _Nonnull (^MotionDataOperationsFact
  * @param failure dblock, which is invoked if upload fails
  **/
 - (void)pushMotionDataWithLabels:(nonnull NSArray<NSString *> *)labels
-                         success:(nullable void(^)(void))success
-                         failure:(nullable void(^)(NSError * _Nullable error))failure;
+                         success:(nullable void (^)(void))success
+                         failure:(nullable void (^)(NSError *_Nullable error))failure;
 
 @end

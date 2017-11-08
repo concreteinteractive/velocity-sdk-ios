@@ -2,19 +2,19 @@
 //  VLTSensorBuilder.m
 //  Velocity
 //
-//  
+//
 //  Copyright © 2016 VLCTY, Inc. All rights reserved.
 //
 
 #import "VLTSensorBuilder.h"
-#import "VLTMultiMotionRecorder.h"
 #import "VLTAccSensorRecorder.h"
-#import "VLTGyroSensorRecorder.h"
 #import "VLTConfig.h"
-#import "VLTSimulatorSensorRecorder.h"
-#import "VLTSensorTypes.h"
-#import "VLTGPSSensorRecorder.h"
 #import "VLTGPS.h"
+#import "VLTGPSSensorRecorder.h"
+#import "VLTGyroSensorRecorder.h"
+#import "VLTMultiMotionRecorder.h"
+#import "VLTSensorTypes.h"
+#import "VLTSimulatorSensorRecorder.h"
 
 static NSTimeInterval MinGPSBufferSizeInSec = 300;
 
@@ -24,7 +24,7 @@ static NSTimeInterval MinGPSBufferSizeInSec = 300;
 {
 #if TARGET_OS_SIMULATOR
     return YES;
-#else 
+#else
     return NO;
 #endif
 }
@@ -32,7 +32,7 @@ static NSTimeInterval MinGPSBufferSizeInSec = 300;
 + (nonnull id<VLTMotionRecorder>)buildSimulatorRecorder
 {
     NSTimeInterval updateInterval = [VLTConfig sensorsUpdateInterval];
-    NSTimeInterval bufferSize = [VLTConfig sensorsBufferSize];
+    NSTimeInterval bufferSize     = [VLTConfig sensorsBufferSize];
     VLTSimulatorSensorRecorder *accRecorder;
     accRecorder = [[VLTSimulatorSensorRecorder alloc] initWithUpdateInterval:updateInterval
                                                                 timeInBuffer:bufferSize
@@ -46,8 +46,9 @@ static NSTimeInterval MinGPSBufferSizeInSec = 300;
     [recorders addObject:gyroRecorder];
 
     if ([VLTGPS isEnabled]) {
-        VLTGPSSensorRecorder *gpsRecorder = [[VLTGPSSensorRecorder alloc] initWithUpdateInterval:updateInterval
-                                                                                    timeInBuffer:MAX(bufferSize, MinGPSBufferSizeInSec)];
+        VLTGPSSensorRecorder *gpsRecorder =
+            [[VLTGPSSensorRecorder alloc] initWithUpdateInterval:updateInterval
+                                                    timeInBuffer:MAX(bufferSize, MinGPSBufferSizeInSec)];
         [recorders addObject:gpsRecorder];
     }
 
@@ -57,19 +58,20 @@ static NSTimeInterval MinGPSBufferSizeInSec = 300;
 + (nonnull id<VLTMotionRecorder>)buildRealDeviceRecorder
 {
     NSTimeInterval updateInterval = [VLTConfig sensorsUpdateInterval];
-    NSTimeInterval bufferSize = [VLTConfig sensorsBufferSize];
-    VLTAccSensorRecorder *accRecorder = [[VLTAccSensorRecorder alloc] initWithUpdateInterval:updateInterval
-                                                                                timeInBuffer:bufferSize];
-    VLTGyroSensorRecorder *gyroRecorder = [[VLTGyroSensorRecorder alloc] initWithUpdateInterval:updateInterval
-                                                                                   timeInBuffer:bufferSize];
+    NSTimeInterval bufferSize     = [VLTConfig sensorsBufferSize];
+    VLTAccSensorRecorder *accRecorder =
+        [[VLTAccSensorRecorder alloc] initWithUpdateInterval:updateInterval timeInBuffer:bufferSize];
+    VLTGyroSensorRecorder *gyroRecorder =
+        [[VLTGyroSensorRecorder alloc] initWithUpdateInterval:updateInterval timeInBuffer:bufferSize];
 
     NSMutableArray<VLTSensorRecorder *> *recorders = [[NSMutableArray alloc] init];
     [recorders addObject:accRecorder];
     [recorders addObject:gyroRecorder];
 
     if ([VLTGPS isEnabled]) {
-        VLTGPSSensorRecorder *gpsRecorder = [[VLTGPSSensorRecorder alloc] initWithUpdateInterval:updateInterval
-                                                                                    timeInBuffer:MAX(bufferSize, MinGPSBufferSizeInSec)];
+        VLTGPSSensorRecorder *gpsRecorder =
+            [[VLTGPSSensorRecorder alloc] initWithUpdateInterval:updateInterval
+                                                    timeInBuffer:MAX(bufferSize, MinGPSBufferSizeInSec)];
         [recorders addObject:gpsRecorder];
     }
     return [[VLTMultiMotionRecorder alloc] initWithMotionRecorders:recorders];
@@ -82,7 +84,6 @@ static NSTimeInterval MinGPSBufferSizeInSec = 300;
     } else {
         return [VLTSensorBuilder buildRealDeviceRecorder];
     }
-
 }
 
 @end

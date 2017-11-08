@@ -2,30 +2,30 @@
 //  VLTManager.m
 //  Velocity
 //
-//  
+//
 //  Copyright © 2017 VLCTY, Inc. All rights reserved.
 //
 
 #import "VLTManager.h"
+#import <AFNetworking/AFNetworkReachabilityManager.h>
 #import "VLTApiClient.h"
-#import "VLTUserDataStore.h"
 #import "VLTClient.h"
-#import "VLTMotionDataOperation.h"
-#import "VLTHTTPCaptureUploadOperation.h"
-#import "VLTParkedDetectOperation.h"
-#import "VLTMacros.h"
 #import "VLTCoreMotionActivityTracker.h"
 #import "VLTDataThrottler.h"
-#import <AFNetworking/AFNetworkReachabilityManager.h>
-#import "VLTWsApiClient.h"
-#import "VLTWsMotionDetectOperation.h"
-#import "VLTWsCaptureUploadOperation.h"
-#import "VLTWsParkedDetectOperation.h"
+#import "VLTHTTPCaptureUploadOperation.h"
 #import "VLTHTTPMotionDetectOperation.h"
+#import "VLTMacros.h"
+#import "VLTMotionDataOperation.h"
 #import "VLTMotionDetectResult.h"
+#import "VLTParkedDetectOperation.h"
+#import "VLTUserDataStore.h"
+#import "VLTWsApiClient.h"
+#import "VLTWsCaptureUploadOperation.h"
+#import "VLTWsMotionDetectOperation.h"
+#import "VLTWsParkedDetectOperation.h"
 
-NSString * const VLTMotionWalking = @"walking";
-NSString * const VLTMotionDriving = @"driving";
+NSString *const VLTMotionWalking = @"walking";
+NSString *const VLTMotionDriving = @"driving";
 
 @interface VLTManager ()
 
@@ -33,7 +33,7 @@ NSString * const VLTMotionDriving = @"driving";
 @property (atomic, assign, getter=isTrackingOn) BOOL trackingOn;
 
 @property (atomic, assign, getter=isDetectionOn) BOOL detectionOn;
-@property (atomic, copy) void(^detectionHandler)(VLTMotionDetectResult * _Nonnull);
+@property (atomic, copy) void (^detectionHandler)(VLTMotionDetectResult *_Nonnull);
 
 @property (nonatomic) VLTDataThrottler *trackingThrottler;
 @property (atomic) NSUInteger seqIndex;
@@ -58,9 +58,9 @@ NSString * const VLTMotionDriving = @"driving";
     if (self) {
         _client = [[VLTClient alloc] init];
         vlt_weakify(self);
-        _client.operationFatoryHandler = ^NSArray<VLTMotionDataOperation *> *(VLTWsApiClient *wsApiClient,
-                                                                              NSArray<VLTData *> *motionData,
-                                                                              UInt32 sequenceIndex) {
+        _client.operationFatoryHandler = ^NSArray<VLTMotionDataOperation *> *(
+            VLTWsApiClient *wsApiClient, NSArray<VLTData *> *motionData, UInt32 sequenceIndex)
+        {
             vlt_strongify(self);
             return [self operationWithWsApiClient:wsApiClient motionData:motionData sequenceIndex:sequenceIndex];
         };
@@ -105,8 +105,9 @@ NSString * const VLTMotionDriving = @"driving";
 + (void)setTrackingDataLimit:(NSInteger)bytesCount
 {
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
-    [VLTManager shared].trackingThrottler = [[VLTDataThrottler alloc] initWithLimit:bytesCount
-                                                                reachabilityManager:[AFNetworkReachabilityManager sharedManager]];
+    [VLTManager shared].trackingThrottler =
+        [[VLTDataThrottler alloc] initWithLimit:bytesCount
+                            reachabilityManager:[AFNetworkReachabilityManager sharedManager]];
 }
 
 + (BOOL)isTrackingDataLimitReached
@@ -114,9 +115,9 @@ NSString * const VLTMotionDriving = @"driving";
     return [[VLTManager shared].trackingThrottler isLimitReached];
 }
 
-+ (void)setDetectionEnabled:(BOOL)enabled handler:(nonnull void(^)(VLTMotionDetectResult * _Nonnull))handler
++ (void)setDetectionEnabled:(BOOL)enabled handler:(nonnull void (^)(VLTMotionDetectResult *_Nonnull))handler
 {
-    [VLTManager shared].detectionOn = enabled;
+    [VLTManager shared].detectionOn      = enabled;
     [VLTManager shared].detectionHandler = handler;
 }
 
@@ -141,27 +142,27 @@ NSString * const VLTMotionDriving = @"driving";
 
     NSMutableArray<VLTMotionDataOperation *> *operations = [[NSMutableArray alloc] init];
     if (self.isTrackingOn && ![self.trackingThrottler shouldThrottle]) {
-        VLTWsCaptureUploadOperation *captureOp = [[VLTWsCaptureUploadOperation alloc] initWithMotionData:motionData
-                                                                                             wsApiClient:wsApiClient];
+        VLTWsCaptureUploadOperation *captureOp =
+            [[VLTWsCaptureUploadOperation alloc] initWithMotionData:motionData wsApiClient:wsApiClient];
         vlt_weakify(self);
         void (^increaseSentData)(NSUInteger) = ^void(NSUInteger bytesSent) {
             vlt_strongify(self);
             [self.trackingThrottler increaseSentDataBy:bytesSent];
         };
-        
+
         captureOp.onSuccess = increaseSentData;
-        captureOp.onError = ^(NSUInteger bytesSent, NSError *error) {
+        captureOp.onError   = ^(NSUInteger bytesSent, NSError *error) {
             NSLog(@"[VelocitySDK] Capture error: %@", error);
             increaseSentData(bytesSent);
         };
-        
+
         [operations addObject:captureOp];
     }
     if (self.isDetectionOn) {
-        VLTWsParkedDetectOperation *parkedOp = [[VLTWsParkedDetectOperation alloc] initWithMotionData:motionData
-                                                                                          wsApiClient:wsApiClient];
+        VLTWsParkedDetectOperation *parkedOp =
+            [[VLTWsParkedDetectOperation alloc] initWithMotionData:motionData wsApiClient:wsApiClient];
         parkedOp.onMotionDetect = [VLTManager shared].detectionHandler;
-        parkedOp.onError = ^(NSError *error) {
+        parkedOp.onError        = ^(NSError *error) {
             NSLog(@"[VelocitySDK] Detection error: %@", error);
         };
         [operations addObject:parkedOp];
@@ -171,19 +172,22 @@ NSString * const VLTMotionDriving = @"driving";
 
 + (void)labelCurrentMotionWith:(nonnull NSArray<NSString *> *)labels
 {
-    [VLTManager labelCurrentMotionWith:labels completion:^(BOOL success){}];
+    [VLTManager labelCurrentMotionWith:labels
+                            completion:^(BOOL success){
+                            }];
 }
 
 + (void)labelCurrentMotionWith:(nonnull NSArray<NSString *> *)labels
-                    completion:(nonnull void(^)(BOOL success))completion {
+                    completion:(nonnull void (^)(BOOL success))completion
+{
     [[VLTManager shared].client pushMotionDataWithLabels:labels
-                                                 success:^{
-                                                     vlt_invoke_block(completion, YES);
-                                                 }
-                                                 failure:^(NSError * _Nullable error) {
-                                                     vlt_invoke_block(completion, NO);
-                                                     NSLog(@"[VelocitySDK] error: %@ markCurrentMotionAs %@ failed. ", error, labels);
-                                                 }];
+        success:^{
+            vlt_invoke_block(completion, YES);
+        }
+        failure:^(NSError *_Nullable error) {
+            vlt_invoke_block(completion, NO);
+            NSLog(@"[VelocitySDK] error: %@ markCurrentMotionAs %@ failed. ", error, labels);
+        }];
 }
 
 + (void)setMotionActivityTrackingEnabled:(BOOL)enabled

@@ -2,21 +2,20 @@
 //  VLTGPSSensorRecorder.m
 //  VelocitySDK
 //
-//  
+//
 //  Copyright © 2017 VLCTY, Inc. All rights reserved.
 //
 
 #import "VLTGPSSensorRecorder.h"
 #import <CoreLocation/CoreLocation.h>
-#import "VLTGPS.h"
-#import "VLTSampleBuilder.h"
 #import "VLTData.h"
+#import "VLTGPS.h"
 #import "VLTSample.h"
+#import "VLTSampleBuilder.h"
 
 @implementation VLTGPSSensorRecorder
 
-- (instancetype)initWithUpdateInterval:(NSTimeInterval)interval
-                          timeInBuffer:(NSTimeInterval)timeInBuffer
+- (instancetype)initWithUpdateInterval:(NSTimeInterval)interval timeInBuffer:(NSTimeInterval)timeInBuffer
 {
     self = [super initWithUpdateInterval:interval timeInBuffer:timeInBuffer sensorType:VLTSensorTypeGPS];
     if (self) {
@@ -37,18 +36,14 @@
 {
     NSArray<CLLocation *> *locations = notification.userInfo[VLTGPSLocationsKey];
     for (CLLocation *location in locations) {
-        id <VLTSample> sample = [VLTSampleBuilder sampleFrom:location];
+        id<VLTSample> sample = [VLTSampleBuilder sampleFrom:location];
         [self addSample:sample];
     }
 }
 
-- (void)startRecording
-{
-}
+- (void)startRecording {}
 
-- (void)stopRecording
-{
-}
+- (void)stopRecording {}
 
 - (nonnull NSArray<VLTData *> *)dataForTimeInterval:(NSTimeInterval)interval
 {
@@ -59,21 +54,20 @@
         return [super dataForTimeInterval:interval];
     }
 
-    NSMutableArray <id<VLTSample>> *newResults = [gpsData.values mutableCopy];
+    NSMutableArray<id<VLTSample>> *newResults = [gpsData.values mutableCopy];
 
     id<VLTSample> lastSample = newResults.lastObject;
     if (lastSample) {
         NSTimeInterval timestampLimit = lastSample.timestamp - interval;
 
         id<VLTSample> sample = newResults.firstObject;
-        while (newResults.count > 2 && sample.timestamp < timestampLimit ) {
+        while (newResults.count > 2 && sample.timestamp < timestampLimit) {
             [newResults removeObjectAtIndex:0];
             sample = newResults.firstObject;
         }
     }
 
-    VLTData *data = [[VLTData alloc] initWithSensorType:gpsData.sensorType
-                                                 values:newResults];
+    VLTData *data = [[VLTData alloc] initWithSensorType:gpsData.sensorType values:newResults];
     return @[data];
 }
 

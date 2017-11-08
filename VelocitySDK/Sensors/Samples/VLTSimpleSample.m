@@ -2,7 +2,7 @@
 //  VLTSample.m
 //  Velocity
 //
-//  
+//
 //  Copyright © 2016 VLCTY, Inc. All rights reserved.
 //
 
@@ -11,7 +11,7 @@
 @interface VLTSimpleSample ()
 
 @property (nonatomic, assign) NSTimeInterval timestamp;
-@property (nonatomic, strong) NSArray <NSNumber *> *values;
+@property (nonatomic, strong) NSArray<NSNumber *> *values;
 
 @end
 
@@ -27,7 +27,7 @@
     self = [super init];
     if (self) {
         _timestamp = timestamp;
-        _values = values;
+        _values    = values;
     }
     return self;
 }

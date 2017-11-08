@@ -12,16 +12,15 @@
 @class VLTPBRequest;
 @class VLTPBResponse;
 
-typedef  void (^VLTWsApiHandshakeSuccess)(VLTPBHandshakeResponse * _Nonnull response);
-typedef  void (^VLTWsApiRequestSuccess)(VLTPBResponse * _Nonnull response);
-typedef  void (^VLTWsApiSuccess)(NSData * _Nonnull data);
-typedef  void (^VLTWsApiFailure)(NSError * _Nonnull error);
+typedef void (^VLTWsApiHandshakeSuccess)(VLTPBHandshakeResponse *_Nonnull response);
+typedef void (^VLTWsApiRequestSuccess)(VLTPBResponse *_Nonnull response);
+typedef void (^VLTWsApiSuccess)(NSData *_Nonnull data);
+typedef void (^VLTWsApiFailure)(NSError *_Nonnull error);
 
-typedef  void (^VLTWsApiOnOpen)(void);
-typedef  void (^VLTWsApiOnClose)(NSInteger code, NSString * _Nonnull reason);
-typedef  void (^VLTWsApiOnPong)(NSData * _Nullable pongPayload);
-typedef  void (^VLTWsApiOnError)(NSError * _Nonnull error);
-
+typedef void (^VLTWsApiOnOpen)(void);
+typedef void (^VLTWsApiOnClose)(NSInteger code, NSString *_Nonnull reason);
+typedef void (^VLTWsApiOnPong)(NSData *_Nullable pongPayload);
+typedef void (^VLTWsApiOnError)(NSError *_Nonnull error);
 
 @interface VLTWsApiClient : NSObject
 
@@ -40,8 +39,7 @@ typedef  void (^VLTWsApiOnError)(NSError * _Nonnull error);
 - (void)openWithAuthToken:(nonnull NSString *)authToken;
 - (void)close;
 
-- (NSUInteger)handshakeWithSuccess:(nonnull VLTWsApiHandshakeSuccess)success
-                           failure:(nonnull VLTWsApiFailure)failure;
+- (NSUInteger)handshakeWithSuccess:(nonnull VLTWsApiHandshakeSuccess)success failure:(nonnull VLTWsApiFailure)failure;
 
 - (NSUInteger)motionDetect:(nonnull VLTPBRequest *)request
                    success:(nonnull VLTWsApiRequestSuccess)success

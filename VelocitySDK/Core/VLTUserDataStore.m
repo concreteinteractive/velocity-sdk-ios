@@ -2,21 +2,21 @@
 //  VLTUserData.m
 //  VelocitySDK
 //
-//  
+//
 //  Copyright © 2017 VLCTY, Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "VLTUserDataStore.h"
+#import <UIKit/UIKit.h>
 #import "VLTApiClient.h"
+#import "VLTConfig.h"
 #import "VLTMacros.h"
 #import "VLTRecordingConfig.h"
-#import "VLTConfig.h"
 
 @interface VLTUserDataStore ()
 
-@property (atomic,  strong, nullable) VLTRecordingConfig *recordingConfig;
-@property (atomic,  strong, nonnull) NSString *sessionId;
+@property (atomic, strong, nullable) VLTRecordingConfig *recordingConfig;
+@property (atomic, strong, nonnull) NSString *sessionId;
 
 @end
 
@@ -36,7 +36,7 @@
 {
     self = [super init];
     if (self) {
-        _userId = [VLTConfig defaultUserID];
+        _userId    = [VLTConfig defaultUserID];
         _sessionId = [[NSUUID UUID] UUIDString];
     }
     return self;

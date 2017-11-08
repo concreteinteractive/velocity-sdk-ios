@@ -2,28 +2,29 @@
 //  VLTSampleBuilder.m
 //  Velocity
 //
-//  
+//
 //  Copyright © 2016 VLCTY, Inc. All rights reserved.
 //
 
 #import "VLTSampleBuilder.h"
+#import <CoreLocation/CoreLocation.h>
 #import <CoreMotion/CoreMotion.h>
-#import "VLTSimpleSample.h"
 #import "VLTDate.h"
 #import "VLTMacros.h"
-#import <CoreLocation/CoreLocation.h>
+#import "VLTSimpleSample.h"
 
-const NSInteger VLTSampleLatitudeIndex = 0;
-const NSInteger VLTSampleLongitudeIndex = 1;
-const NSInteger VLTSampleAltitudeIndex = 2;
+const NSInteger VLTSampleLatitudeIndex           = 0;
+const NSInteger VLTSampleLongitudeIndex          = 1;
+const NSInteger VLTSampleAltitudeIndex           = 2;
 const NSInteger VLTSampleHorizontalAccuracyIndex = 3;
-const NSInteger VLTSampleSpeedIndex = 4;
+const NSInteger VLTSampleSpeedIndex              = 4;
 
 const NSInteger VLTLocationSampleValuesCount = 5;
 
 @implementation VLTSampleBuilder
 
-+ (nonnull id<VLTSample>)simulatorSample {
++ (nonnull id<VLTSample>)simulatorSample
+{
     return [[VLTSimpleSample alloc] initWithTimestamp:[[NSDate date] timeIntervalSince1970]
                                                     x:arc4random_uniform(10)
                                                     y:arc4random_uniform(10)
@@ -50,12 +51,12 @@ const NSInteger VLTLocationSampleValuesCount = 5;
 {
     return [[VLTSimpleSample alloc] initWithTimestamp:location.timestamp.timeIntervalSince1970
                                                values:@[
-                                                        @(location.coordinate.latitude),
-                                                        @(location.coordinate.longitude),
-                                                        @(location.altitude),
-                                                        @(location.horizontalAccuracy),
-                                                        @(location.speed),
-                                                        ]];
+                                                   @(location.coordinate.latitude),
+                                                   @(location.coordinate.longitude),
+                                                   @(location.altitude),
+                                                   @(location.horizontalAccuracy),
+                                                   @(location.speed),
+                                               ]];
 }
 
 + (nonnull id<VLTSample>)emptySample

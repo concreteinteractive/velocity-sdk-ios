@@ -2,7 +2,7 @@
 //  ListQueue.h
 //  VelocitySDK iOS
 //
-//  
+//
 //  Copyright © 2017 VLCTY, Inc. All rights reserved.
 //
 

@@ -63,7 +63,7 @@
  * @param enabled - bool flag which indicates whether tracking should be enabled
  * @param handler - handler, which is invoked when detection occurs
  */
-+ (void)setDetectionEnabled:(BOOL)enabled handler:(nonnull void(^)(VLTMotionDetectResult * _Nonnull))handler;
++ (void)setDetectionEnabled:(BOOL)enabled handler:(nonnull void (^)(VLTMotionDetectResult *_Nonnull))handler;
 
 /**
  @brief Returns whether Velocity detection is enabled
@@ -80,7 +80,7 @@
  * @param completion - invoked when request is completed, success flag indicates that error occured
  */
 + (void)labelCurrentMotionWith:(nonnull NSArray<NSString *> *)labels
-                    completion:(nonnull void(^)(BOOL success))completion;
+                    completion:(nonnull void (^)(BOOL success))completion;
 
 /**
  @brief Control the state of core motion activity tracking
