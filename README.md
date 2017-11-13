@@ -1,5 +1,17 @@
 # velocity-sdk-ios
 
+## Setup ##
+In your app delegate set unique api token which is assigned to your company
+
+```func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    ...
+    VLTManager.setApiToken("unique_token_assigned_to_you")
+    ...
+}```
+
+You can also set custom user id:
+```VLTManager.setUserId(NSUUID().uuidString)```
+
 ## Motion Detection ##
 
 Enable motions detection and add a completion block to listen for new detections
