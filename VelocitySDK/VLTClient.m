@@ -23,6 +23,8 @@
 #import "VLTUserDataStore.h"
 #import "VLTWsApiClient.h"
 
+@import SocketRocket;
+
 static void *VLTIsActiveKVOContext = &VLTIsActiveKVOContext;
 
 static const NSTimeInterval LabeledDataMaxTimeInterval = 300;
@@ -88,21 +90,34 @@ static const NSUInteger VLTWsApiQueueSize              = 10;
     self.wsApiClient = [[VLTWsApiClient alloc] initWithQueueSize:VLTWsApiQueueSize];
     [self.wsApiClient setOnClose:^(NSInteger code, NSString *_Nonnull reason) {
         DLog(@"WS Closed: %ld [%@]", (long)code, reason);
+        vlt_strongify(self);
+        if (code != SRStatusCodeNormal && code != SRStatusCodeGoingAway) {
+            [self reconnectAndStartMotionSensing];
+        }
     }];
     [self.wsApiClient setOnError:^(NSError *_Nonnull error) {
         DLog(@"WS error: %@", error);
         vlt_strongify(self);
-        [self reinitializeWsApiClient];
-        [self startMotionSensing];
+        [self reconnectAndStartMotionSensing];
     }];
     [self.wsApiClient setOnPong:^(NSData *_Nullable pongPayload) {
         DLog(@"WS API Client PONG: %@", [[NSString alloc] initWithData:pongPayload encoding:NSUTF8StringEncoding]);
     }];
 }
 
+- (void)reconnectAndStartMotionSensing
+{
+    [self reinitializeWsApiClient];
+    [self startMotionSensing];
+}
+
 - (void)closeWsApiClientIfNeeded
 {
     if (self.wsApiClient && !self.wsApiClient.isClosed) {
+        [self.wsApiClient setOnOpen:nil];
+        [self.wsApiClient setOnClose:nil];
+        [self.wsApiClient setOnError:nil];
+        [self.wsApiClient setOnPong:nil];
         [self.wsApiClient close];
     }
 }

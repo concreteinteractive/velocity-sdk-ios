@@ -8,6 +8,7 @@
 
 #import "VLTDataThrottler.h"
 #import <AFNetworking/AFNetworkReachabilityManager.h>
+#import "VLTMacros.h"
 
 static NSString *const VLTDataThrottlerKey = @"VLTDataThrottlerKey";
 
@@ -65,6 +66,8 @@ static NSString *const VLTDataThrottlerKey = @"VLTDataThrottlerKey";
 
     [[NSUserDefaults standardUserDefaults] setValue:self.sentDataDict forKey:VLTDataThrottlerKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
+
+    DLog(@"Total sent data: %ld", (long)sentBytesCount);
 }
 
 - (NSString *)todaysKey
