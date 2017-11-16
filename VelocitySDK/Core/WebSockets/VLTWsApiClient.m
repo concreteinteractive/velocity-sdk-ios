@@ -59,17 +59,21 @@ static NSString *const VLTWsApiClientUrl = @"https://sdk.vlcty.net/api/ws";
         VLTWsApiClientRequest *req = [self.queue get];
         vlt_invoke_block(req.success, message);
     } else {
-        DLog(@"[Error]: Data received successfully. But data has no handler for it.")
+        DLog(@"[Error]: Data received successfully. But data has no handler for it.");
     }
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error
 {
-    if (self.queue.count > 0) {
+    [self finishOperationsInQueueWithError:error];
+    vlt_invoke_block(self.onError, error);
+}
+
+- (void)finishOperationsInQueueWithError:(NSError *)error
+{
+    while (self.queue.count > 0) {
         VLTWsApiClientRequest *req = [self.queue get];
         vlt_invoke_block(req.failure, error);
-    } else {
-        vlt_invoke_block(self.onError, error);
     }
 }
 
@@ -84,6 +88,9 @@ static NSString *const VLTWsApiClientUrl = @"https://sdk.vlcty.net/api/ws";
               reason:(NSString *)reason
             wasClean:(BOOL)wasClean
 {
+    NSError *error = [NSError errorWithDomain:VLTErrorDomain code:VLTWsApiClientDisconnectedError userInfo:nil];
+    [self finishOperationsInQueueWithError:error];
+
     self.closed        = YES;
     webSocket.delegate = nil;
     vlt_invoke_block(self.onClose, code, reason);
@@ -179,8 +186,14 @@ static NSString *const VLTWsApiClientUrl = @"https://sdk.vlcty.net/api/ws";
 - (void)sendData:(NSData *)data success:(VLTWsApiSuccess)success failure:(VLTWsApiFailure)failure
 {
     if (self.queue.count > self.queueSize) {
-        NSError *error = [NSError errorWithDomain:VLTErrorDomain code:VLTApiWsQueueIsFullError userInfo:nil];
+        NSError *error = [NSError errorWithDomain:VLTErrorDomain code:VLTWsApiQueueIsFullError userInfo:nil];
         [self webSocket:self.ws didFailWithError:error];
+        return;
+    }
+
+    if ([self.ws readyState] != SR_OPEN) {
+        NSError *error = [NSError errorWithDomain:VLTErrorDomain code:VLTWsApiClientDisconnectedError userInfo:nil];
+        failure(error);
         return;
     }
 

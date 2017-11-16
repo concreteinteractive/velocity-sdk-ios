@@ -25,8 +25,8 @@
 {
     self = [super init];
     if (self) {
-        _sampleSize        = handshakeResponse.sampleSize;
-        _captureInterval   = handshakeResponse.captureInterval;
+        _sampleSize        = 6; // handshakeResponse.sampleSize;
+        _captureInterval   = 6; // handshakeResponse.captureInterval;
         _detectMotionOn    = handshakeResponse.canLabelMotion;
         _pushLabeledDataOn = handshakeResponse.canLabelMotion;
     }
