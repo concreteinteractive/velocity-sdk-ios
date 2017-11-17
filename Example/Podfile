@@ -1,6 +1,9 @@
 platform :ios, '8.0'
 use_frameworks!
 
+source 'https://github.com/velocity-inc/velocity-pods.git'
+source 'https://github.com/CocoaPods/Specs.git'
+
 target 'Example' do
   pod 'VelocitySDK', :path => '../'
 end

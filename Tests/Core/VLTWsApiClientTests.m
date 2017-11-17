@@ -9,7 +9,6 @@
 
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
-#import <Quick/Quick.h>
 #import "VLTWsApiClient.h"
 #import <SocketRocket/SocketRocket.h>
 #import "Velocity.pbobjc.h"
@@ -18,7 +17,7 @@
 
 @property (atomic, strong) SRWebSocket *ws;
 
-- (void)sendData:(NSData *)data error:(NSError **)error;
+- (void)sendData:(NSData *)data success:(VLTWsApiSuccess)success failure:(VLTWsApiFailure)failure;
 
 @end
 
@@ -56,7 +55,7 @@
 {
     XCTestExpectation *expectation = [self expectationWithDescription:@"handshake test"];
 
-    OCMStub([(SRWebSocket *)self.mockWebSocket send:OCMOCK_ANY]).andDo(nil);
+    OCMStub([(SRWebSocket *)self.mockWebSocket sendData:OCMOCK_ANY error:[OCMArg setTo:nil]]).andReturn(YES);
 
     [self.wsApiClient handshakeWithSuccess:^(VLTPBHandshakeResponse * _Nonnull response) {
         XCTAssertEqual(response.sampleSize, 5);
@@ -75,10 +74,9 @@
     response.canLabelMotion = YES;
     [self.wsApiClient webSocket:self.mockWebSocket didReceiveMessage:[response data]];
 
-
-
     XCTestExpectation *failExpectation = [self expectationWithDescription:@"handshake error test"];
-    OCMStub([(SRWebSocket *)self.mockWebSocket send:OCMOCK_ANY]).andDo(nil);
+
+    OCMStub([(SRWebSocket *)self.mockWebSocket sendData:OCMOCK_ANY error:[OCMArg setTo:nil]]).andReturn(YES);
 
     [self.wsApiClient handshakeWithSuccess:^(VLTPBHandshakeResponse * _Nonnull response) {
     } failure:^(NSError * _Nonnull error) {
@@ -94,16 +92,9 @@
 
 - (void)testMotionDetect
 {
-    OCMStub([self.mockWebSocket send:OCMOCK_ANY]).andDo(nil);
+    OCMStub([self.mockWebSocket sendData:OCMOCK_ANY error:[OCMArg setTo:nil]]).andReturn(YES);
 
     XCTestExpectation *expectation = [self expectationWithDescription:@"response received."];
-    OCMStub([self.mockWebSocket send:OCMOCK_ANY]).andDo(^(NSInvocation *invocation){
-        VLTPBModelPrediction *mp = [[VLTPBModelPrediction alloc] init];
-        mp.modelName = @"TEST MODEL";
-        VLTPBResponse *response = [[VLTPBResponse alloc] init];
-        response.modelPredictionsArray = [@[mp] mutableCopy];
-        [self.wsApiClient webSocket:self.mockWebSocket didReceiveMessage:[response data]];
-    });
 
     [self.wsApiClient motionDetect:[[VLTPBRequest alloc] init] success:^(VLTPBResponse * _Nonnull response) {
         XCTAssertEqualObjects(@"TEST MODEL", response.modelPredictionsArray[0].modelName);
@@ -140,7 +131,9 @@
     req.sessionId = @"TEST SESSION";
 
 
-    id invocation = OCMStub([self.mockWebSocket send:OCMOCK_ANY]).andDo(^(NSInvocation *invocation){
+    id invocation = OCMStub([(SRWebSocket *)self.mockWebSocket sendData:OCMOCK_ANY error:[OCMArg setTo:nil]])
+        .andDo(^(NSInvocation *invocation){
+
         NSData *data = nil;
         [invocation getArgument:&data atIndex:2];
 
@@ -150,23 +143,34 @@
         XCTAssertEqual(receivedReq.modelNamesArray.count, 0);
         XCTAssertEqualObjects(@"TEST SESSION", receivedReq.sessionId);
         XCTAssertNil(error);
-        NSLog(@"modelNamesArray: %@", receivedReq.modelNamesArray);
     });
 
-    NSError *error = nil;
-    [self.wsApiClient captureUpload:req error:&error];
+    __block NSError *outError = nil;
+    [self.wsApiClient captureUpload:req success:^(VLTPBResponse * _Nonnull response) {
 
-    XCTAssertNil(error);
+    } failure:^(NSError * _Nonnull error) {
+        outError = error;
+    }];
+
+    XCTAssertNil(outError);
     OCMVerify(invocation);
 }
 
 - (void)testSendData
 {
-    id invocation = OCMExpect([(SRWebSocket *)self.mockWebSocket send:OCMOCK_ANY]).andDo(nil);
+    id invocation = OCMExpect([(SRWebSocket *)self.mockWebSocket sendData:OCMOCK_ANY
+                                                                    error:[OCMArg setTo:nil]]).andDo(nil);
     NSData *data = [@"THIS IS DATA" dataUsingEncoding:NSUTF8StringEncoding];
-    [self.wsApiClient sendData:data error:nil];
+    [self.wsApiClient sendData:data success:^(NSData *_Nonnull data) {} failure:^(NSError *_Nonnull error) {}];
     OCMVerify(invocation);
 }
 
+- (VLTPBResponse *)emptyResponse
+{
+    VLTPBResponse *response = [[VLTPBResponse alloc] init];
+    response.modelPredictionsArray = [@[] mutableCopy];
+
+    return response;
+}
 
 @end
