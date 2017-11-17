@@ -9,7 +9,6 @@
 #import <XCTest/XCTest.h>
 #import <AFNetworking/AFNetworking.h>
 #import <OCMock/OCMock.h>
-#import <Quick/Quick.h>
 #import "VLTApiClient.h"
 
 @interface VLTApiClient ()

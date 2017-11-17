@@ -34,6 +34,8 @@ static NSString *const VLTWsApiClientUrl = @"https://sdk.vlcty.net/api/ws";
 @property (atomic, assign, getter=isOpen) BOOL open;
 @property (atomic, assign, getter=isClosed) BOOL closed;
 
+@property (atomic, copy) void(^closeBlock)(void);
+
 @end
 
 @implementation VLTWsApiClient
@@ -92,8 +94,12 @@ static NSString *const VLTWsApiClientUrl = @"https://sdk.vlcty.net/api/ws";
     [self finishOperationsInQueueWithError:error];
 
     self.closed        = YES;
-    webSocket.delegate = nil;
     vlt_invoke_block(self.onClose, code, reason);
+    webSocket.delegate = nil;
+
+    if (self.closeBlock != nil) {
+        self.closeBlock();
+    }
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didReceivePong:(NSData *)pongPayload
@@ -111,6 +117,14 @@ static NSString *const VLTWsApiClientUrl = @"https://sdk.vlcty.net/api/ws";
 
 - (void)close
 {
+    if (self.ws.readyState == SR_CLOSING || self.ws.readyState == SR_CLOSED) {
+        return;
+    }
+
+    __strong typeof(self) strongSelf = self;
+    self.closeBlock = ^{
+        strongSelf.closeBlock = nil;
+    };
     [self.ws close];
 }
 
@@ -199,7 +213,12 @@ static NSString *const VLTWsApiClientUrl = @"https://sdk.vlcty.net/api/ws";
 
     VLTWsApiClientRequest *req = [[VLTWsApiClientRequest alloc] initWithData:data success:success failure:failure];
     [self.queue add:req];
-    [self.ws send:data];
+    NSError *error = nil;
+    BOOL ok = [self.ws sendData:data error:&error];
+    if (!ok) {
+        [self.queue get];
+        failure(error);
+    }
 }
 
 @end

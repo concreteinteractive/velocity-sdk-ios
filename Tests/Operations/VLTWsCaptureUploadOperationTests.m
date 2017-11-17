@@ -33,7 +33,15 @@
 
 - (void)testSuccess
 {
-    OCMStub([self.wsApiClientMock captureUpload:OCMOCK_ANY error:[OCMArg setTo:nil]]).andDo(nil);
+    __block VLTPBResponse *response = [self emptyResponse];
+    
+    OCMStub([self.wsApiClientMock captureUpload:OCMOCK_ANY
+                                        success:OCMOCK_ANY
+                                        failure:OCMOCK_ANY]).andDo(^(NSInvocation *invocation){
+        VLTWsApiRequestSuccess successBlock;
+        [invocation getArgument:&successBlock atIndex:3];
+        successBlock(response);
+    });
 
     XCTestExpectation *expectation = [self expectationWithDescription:@"block invoked"];
     self.op.onSuccess = ^(NSUInteger bytesSent) {
@@ -46,8 +54,12 @@
 - (void)testFailure
 {
     OCMStub([self.wsApiClientMock captureUpload:OCMOCK_ANY
-                                          error:[OCMArg setTo:[NSError errorWithDomain:@"TESTS" code:3 userInfo:nil]]])
-    .andDo(nil);
+                                        success:OCMOCK_ANY
+                                        failure:OCMOCK_ANY]).andDo(^(NSInvocation *invocation){
+        VLTWsApiFailure failureBlock;
+        [invocation getArgument:&failureBlock atIndex:4];
+        failureBlock([NSError errorWithDomain:@"TESTS" code:2 userInfo:nil]);
+    });
 
     XCTestExpectation *errorExpectation = [self expectationWithDescription:@"block invoked"];
     self.op.onError = ^(NSUInteger bytesSent, NSError *error) {
@@ -56,6 +68,18 @@
 
     [self.op start];
     [self waitForExpectations:@[errorExpectation] timeout:0.1];
+
+    XCTAssertNotNil(self.op.error);
+    XCTAssertEqual(2, self.op.error.code);
+    XCTAssertEqualObjects(@"TESTS", [self.op.error domain]);
+}
+
+- (VLTPBResponse *)emptyResponse
+{
+    VLTPBResponse *response = [[VLTPBResponse alloc] init];
+    response.modelPredictionsArray = [@[] mutableCopy];
+
+    return response;
 }
 
 @end
