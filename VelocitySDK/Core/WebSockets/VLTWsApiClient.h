@@ -27,12 +27,10 @@ typedef void (^VLTWsApiOnError)(NSError *_Nonnull error);
 @property (copy, readonly, nullable) NSString *authToken;
 
 @property (atomic, copy, nullable) VLTWsApiOnOpen onOpen;
-@property (atomic, copy, nullable) VLTWsApiOnClose onClose;
 @property (atomic, copy, nullable) VLTWsApiOnPong onPong;
 @property (atomic, copy, nullable) VLTWsApiOnError onError;
 
-@property (atomic, assign, readonly, getter=isOpen) BOOL open;
-@property (atomic, assign, readonly, getter=isClosed) BOOL closed;
+@property (nonatomic, assign, readonly, getter=isOpen) BOOL open;
 
 - (nonnull instancetype)initWithQueueSize:(NSUInteger)queueSize;
 

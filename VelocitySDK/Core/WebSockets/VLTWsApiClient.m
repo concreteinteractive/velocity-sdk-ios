@@ -31,9 +31,7 @@ static NSString *const VLTWsApiClientUrl = @"https://sdk.vlcty.net/api/ws";
 @property (atomic, strong) SRWebSocket *ws;
 @property (atomic, assign) BOOL handshakeCompleted;
 
-@property (atomic, assign, getter=isOpen) BOOL open;
 @property (atomic, assign, getter=isClosed) BOOL closed;
-
 @property (atomic, copy) void(^closeBlock)(void);
 
 @end
@@ -79,9 +77,13 @@ static NSString *const VLTWsApiClientUrl = @"https://sdk.vlcty.net/api/ws";
     }
 }
 
+- (BOOL)isOpen
+{
+    return self.ws.readyState == SR_OPEN;
+}
+
 - (void)webSocketDidOpen:(SRWebSocket *)webSocket
 {
-    self.open = YES;
     vlt_invoke_block(self.onOpen);
 }
 
@@ -90,13 +92,15 @@ static NSString *const VLTWsApiClientUrl = @"https://sdk.vlcty.net/api/ws";
               reason:(NSString *)reason
             wasClean:(BOOL)wasClean
 {
-    NSError *error = [NSError errorWithDomain:VLTErrorDomain code:VLTWsApiClientDisconnectedError userInfo:nil];
+    NSError *error = [NSError errorWithDomain:VLTErrorDomain
+                                         code:VLTWsApiClientDisconnectedError
+                                     userInfo:@{
+                                                VLTWsCloseWithCodeKey: @(code),
+                                                VLTWsCloseWasCleanKey: @(wasClean),
+                                                }];
     [self finishOperationsInQueueWithError:error];
-
-    self.closed        = YES;
-    vlt_invoke_block(self.onClose, code, reason);
+    vlt_invoke_block(self.onError, error);
     webSocket.delegate = nil;
-
     if (self.closeBlock != nil) {
         self.closeBlock();
     }
@@ -117,10 +121,13 @@ static NSString *const VLTWsApiClientUrl = @"https://sdk.vlcty.net/api/ws";
 
 - (void)close
 {
+    self.onOpen = nil;
+    self.onError = nil;
+    self.onPong = nil;
+
     if (self.ws.readyState == SR_CLOSING || self.ws.readyState == SR_CLOSED) {
         return;
     }
-
     __strong typeof(self) strongSelf = self;
     self.closeBlock = ^{
         strongSelf.closeBlock = nil;

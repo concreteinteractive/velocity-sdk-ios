@@ -43,7 +43,7 @@
       "~> 3.4.0"
     ],
     "SocketRocket": [
-      "~> 0.6.0"
+      "~> 0.6.0-vlcty"
     ]
   },
   "subspecs": [
