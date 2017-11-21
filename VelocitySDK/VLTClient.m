@@ -24,6 +24,7 @@
 #import "VLTWsApiClient.h"
 
 @import SocketRocket;
+@import AFNetworking;
 
 static void *VLTIsActiveKVOContext = &VLTIsActiveKVOContext;
 
@@ -41,6 +42,7 @@ static const NSUInteger VLTWsApiQueueSize              = 10;
 @property (atomic, strong) VLTWsApiClient *wsApiClient;
 
 @property (nonatomic, strong) NSOperationQueue *processingQueue;
+@property (nonatomic, strong) AFNetworkReachabilityManager *reachabilityManager;
 
 @end
 
@@ -55,6 +57,14 @@ static const NSUInteger VLTWsApiQueueSize              = 10;
     if (self) {
         _processingQueue           = [[NSOperationQueue alloc] init];
         _processingQueue.suspended = NO;
+
+        _reachabilityManager = [AFNetworkReachabilityManager manager];
+        [_reachabilityManager startMonitoring];
+        vlt_weakify(self);
+        [_reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+            vlt_strongify(self);
+            [self handleReachabilityChange];
+        }];
         [self initializeWsApiClient];
     }
     return self;
@@ -72,15 +82,53 @@ static const NSUInteger VLTWsApiQueueSize              = 10;
     @synchronized(self) { return _active; }
 }
 
+- (void)handleReachabilityChange
+{
+    if (!self.isActive) {
+        return;
+    }
+
+    if ([self.reachabilityManager isReachable] && !self.wsApiClient.isOpen) {
+        [self reinitializeWsApiClient];
+    }
+}
+
 - (void)handleIsActiveChange
 {
     if (self.isActive) {
         [self reinitializeWsApiClient];
-        [self startMotionSensing];
     } else {
         [self stopMotionSensing];
         [self closeWsApiClientIfNeeded];
     }
+}
+
+- (BOOL)shouldReconnectAfterError:(NSError *)error
+{
+    if ([error.domain isEqualToString:VLTErrorDomain] && error.code == VLTWsApiClientDisconnectedError) {
+        BOOL wasClean = [error.userInfo[VLTWsCloseWasCleanKey] boolValue];
+        if (wasClean) {
+            return NO;
+        }
+    }
+
+    if ([error.domain isEqualToString:NSPOSIXErrorDomain]) {
+        switch (error.code) {
+            case ECONNREFUSED:
+                return NO;
+            default:
+                break;
+        }
+    }
+
+    if ([error.domain isEqualToString:SRWebSocketErrorDomain]) {
+        NSInteger code = [error.userInfo[SRHTTPResponseErrorKey] integerValue];
+        if (code >= 400) {
+            return NO;
+        }
+    }
+
+    return YES;
 }
 
 - (void)initializeWsApiClient
@@ -88,48 +136,41 @@ static const NSUInteger VLTWsApiQueueSize              = 10;
     [self closeWsApiClientIfNeeded];
     vlt_weakify(self);
     self.wsApiClient = [[VLTWsApiClient alloc] initWithQueueSize:VLTWsApiQueueSize];
-    [self.wsApiClient setOnClose:^(NSInteger code, NSString *_Nonnull reason) {
-        DLog(@"WS Closed: %ld [%@]", (long)code, reason);
-        vlt_strongify(self);
-        if (code != SRStatusCodeNormal && code != SRStatusCodeGoingAway) {
-            [self reconnectAndStartMotionSensing];
-        }
-    }];
     [self.wsApiClient setOnError:^(NSError *_Nonnull error) {
         DLog(@"WS error: %@", error);
+
         vlt_strongify(self);
-        [self reconnectAndStartMotionSensing];
+        BOOL shouldReconnect = [self shouldReconnectAfterError:error];
+        if (shouldReconnect) {
+            [self reinitializeWsApiClient];
+        } else {
+            self.active = NO;
+        }
     }];
     [self.wsApiClient setOnPong:^(NSData *_Nullable pongPayload) {
         DLog(@"WS API Client PONG: %@", [[NSString alloc] initWithData:pongPayload encoding:NSUTF8StringEncoding]);
     }];
 }
 
-- (void)reconnectAndStartMotionSensing
+- (void)reinitializeWsApiClient
 {
-    [self reinitializeWsApiClient];
+    [self initializeWsApiClient];
     [self startMotionSensing];
 }
 
 - (void)closeWsApiClientIfNeeded
 {
-    if (self.wsApiClient && !self.wsApiClient.isClosed) {
-        [self.wsApiClient setOnOpen:nil];
-        [self.wsApiClient setOnClose:nil];
-        [self.wsApiClient setOnError:nil];
-        [self.wsApiClient setOnPong:nil];
+    if (self.wsApiClient.isOpen) {
         [self.wsApiClient close];
     }
 }
 
-- (void)reinitializeWsApiClient
-{
-    [self stopMotionSensing];
-    [self initializeWsApiClient];
-}
-
 - (void)startMotionSensing
 {
+    if (!self.reachabilityManager.isReachable) {
+        return;
+    }
+
     vlt_weakify(self);
     [self.wsApiClient setOnOpen:^{
         vlt_strongify(self);
@@ -139,8 +180,7 @@ static const NSUInteger VLTWsApiQueueSize              = 10;
             [self startRecording];
         }
             failure:^(NSError *_Nonnull error) {
-                vlt_strongify(self);
-                [self handleError:error];
+                DLog(@"Handshake error: %@", error);
             }];
     }];
     [self.wsApiClient openWithAuthToken:self.authToken];
@@ -154,7 +194,6 @@ static const NSUInteger VLTWsApiQueueSize              = 10;
 - (void)startRecording
 {
     if (!self.recordingConfig) {
-        [self handleError:[NSError errorWithDomain:VLTErrorDomain code:VLTClientError userInfo:nil]];
         return;
     }
 
@@ -193,24 +232,9 @@ static const NSUInteger VLTWsApiQueueSize              = 10;
     }];
 }
 
-- (void)handleError:(NSError *)error
-{
-    if (error && [error.domain isEqualToString:VLTErrorDomain]) {
-        switch (error.code) {
-            case VLTApiFatalError:
-            case VLTApiTokenNotRecognized:
-            case VLTApiTokenNoAccess:
-                self.active = NO;
-                break;
-            default:
-                break;
-        }
-    }
-}
-
 - (void)capture
 {
-    if (self.isInProgress) {
+    if (self.isInProgress || !self.wsApiClient.isOpen) {
         return;
     }
 

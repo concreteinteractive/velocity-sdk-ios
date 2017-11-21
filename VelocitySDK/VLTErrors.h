@@ -22,6 +22,8 @@ enum : NSInteger {
     VLTWsApiClientDisconnectedError = 1007, // Websockets api error
 };
 
+static NSString *const VLTWsCloseWithCodeKey = @"VLTWsClosedWithCode";
+static NSString *const VLTWsCloseWasCleanKey = @"VLTWsCloseWasClean";
 static NSString *const VLTErrorDomain = @"VLTErrorDomain";
 
 #endif /* VLTErrors_h */

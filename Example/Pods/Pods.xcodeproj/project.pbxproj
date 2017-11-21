@@ -300,13 +300,13 @@
 		01E6907CF2644EB1CF8E23F708A3DA0B /* Pods-Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Example-resources.sh"; sourceTree = "<group>"; };
 		02CDC0105395D507F4CB3C8CAAD0A3DB /* VLTHTTPMotionDetectOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = VLTHTTPMotionDetectOperation.m; sourceTree = "<group>"; };
 		03968AE850C596295C5DDABB14C3D744 /* GPBUnknownFieldSet.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPBUnknownFieldSet.m; path = objectivec/GPBUnknownFieldSet.m; sourceTree = "<group>"; };
-		06E84AB99A867246A9353366C821FBB9 /* AFNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AFNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		06E84AB99A867246A9353366C821FBB9 /* AFNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = AFNetworking.framework; path = AFNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		07A8652EC761032A0E42B4E241AE1ABD /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/MobileCoreServices.framework; sourceTree = DEVELOPER_DIR; };
 		0895D8C6F673B65E33F20D22691948EA /* Empty.pbobjc.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = Empty.pbobjc.m; path = objectivec/google/protobuf/Empty.pbobjc.m; sourceTree = "<group>"; };
 		0A0F193DD3AE3CDD0D2E4FD8E3C24F12 /* AFNetworking-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "AFNetworking-dummy.m"; sourceTree = "<group>"; };
 		0FAF84F3F09116D6FA728D54526AB7DA /* VelocitySDK.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = VelocitySDK.xcconfig; sourceTree = "<group>"; };
 		0FD881E716DEE700A5591E74E8CEDBE2 /* GPBUtilities.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPBUtilities.m; path = objectivec/GPBUtilities.m; sourceTree = "<group>"; };
-		119072C64A19799964E1620D83F514FB /* Pods-Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-Example.modulemap"; sourceTree = "<group>"; };
+		119072C64A19799964E1620D83F514FB /* Pods-Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-Example.modulemap"; sourceTree = "<group>"; };
 		11AEC6777C16F7FBB84142E6B21A4F2A /* VLTSampleBuilder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = VLTSampleBuilder.m; sourceTree = "<group>"; };
 		11E94AA325355F434A454CC6D363FFF9 /* VLTWsApiClientRequest.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = VLTWsApiClientRequest.m; sourceTree = "<group>"; };
 		120C4AFB1B75FBAA1C7540C414B9F2DF /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFNetworkReachabilityManager.h; path = AFNetworking/AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
@@ -340,7 +340,7 @@
 		27BF248D38A894E5D1019DB8102CAA1C /* NSRunLoop+SRWebSocket.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSRunLoop+SRWebSocket.m"; path = "SocketRocket/NSRunLoop+SRWebSocket.m"; sourceTree = "<group>"; };
 		2817C77501D5D426A2C071CE67DD8952 /* VLTLabeledDataUploadOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = VLTLabeledDataUploadOperation.m; sourceTree = "<group>"; };
 		2A80D05F097AEF897A16F60CF126227E /* VLTDataThrottler.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = VLTDataThrottler.h; sourceTree = "<group>"; };
-		2BA3A16985BF7FF69BFD6B0E4504F315 /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BA3A16985BF7FF69BFD6B0E4504F315 /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Example.framework; path = "Pods-Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C3273DD1D4B9A10D1BEBF63BB3FBE70 /* VLTErrors.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = VLTErrors.h; sourceTree = "<group>"; };
 		2DE6F91E5355ABCE9F48910CB89D266E /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2EB984EAD7B71A72B7A25995000DA6AC /* GPBMessage_PackagePrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBMessage_PackagePrivate.h; path = objectivec/GPBMessage_PackagePrivate.h; sourceTree = "<group>"; };
@@ -374,7 +374,7 @@
 		515C856FE4B3E351D958EA708E24496D /* VLTMultiMotionRecorder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = VLTMultiMotionRecorder.h; sourceTree = "<group>"; };
 		51AAEB3B1D4B2C7C048C5EAECECED5D1 /* GPBProtocolBuffers.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBProtocolBuffers.h; path = objectivec/GPBProtocolBuffers.h; sourceTree = "<group>"; };
 		539B8BC7E7A36CE919081850D0366A67 /* VLTGPSSensorRecorder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = VLTGPSSensorRecorder.h; sourceTree = "<group>"; };
-		5461413038FC41C1774F873391D11335 /* Protobuf.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = Protobuf.modulemap; sourceTree = "<group>"; };
+		5461413038FC41C1774F873391D11335 /* Protobuf.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = Protobuf.modulemap; sourceTree = "<group>"; };
 		547197364A3470333EBF7077DBE4CCFC /* SRPinningSecurityPolicy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SRPinningSecurityPolicy.m; path = SocketRocket/Internal/Security/SRPinningSecurityPolicy.m; sourceTree = "<group>"; };
 		552550F3F912264E5D073F8893691F88 /* Pods-Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Example-frameworks.sh"; sourceTree = "<group>"; };
 		558945E4877BBF192C877223D680ED00 /* VLTWsCaptureUploadOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = VLTWsCaptureUploadOperation.h; sourceTree = "<group>"; };
@@ -433,7 +433,7 @@
 		83A9CAD411643FCDA5760AB4EFD0ACE0 /* Timestamp.pbobjc.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Timestamp.pbobjc.h; path = objectivec/google/protobuf/Timestamp.pbobjc.h; sourceTree = "<group>"; };
 		845AB0269E7CCBA68252B5FA486BCE09 /* NSRunLoop+SRWebSocketPrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSRunLoop+SRWebSocketPrivate.h"; path = "SocketRocket/Internal/NSRunLoop+SRWebSocketPrivate.h"; sourceTree = "<group>"; };
 		8602D4795C2D82329C207FCE2F355059 /* VLTHTTPCaptureUploadOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = VLTHTTPCaptureUploadOperation.h; sourceTree = "<group>"; };
-		8738006B79E7DDEE0C5A4D4E058EE018 /* VelocitySDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VelocitySDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8738006B79E7DDEE0C5A4D4E058EE018 /* VelocitySDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = VelocitySDK.framework; path = VelocitySDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D030DE2A24A1CE5D74B36E276275C39 /* VelocitySDK-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "VelocitySDK-prefix.pch"; sourceTree = "<group>"; };
 		8DB5CCD18B703BB8A31BA79F716E0A93 /* VLTManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = VLTManager.m; sourceTree = "<group>"; };
 		8E1CAF72CBD148076A778366CEDBA42F /* Struct.pbobjc.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Struct.pbobjc.h; path = objectivec/google/protobuf/Struct.pbobjc.h; sourceTree = "<group>"; };
@@ -443,14 +443,14 @@
 		900C28C18D4886C1B0BF750E45785DC0 /* FifoListQueue.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = FifoListQueue.h; sourceTree = "<group>"; };
 		902A155EB4F50032EE6EBCC01D36F78D /* VLTData.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = VLTData.h; sourceTree = "<group>"; };
 		90790BF4C2DEBB075CD9288813D8E337 /* GPBDescriptor.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPBDescriptor.m; path = objectivec/GPBDescriptor.m; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		93EA10E35763778E24583AEBF2AEE4A6 /* VLTOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = VLTOperation.m; sourceTree = "<group>"; };
 		959368FF1DB0CFCA793ECB461C97DC67 /* SourceContext.pbobjc.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SourceContext.pbobjc.m; path = objectivec/google/protobuf/SourceContext.pbobjc.m; sourceTree = "<group>"; };
 		9763B10B310447ADB106183D9C57AE97 /* VLTApiClient.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = VLTApiClient.m; sourceTree = "<group>"; };
 		98EA3158EC6E78AAF2A58DFD2D89C788 /* GPBCodedInputStream_PackagePrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBCodedInputStream_PackagePrivate.h; path = objectivec/GPBCodedInputStream_PackagePrivate.h; sourceTree = "<group>"; };
 		9AF1501B5458F33A533426C5E2A3D618 /* GPBDictionary.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBDictionary.h; path = objectivec/GPBDictionary.h; sourceTree = "<group>"; };
 		9B6815514274A6517E7940ED7815C3D1 /* AFNetworking-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AFNetworking-prefix.pch"; sourceTree = "<group>"; };
-		9C3160AA58E1B856955A1CFCB7ED5700 /* VelocitySDK.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = VelocitySDK.modulemap; sourceTree = "<group>"; };
+		9C3160AA58E1B856955A1CFCB7ED5700 /* VelocitySDK.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = VelocitySDK.modulemap; sourceTree = "<group>"; };
 		9D1C254CF3A1F57ECC5C5B0CC4DE3931 /* Velocity.pbobjc.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Velocity.pbobjc.h; path = "vendor/velocity-protobuf/lib/objc/Velocity.pbobjc.h"; sourceTree = "<group>"; };
 		9D8BCC3C50733D0AFCAF2E36E91CA91C /* VLTMultiMotionRecorder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = VLTMultiMotionRecorder.m; sourceTree = "<group>"; };
 		9E3DB5B4BDBA1B85DB37136B0D5A2D88 /* GPBCodedOutputStream.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBCodedOutputStream.h; path = objectivec/GPBCodedOutputStream.h; sourceTree = "<group>"; };
@@ -511,7 +511,7 @@
 		CE1004F1044D4BDC8A3FD003BD320045 /* SRSIMDHelpers.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SRSIMDHelpers.m; path = SocketRocket/Internal/Utilities/SRSIMDHelpers.m; sourceTree = "<group>"; };
 		CEC5700E1468448F0CD49E340590E22E /* VLTCore.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = VLTCore.m; sourceTree = "<group>"; };
 		CED6392E8B68F6D5861544F958674B93 /* Wrappers.pbobjc.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = Wrappers.pbobjc.m; path = objectivec/google/protobuf/Wrappers.pbobjc.m; sourceTree = "<group>"; };
-		CFDC811BEF46FA1577F3EB27F6BA20FC /* SocketRocket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SocketRocket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CFDC811BEF46FA1577F3EB27F6BA20FC /* SocketRocket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SocketRocket.framework; path = SocketRocket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D13CAD33E5095874881FE9AACF2EF74D /* GPBCodedOutputStream_PackagePrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBCodedOutputStream_PackagePrivate.h; path = objectivec/GPBCodedOutputStream_PackagePrivate.h; sourceTree = "<group>"; };
 		D1E5ADBC7A1A6436BD7FB7CA233CD043 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		D2D384BC36F3B36E9843349CFFD1E560 /* VLTActivityItem.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = VLTActivityItem.m; sourceTree = "<group>"; };
@@ -525,7 +525,7 @@
 		D8598A992F7A1B7A25C0E76AB1743B99 /* VLTCoreMotionActivityTracker.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = VLTCoreMotionActivityTracker.h; sourceTree = "<group>"; };
 		D893F385DBCE742EBCBF743FEDF48212 /* ListQueue.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = ListQueue.h; sourceTree = "<group>"; };
 		D8C6A1B14F52C8ED83764F6D161EBC12 /* VLTMotionDataOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = VLTMotionDataOperation.m; sourceTree = "<group>"; };
-		D8D6083B20BD35F555A0490A9FE535D8 /* AFNetworking.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = AFNetworking.modulemap; sourceTree = "<group>"; };
+		D8D6083B20BD35F555A0490A9FE535D8 /* AFNetworking.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = AFNetworking.modulemap; sourceTree = "<group>"; };
 		D943F7AA3E93660E3D248C7FB62BA082 /* GPBWireFormat.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPBWireFormat.m; path = objectivec/GPBWireFormat.m; sourceTree = "<group>"; };
 		DBDE5A709586D834CD915EF7F24AEB77 /* SRSecurityPolicy.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SRSecurityPolicy.h; path = SocketRocket/SRSecurityPolicy.h; sourceTree = "<group>"; };
 		DBE07909BD637DB451062976EF16DC00 /* VelocitySDK.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = VelocitySDK.h; sourceTree = "<group>"; };
@@ -540,7 +540,7 @@
 		E512A5F985F876750237FD237C3AEEDA /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
 		E61F9924EA50A5AE7E77B5C3807D063D /* VLTSimpleSample.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = VLTSimpleSample.m; sourceTree = "<group>"; };
 		E755A3E2181CBDE3E12019829573A14A /* VLTCore.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = VLTCore.h; sourceTree = "<group>"; };
-		E9DF16A1AD5B97161468163FC853708A /* SocketRocket.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = SocketRocket.modulemap; sourceTree = "<group>"; };
+		E9DF16A1AD5B97161468163FC853708A /* SocketRocket.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = SocketRocket.modulemap; sourceTree = "<group>"; };
 		EA0B4A08B486B513AAC859E17AAFAC7F /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EAC587D2B2A4DF41B2D0B74C10BF6902 /* VLTMotionDetectResult.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = VLTMotionDetectResult.h; sourceTree = "<group>"; };
 		EB75D5F000BC15CA8074518D848C298F /* AFNetworking-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AFNetworking-umbrella.h"; sourceTree = "<group>"; };
@@ -551,7 +551,7 @@
 		F79FD91161BF448170445A6FE45AC3BB /* GPBCodedInputStream.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBCodedInputStream.h; path = objectivec/GPBCodedInputStream.h; sourceTree = "<group>"; };
 		F96F4CE735EF52E2BDE45CF0AE5C5D9E /* VLTSensorBuilder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = VLTSensorBuilder.m; sourceTree = "<group>"; };
 		FACCDDC230C151CB4A5E5714F4710612 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFURLResponseSerialization.m; path = AFNetworking/AFURLResponseSerialization.m; sourceTree = "<group>"; };
-		FD65F0F3D82FC66A36CE6EB548A993A5 /* Protobuf.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Protobuf.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD65F0F3D82FC66A36CE6EB548A993A5 /* Protobuf.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Protobuf.framework; path = Protobuf.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDCA71940A4C5B2A726000F8FC6B8FA6 /* VLTWsApiClientRequest.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = VLTWsApiClientRequest.h; sourceTree = "<group>"; };
 		FDE07245DC6B86F69FE8D3ADAA6E402F /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
 		FDEBFC9DEAF6EDD4259537DFB81ED99A /* VLTDrivingDetectOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = VLTDrivingDetectOperation.m; sourceTree = "<group>"; };
@@ -632,6 +632,7 @@
 				3269DA5A704469FFAB860913F16CF150 /* VLTSimulatorSensorRecorder.h */,
 				C217B078B5DBC33DA0330C6E457F359C /* VLTSimulatorSensorRecorder.m */,
 			);
+			name = Recorders;
 			path = Recorders;
 			sourceTree = "<group>";
 		};
@@ -725,6 +726,7 @@
 				558945E4877BBF192C877223D680ED00 /* VLTWsCaptureUploadOperation.h */,
 				4B2A52332539EFB917C5879B566F0ECF /* VLTWsCaptureUploadOperation.m */,
 			);
+			name = Capture;
 			path = Capture;
 			sourceTree = "<group>";
 		};
@@ -736,6 +738,7 @@
 				FDCA71940A4C5B2A726000F8FC6B8FA6 /* VLTWsApiClientRequest.h */,
 				11E94AA325355F434A454CC6D363FFF9 /* VLTWsApiClientRequest.m */,
 			);
+			name = WebSockets;
 			path = WebSockets;
 			sourceTree = "<group>";
 		};
@@ -747,6 +750,7 @@
 				0E5C339FCD6079B0BFEB42F786005562 /* Recorders */,
 				4FA168EC7B9A2512397BD493B104CE5F /* Samples */,
 			);
+			name = Sensors;
 			path = Sensors;
 			sourceTree = "<group>";
 		};
@@ -761,6 +765,7 @@
 				AAA6614B39D0851C0DB8C76411932BB5 /* VLTSimpleSample.h */,
 				E61F9924EA50A5AE7E77B5C3807D063D /* VLTSimpleSample.m */,
 			);
+			name = Samples;
 			path = Samples;
 			sourceTree = "<group>";
 		};
@@ -771,6 +776,7 @@
 				FE309189428E2AAC92CEE9A4F15BFCB4 /* FifoListQueue.m */,
 				D893F385DBCE742EBCBF743FEDF48212 /* ListQueue.h */,
 			);
+			name = ListQueues;
 			path = ListQueues;
 			sourceTree = "<group>";
 		};
@@ -783,6 +789,7 @@
 				268C45208F5CF2724623B184F6B98080 /* VLTProtobufHelper.h */,
 				6913B292C52E84A74EE0CC6EA1212241 /* VLTProtobufHelper.m */,
 			);
+			name = Support;
 			path = Support;
 			sourceTree = "<group>";
 		};
@@ -832,6 +839,7 @@
 				29F2800680242F3136F3293D75453AA2 /* Serialization */,
 				6C990B459ABAA87499A60DD2688D5440 /* Support Files */,
 			);
+			name = AFNetworking;
 			path = AFNetworking;
 			sourceTree = "<group>";
 		};
@@ -851,6 +859,7 @@
 				C167766D4E7FA21B65958F28BA2DC6DF /* VLTLabeledDataUploadOperation.h */,
 				2817C77501D5D426A2C071CE67DD8952 /* VLTLabeledDataUploadOperation.m */,
 			);
+			name = LabeledDataUpload;
 			path = LabeledDataUpload;
 			sourceTree = "<group>";
 		};
@@ -897,6 +906,7 @@
 				770B89539FF9FAC94A30B290C3FD1E7E /* VLTWsParkedDetectOperation.h */,
 				BEE749826737128BE6803F634E24E4B0 /* VLTWsParkedDetectOperation.m */,
 			);
+			name = ParkedDetect;
 			path = ParkedDetect;
 			sourceTree = "<group>";
 		};
@@ -915,6 +925,7 @@
 				7A0DECB11E99703BCE42104201D060F1 /* VLTDrivingDetectOperation.h */,
 				FDEBFC9DEAF6EDD4259537DFB81ED99A /* VLTDrivingDetectOperation.m */,
 			);
+			name = DrivingDetect;
 			path = DrivingDetect;
 			sourceTree = "<group>";
 		};
@@ -931,6 +942,7 @@
 			children = (
 				DBE07909BD637DB451062976EF16DC00 /* VelocitySDK.h */,
 			);
+			name = Framework;
 			path = Framework;
 			sourceTree = "<group>";
 		};
@@ -1001,6 +1013,7 @@
 				CED6392E8B68F6D5861544F958674B93 /* Wrappers.pbobjc.m */,
 				28048097F7436CC128AEBE2859264BBA /* Support Files */,
 			);
+			name = Protobuf;
 			path = Protobuf;
 			sourceTree = "<group>";
 		};
@@ -1022,6 +1035,7 @@
 				4DCF648F5DE8BACB41EE49F72477DCC4 /* Sensors */,
 				641FDDA8777F3DABC3CF277F1F62E5D3 /* Support */,
 			);
+			name = VelocitySDK;
 			path = VelocitySDK;
 			sourceTree = "<group>";
 		};
@@ -1071,6 +1085,7 @@
 				C940E74E3E272FAEBDD64DEA588E0173 /* SRWebSocket.m */,
 				20C2B2FEAFD9B892E9FD041D3FE7B52C /* Support Files */,
 			);
+			name = SocketRocket;
 			path = SocketRocket;
 			sourceTree = "<group>";
 		};
@@ -1101,6 +1116,7 @@
 				D670B645820A19F78DEDF1BD767BD49B /* VLTUserDataStore.m */,
 				450D9E353BAA3D39E2CE7D13EE4BE207 /* WebSockets */,
 			);
+			name = Core;
 			path = Core;
 			sourceTree = "<group>";
 		};
@@ -1119,6 +1135,7 @@
 				7D1D2ED1A61EEF2F79A1305697FF9C27 /* LabeledDataUpload */,
 				99938F54DECD5C009C4E26E7644754EB /* ParkedDetect */,
 			);
+			name = Operations;
 			path = Operations;
 			sourceTree = "<group>";
 		};
@@ -1131,6 +1148,7 @@
 				D4FA8D069FEB0809242C8FB2A7555B23 /* VLTWsMotionDetectOperation.h */,
 				45D7050E021236B90DA36F01E42A79AA /* VLTWsMotionDetectOperation.m */,
 			);
+			name = Detect;
 			path = Detect;
 			sourceTree = "<group>";
 		};
@@ -1429,7 +1447,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0910;
+				LastUpgradeCheck = 0700;
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1710,9 +1728,7 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -1720,21 +1736,15 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"POD_CONFIGURATION_DEBUG=1",
@@ -1767,9 +1777,7 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -1777,20 +1785,14 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"POD_CONFIGURATION_RELEASE=1",
 					"$(inherited)",

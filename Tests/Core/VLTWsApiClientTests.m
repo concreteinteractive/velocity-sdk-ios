@@ -36,6 +36,7 @@
 
     self.wsApiClient = [[VLTWsApiClient alloc] initWithQueueSize:10];
     self.mockWebSocket = OCMPartialMock((id)self.wsApiClient.ws);
+    OCMStub([self.mockWebSocket readyState]).andReturn(SR_OPEN);
     self.wsApiClient.ws = self.mockWebSocket;
 }
 
@@ -76,7 +77,6 @@
 
     XCTestExpectation *failExpectation = [self expectationWithDescription:@"handshake error test"];
 
-    OCMStub([(SRWebSocket *)self.mockWebSocket sendData:OCMOCK_ANY error:[OCMArg setTo:nil]]).andReturn(YES);
 
     [self.wsApiClient handshakeWithSuccess:^(VLTPBHandshakeResponse * _Nonnull response) {
     } failure:^(NSError * _Nonnull error) {
