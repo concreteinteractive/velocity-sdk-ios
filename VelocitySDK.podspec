@@ -28,5 +28,5 @@ Pod::Spec.new do |s|
   s.module_name         = 'VelocitySDK'
   s.dependency  'AFNetworking/NSURLSession'
   s.dependency  'Protobuf', '~> 3.4.0'
-  s.dependency  'SocketRocket', '~> 0.6.0-vlcty'
+  s.dependency  'SocketRocket', '0.6.0-vlcty'
 end
