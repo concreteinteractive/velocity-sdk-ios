@@ -154,8 +154,10 @@ static const NSUInteger VLTWsApiQueueSize              = 10;
 
 - (void)reinitializeWsApiClient
 {
-    [self initializeWsApiClient];
-    [self startMotionSensing];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self initializeWsApiClient];
+        [self startMotionSensing];
+    });
 }
 
 - (void)closeWsApiClientIfNeeded
