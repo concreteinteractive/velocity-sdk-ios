@@ -20,6 +20,7 @@ enum : NSInteger {
     VLTClientError                  = 1005, // An error occured in Velocity client. E.g. it can occur due network error
     VLTWsApiQueueIsFullError        = 1006, // An error, which occurs when websocket API queue reach its limit
     VLTWsApiClientDisconnectedError = 1007, // Websockets api error
+    VLTWsApiClientAlreadyOpenError = 1008, // Websockets api error
 };
 
 static NSString *const VLTWsCloseWithCodeKey = @"VLTWsClosedWithCode";

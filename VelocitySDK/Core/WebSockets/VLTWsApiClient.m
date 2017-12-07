@@ -32,6 +32,7 @@ static NSString *const VLTWsApiClientUrl = @"https://sdk.vlcty.net/api/ws";
 @property (atomic, assign) BOOL handshakeCompleted;
 
 @property (atomic, assign, getter=isClosed) BOOL closed;
+@property (nonatomic, assign) BOOL alreadyOpen;
 @property (atomic, copy) void(^closeBlock)(void);
 
 @end
@@ -115,6 +116,15 @@ static NSString *const VLTWsApiClientUrl = @"https://sdk.vlcty.net/api/ws";
 
 - (void)openWithAuthToken:(nonnull NSString *)authToken
 {
+    @synchronized(self) {
+        if (self.alreadyOpen) {
+            NSDictionary *uInfo = @{ NSLocalizedDescriptionKey: @"Already tried to open websocket.", };
+            NSError *error = [NSError errorWithDomain:VLTErrorDomain code:VLTWsApiClientAlreadyOpenError userInfo:uInfo];
+            vlt_invoke_block(self.onError, error);
+            return;
+        }
+        self.alreadyOpen = true;
+    }
     self.authToken = authToken;
     [self.ws open];
 }
