@@ -107,7 +107,7 @@ static NSString *const VLTDefaultUserIDKey           = @"net.vlcty.default_user_
 
 + (NSString *)IFA
 {
-    NSString *ifa                  = @"00000000-0000-0000-0000-000000000000";
+    NSString *ifa                  = @"";
     Class ASIdentifierManagerClass = NSClassFromString(@"ASIdentifierManager");
     if (ASIdentifierManagerClass) {
         SEL sharedManagerSelector = NSSelectorFromString(@"sharedManager");

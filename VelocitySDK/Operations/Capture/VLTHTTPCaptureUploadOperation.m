@@ -39,9 +39,9 @@
 - (void)processMotionData
 {
     VLTPBCapture *captureRequest = [VLTProtobufHelper captureFromDatas:self.motionData
-                                                                   ifa:[VLTConfig IFA]
+                                                                   ifa:[VLTUserDataStore shared].IFA
                                                          sequenceIndex:self.sequenceIndex
-                                                          impressionId:[[VLTUserDataStore shared] sessionId]];
+                                                          impressionId:[VLTUserDataStore shared].sessionId];
     vlt_weakify(self);
     [[VLTApiClient shared] uploadForTracking:captureRequest
         success:^(NSUInteger bytesSent) {

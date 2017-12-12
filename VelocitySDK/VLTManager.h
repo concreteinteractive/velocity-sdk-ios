@@ -100,4 +100,10 @@
                     success:(nullable void (^)(void))success
                     failure:(nullable void (^)(NSError *_Nonnull error))failure;
 
+/**
+ @brief Control identifier for ad usage
+ @param enabled Enable/Disable usage of identifier for ad
+ */
++ (void)setIFAEnabled:(BOOL)enabled;
+
 @end

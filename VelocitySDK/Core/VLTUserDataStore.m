@@ -38,8 +38,17 @@
     if (self) {
         _userId    = [VLTConfig defaultUserID];
         _sessionId = [[NSUUID UUID] UUIDString];
+        _IFAEnabled = YES;
     }
     return self;
+}
+
+- (NSString *)IFA
+{
+    if (self.isIFAEnabled && [VLTConfig trackingEnabled]) {
+        return [VLTConfig IFA];
+    }
+    return @"";
 }
 
 @end

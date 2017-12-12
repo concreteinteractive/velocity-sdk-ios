@@ -41,9 +41,9 @@
 - (void)processMotionData
 {
     VLTPBCapture *capture = [VLTProtobufHelper captureFromDatas:self.motionData
-                                                            ifa:[VLTConfig IFA]
+                                                            ifa:[VLTUserDataStore shared].IFA
                                                   sequenceIndex:1
-                                                   impressionId:[[VLTUserDataStore shared] sessionId]];
+                                                   impressionId:[VLTUserDataStore shared].sessionId];
     vlt_weakify(self);
     [[VLTApiClient shared] uploadMotionData:capture
         labels:self.labels
