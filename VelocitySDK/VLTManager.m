@@ -195,4 +195,9 @@ NSString *const VLTMotionDriving = @"driving";
     [VLTCoreMotionActivityTracker shared].enabled = enabled;
 }
 
++ (void)setIFAEnabled:(BOOL)enabled
+{
+    [[VLTUserDataStore shared] setIFAEnabled:enabled];
+}
+
 @end

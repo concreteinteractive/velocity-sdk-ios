@@ -149,7 +149,7 @@ static NSString *const VLTWsApiClientUrl = @"https://sdk.vlcty.net/api/ws";
 {
     VLTPBHandshakeRequest *handshakeReq;
     handshakeReq = [VLTProtobufHelper handshakeRequestWithAuthToken:self.authToken
-                                                               idfa:[VLTConfig IFA]
+                                                               idfa:[VLTUserDataStore shared].IFA
                                                              userId:[VLTUserDataStore shared].userId];
     NSData *data = [handshakeReq data];
     vlt_weakify(self);

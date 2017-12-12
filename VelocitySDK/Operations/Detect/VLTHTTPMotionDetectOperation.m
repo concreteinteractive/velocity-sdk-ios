@@ -45,7 +45,7 @@
     motionRequest                           = [VLTProtobufHelper detectMotionRequestFromDatas:self.motionData
                                                        impressionId:[VLTUserDataStore shared].sessionId
                                                          modelNames:@[]
-                                                                ifa:[VLTConfig IFA]
+                                                                ifa:[VLTUserDataStore shared].IFA
                                                              userId:[VLTUserDataStore shared].userId
                                                       sequenceIndex:self.sequenceIndex];
     vlt_weakify(self);
