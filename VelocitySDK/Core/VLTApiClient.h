@@ -32,7 +32,7 @@
        success:(nullable void (^)(VLTMotionDetectResult *_Nonnull result))success
        failure:(nullable void (^)(NSError *_Nonnull error))failure;
 
-- (void)uploadMotionData:(nonnull VLTPBCapture *)capture
+- (void)uploadMotionData:(nullable VLTPBCapture *)capture
                   labels:(nonnull NSArray<NSString *> *)labels
                  success:(nullable void (^)(void))success
                  failure:(nullable void (^)(NSError *_Nonnull error))failure;

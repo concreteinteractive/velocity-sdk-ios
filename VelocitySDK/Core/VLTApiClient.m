@@ -113,7 +113,7 @@ typedef NS_ENUM(NSInteger, VLTApiStatusCode) {
     [task resume];
 }
 
-- (void)uploadMotionData:(nonnull VLTPBCapture *)capture
+- (void)uploadMotionData:(nullable VLTPBCapture *)capture
                   labels:(nonnull NSArray<NSString *> *)labels
                  success:(nullable void (^)(void))success
                  failure:(nullable void (^)(NSError *_Nonnull error))failure
@@ -128,8 +128,8 @@ typedef NS_ENUM(NSInteger, VLTApiStatusCode) {
     NSString *endpoint = [NSString stringWithFormat:@"motions/label"];
 
     NSError *error = nil;
-    NSURLRequest *req =
-        [self multipartForRequestWithMethod:@"POST" endpoint:endpoint parameters:params data:data error:&error];
+    NSURLRequest *req = [self multipartForRequestWithMethod:@"POST" endpoint:endpoint parameters:params data:data error:&error];
+    
     if (req == nil) {
         vlt_invoke_block(failure, error);
         return;
@@ -223,12 +223,15 @@ typedef NS_ENUM(NSInteger, VLTApiStatusCode) {
                                                  error:(NSError **)error
 {
     NSString *urlString = [NSString stringWithFormat:@"%@%@", self.baseUrl, endpoint];
-    void (^block)(id<AFMultipartFormData> _Nonnull formData) = ^(id<AFMultipartFormData> _Nonnull formData) {
-        [formData appendPartWithFileData:data
-                                    name:@"motion_data.bin"
-                                fileName:@"motion_data.bin"
-                                mimeType:@"application/octet-stream"];
-    };
+    void (^block)(id<AFMultipartFormData> _Nonnull formData) = nil;
+    if (data) {
+        block = ^(id<AFMultipartFormData> _Nonnull formData) {
+            [formData appendPartWithFileData:data
+                                        name:@"motion_data.bin"
+                                    fileName:@"motion_data.bin"
+                                    mimeType:@"application/octet-stream"];
+        };
+    }
     NSMutableURLRequest *req = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:method
                                                                                           URLString:urlString
                                                                                          parameters:parameters
