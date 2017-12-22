@@ -12,6 +12,7 @@
 #import "VLTMacros.h"
 #import "VLTProtobufHelper.h"
 #import "VLTUserDataStore.h"
+#import "VLTData.h"
 
 @interface VLTLabeledDataUploadOperation ()
 
@@ -40,10 +41,21 @@
 
 - (void)processMotionData
 {
-    VLTPBCapture *capture = [VLTProtobufHelper captureFromDatas:self.motionData
-                                                            ifa:[VLTUserDataStore shared].IFA
-                                                  sequenceIndex:1
-                                                   impressionId:[VLTUserDataStore shared].sessionId];
+    VLTPBCapture *capture = nil;
+    BOOL hasAnyValues = NO;
+    for (VLTData* data in self.motionData) {
+        if (data.values.count > 0) {
+            hasAnyValues = YES;
+            break;
+        }
+    }
+    
+    if (hasAnyValues) {
+        capture = [VLTProtobufHelper captureFromDatas:self.motionData
+                                                  ifa:[VLTUserDataStore shared].IFA
+                                        sequenceIndex:1
+                                         impressionId:[VLTUserDataStore shared].sessionId];
+    }
     vlt_weakify(self);
     [[VLTApiClient shared] uploadMotionData:capture
         labels:self.labels
