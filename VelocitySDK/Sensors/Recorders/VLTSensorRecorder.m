@@ -92,12 +92,20 @@
     NSArray<id<VLTSample>> *results = @[];
     id<VLTSample> lastObject        = [samples lastObject];
     if (lastObject) {
-        NSTimeInterval timestampLimit = lastObject.timestamp - interval;
-        for (NSInteger i = (samples.count - 1); i >= 0; i--) {
-            id<VLTSample> sample = samples[i];
-            if (sample.timestamp < timestampLimit) {
-                results = [samples subarrayWithRange:NSMakeRange(i, samples.count - i)];
-                break;
+        if ([samples lastObject].timestamp - [samples firstObject].timestamp < interval) {
+            results = samples;
+        } else {
+            NSTimeInterval timestampLimit = lastObject.timestamp - interval;
+            NSInteger lastValidSampleIndex = NSNotFound;
+            for (NSInteger i = (samples.count - 1); i >= 0; i--) {
+                id<VLTSample> sample = samples[i];
+                if (sample.timestamp < timestampLimit) {
+                    break;
+                }
+                lastValidSampleIndex = i;
+            }
+            if (lastValidSampleIndex != NSNotFound) {
+                results = [samples subarrayWithRange:NSMakeRange(lastValidSampleIndex, samples.count - lastValidSampleIndex)];
             }
         }
     }

@@ -121,6 +121,7 @@
 		B92162901F8F840B009E18D0 /* VLTDataThrottler.h in Headers */ = {isa = PBXBuildFile; fileRef = B921628E1F8F840B009E18D0 /* VLTDataThrottler.h */; };
 		B92162911F8F840B009E18D0 /* VLTDataThrottler.m in Sources */ = {isa = PBXBuildFile; fileRef = B921628F1F8F840B009E18D0 /* VLTDataThrottler.m */; };
 		B9746AF81F90D7520079F409 /* VLTDataThrottlerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B9746AF71F90D7520079F409 /* VLTDataThrottlerTests.m */; };
+		B9D427611FED0AB2000D9818 /* VLTSensorRecorderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B9D427601FED0AB2000D9818 /* VLTSensorRecorderTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -299,6 +300,7 @@
 		B921628E1F8F840B009E18D0 /* VLTDataThrottler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTDataThrottler.h; sourceTree = "<group>"; };
 		B921628F1F8F840B009E18D0 /* VLTDataThrottler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTDataThrottler.m; sourceTree = "<group>"; };
 		B9746AF71F90D7520079F409 /* VLTDataThrottlerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTDataThrottlerTests.m; sourceTree = "<group>"; };
+		B9D427601FED0AB2000D9818 /* VLTSensorRecorderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VLTSensorRecorderTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -478,6 +480,7 @@
 			isa = PBXGroup;
 			children = (
 				AD24C3381F3C8C5C00F3DB78 /* VLTGPSSensorRecorderTests.m */,
+				B9D427601FED0AB2000D9818 /* VLTSensorRecorderTests.m */,
 			);
 			path = Recorders;
 			sourceTree = "<group>";
@@ -928,6 +931,7 @@
 				AD5D3A0F1F4AF1B40042A4A2 /* VLTHTTPCaptureUploadOperationTests.m in Sources */,
 				AD393D7F1F9F54FA00F7E15A /* VLTWsApiClientTests.m in Sources */,
 				ADF383CB1FA20CF80099D867 /* VLTWsCaptureUploadOperationTests.m in Sources */,
+				B9D427611FED0AB2000D9818 /* VLTSensorRecorderTests.m in Sources */,
 				AD9919021F4B0C8F0002DE4E /* VLTParkedDetectionOperationTests.m in Sources */,
 				B9746AF81F90D7520079F409 /* VLTDataThrottlerTests.m in Sources */,
 				AD1380A81F45AD25005400AA /* VLTClientTests.m in Sources */,
