@@ -8,12 +8,12 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - Protobuf (3.4.0)
   - SocketRocket (0.6.0-vlcty)
-  - VelocitySDK (1.3.2):
+  - VelocitySDK (1.3.3):
     - AFNetworking/NSURLSession
     - Protobuf (~> 3.4.0)
     - SocketRocket (= 0.6.0-vlcty)
-    - VelocitySDK/no-arc (= 1.3.2)
-  - VelocitySDK/no-arc (1.3.2):
+    - VelocitySDK/no-arc (= 1.3.3)
+  - VelocitySDK/no-arc (1.3.3):
     - AFNetworking/NSURLSession
     - Protobuf (~> 3.4.0)
     - SocketRocket (= 0.6.0-vlcty)
@@ -29,7 +29,7 @@ SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   Protobuf: 03eef2ee0b674770735cf79d9c4d3659cf6908e8
   SocketRocket: 363f83d2ce2d1894d5066dd62fbbf413af40fe8b
-  VelocitySDK: 1180385b32b541b38486f3a79147b41680763bac
+  VelocitySDK: 298faad02b5e484e53d1116a27b476d23288805e
 
 PODFILE CHECKSUM: ed1b32e3f55ecbeac3654d115e502e706d03a14a
 
