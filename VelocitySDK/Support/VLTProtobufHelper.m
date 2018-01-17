@@ -16,7 +16,6 @@
 
 + (nonnull VLTPBCapture *)captureFromDatas:(nonnull NSArray<VLTData *> *)datas
                                        ifa:(nullable NSString *)ifa
-                             sequenceIndex:(UInt32)seqIndex
                               impressionId:(nonnull NSString *)impressionId;
 {
     NSMutableArray<VLTPBSensor *> *sensors = [NSMutableArray array];
@@ -30,7 +29,7 @@
     capture.ifa           = ifa;
     capture.timestamp     = [NSDate date].timeIntervalSince1970;
     capture.platform      = VLTPBPlatformType_Ios;
-    capture.sequenceIndex = seqIndex;
+    capture.sequenceIndex = 0;
     capture.impressionId  = impressionId;
     capture.appId         = [[NSBundle mainBundle] bundleIdentifier];
 
@@ -42,7 +41,6 @@
                                                         modelNames:(nonnull NSArray<NSString *> *)modelNames
                                                                ifa:(nullable NSString *)ifa
                                                             userId:(nullable NSString *)userId
-                                                     sequenceIndex:(UInt32)seqIndex
 {
     NSMutableArray<VLTPBSensor *> *sensors = [NSMutableArray array];
     for (VLTData *data in datas) {
@@ -54,7 +52,7 @@
     motionRequest.userId                    = userId;
     motionRequest.modelNameArray            = [modelNames mutableCopy];
     motionRequest.sensorsArray              = sensors;
-    motionRequest.sequenceIndex             = seqIndex;
+    motionRequest.sequenceIndex             = 0;
     motionRequest.platform                  = VLTPBPlatformType_Ios;
     motionRequest.timestamp                 = [NSDate date].timeIntervalSince1970;
     return motionRequest;

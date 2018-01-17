@@ -15,21 +15,11 @@
 
 @interface VLTHTTPCaptureUploadOperation ()
 
-@property (nonatomic, assign) UInt32 sequenceIndex;
 @property (atomic, strong) NSError *error;
 
 @end
 
 @implementation VLTHTTPCaptureUploadOperation
-
-- (nonnull instancetype)initWithMotionData:(nonnull NSArray<VLTData *> *)motionData sequenceIndex:(UInt32)sequenceIndex
-{
-    self = [super initWithMotionData:motionData];
-    if (self) {
-        _sequenceIndex = sequenceIndex;
-    }
-    return self;
-}
 
 - (BOOL)isAsynchronous
 {
@@ -40,7 +30,6 @@
 {
     VLTPBCapture *captureRequest = [VLTProtobufHelper captureFromDatas:self.motionData
                                                                    ifa:[VLTUserDataStore shared].IFA
-                                                         sequenceIndex:self.sequenceIndex
                                                           impressionId:[VLTUserDataStore shared].sessionId];
     vlt_weakify(self);
     [[VLTApiClient shared] uploadForTracking:captureRequest

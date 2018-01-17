@@ -66,9 +66,8 @@
     OCMStub([wsMock isOpen]).andReturn(true);
 
     __block BOOL alreadyFulfilled = NO;
-    self.client.operationFatoryHandler = ^NSArray<VLTMotionDataOperation *> *(VLTWsApiClient *wsApiClient, NSArray<VLTData *> * motionData, UInt32 sequenceIndex) {
-        VLTHTTPMotionDetectOperation *op = [[VLTHTTPMotionDetectOperation alloc] initWithMotionData:motionData
-                                                                              sequenceIndex:sequenceIndex];
+    self.client.operationFatoryHandler = ^NSArray<VLTMotionDataOperation *> *(VLTWsApiClient *wsApiClient, NSArray<VLTData *> * motionData) {
+        VLTHTTPMotionDetectOperation *op = [[VLTHTTPMotionDetectOperation alloc] initWithMotionData:motionData];
         id operationMock = OCMPartialMock(op);
         OCMStub([operationMock processMotionData]).andDo(^(NSInvocation *invocation) {
             op.onMotionDetect([[VLTMotionDetectResult alloc] init]);

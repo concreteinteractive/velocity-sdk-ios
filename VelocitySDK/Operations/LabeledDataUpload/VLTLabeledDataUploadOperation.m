@@ -53,7 +53,6 @@
     if (hasAnyValues) {
         capture = [VLTProtobufHelper captureFromDatas:self.motionData
                                                   ifa:[VLTUserDataStore shared].IFA
-                                        sequenceIndex:1
                                          impressionId:[VLTUserDataStore shared].sessionId];
     }
     vlt_weakify(self);

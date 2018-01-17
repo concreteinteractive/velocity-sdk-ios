@@ -20,15 +20,13 @@
 
 + (nonnull VLTPBCapture *)captureFromDatas:(nonnull NSArray<VLTData *> *)datas
                                        ifa:(nullable NSString *)ifa
-                             sequenceIndex:(UInt32)seqIndex
                               impressionId:(nonnull NSString *)impressionId;
 
 + (nonnull VLTPBDetectMotionRequest *)detectMotionRequestFromDatas:(nonnull NSArray<VLTData *> *)datas
                                                       impressionId:(nonnull NSString *)impressionId
                                                         modelNames:(nonnull NSArray<NSString *> *)modelNames
                                                                ifa:(nullable NSString *)ifa
-                                                            userId:(nullable NSString *)userId
-                                                     sequenceIndex:(UInt32)seqIndex;
+                                                            userId:(nullable NSString *)userId;
 
 + (nonnull VLTPBSensor *)sensorFromData:(nonnull VLTData *)data;
 

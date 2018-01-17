@@ -14,8 +14,7 @@
 
 typedef NSArray<VLTMotionDataOperation *> *_Nonnull (^MotionDataOperationsFactory)(
     VLTWsApiClient *_Nonnull wsApiClient,
-    NSArray<VLTData *> *_Nonnull motionData,
-    UInt32 sequenceIndex);
+    NSArray<VLTData *> *_Nonnull motionData);
 
 @interface VLTClient : NSObject
 

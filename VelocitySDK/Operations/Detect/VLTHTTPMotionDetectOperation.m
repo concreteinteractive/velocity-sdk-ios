@@ -19,20 +19,9 @@
 @property (atomic, strong) VLTMotionDetectResult *result;
 @property (atomic, strong) NSError *error;
 
-@property (nonatomic, assign) UInt32 sequenceIndex;
-
 @end
 
 @implementation VLTHTTPMotionDetectOperation
-
-- (nonnull instancetype)initWithMotionData:(nonnull NSArray<VLTData *> *)motionData sequenceIndex:(UInt32)sequenceIndex
-{
-    self = [super initWithMotionData:motionData];
-    if (self) {
-        _sequenceIndex = sequenceIndex;
-    }
-    return self;
-}
 
 - (BOOL)isAsynchronous
 {
@@ -46,8 +35,7 @@
                                                        impressionId:[VLTUserDataStore shared].sessionId
                                                          modelNames:@[]
                                                                 ifa:[VLTUserDataStore shared].IFA
-                                                             userId:[VLTUserDataStore shared].userId
-                                                      sequenceIndex:self.sequenceIndex];
+                                                             userId:[VLTUserDataStore shared].userId];
     vlt_weakify(self);
     [[VLTApiClient shared] detect:motionRequest
         success:^(VLTMotionDetectResult *_Nonnull result) {
