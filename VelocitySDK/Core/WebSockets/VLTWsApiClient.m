@@ -46,8 +46,11 @@ static NSString *const VLTWsApiClientUrl = @"https://sdk.vlcty.net/api/ws";
         _delegateQueue = dispatch_queue_create("net.vlcty.ws.delegate", DISPATCH_QUEUE_SERIAL);
         _queueSize     = queueSize;
         _queue         = [[FifoListQueue alloc] init];
+      
         NSURL *url     = [NSURL URLWithString:VLTWsApiClientUrl];
-        _ws            = [[SRWebSocket alloc] initWithURL:url];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+        [request setValue:[VLTConfig userAgent] forHTTPHeaderField:@"User-Agent"];
+        _ws = [[SRWebSocket alloc] initWithURLRequest:request];
         [_ws setDelegateDispatchQueue:_delegateQueue];
         _ws.delegate = self;
     }

@@ -5,7 +5,7 @@
 //
 //  Copyright © 2016 VLCTY, Inc. All rights reserved.
 //
-
+#import <UIKit/UIKit.h>
 #import "VLTConfig.h"
 #import "VLTMacros.h"
 
@@ -137,6 +137,24 @@ static NSString *const VLTDefaultUserIDKey           = @"net.vlcty.default_user_
         }
     }
     return NO;
+}
+
++ (NSString *)userAgent
+{
+    NSString * appVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    NSString * appBuildString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
+    NSString * versionBuildString = [NSString stringWithFormat:@"Version: %@ (%@)", appVersionString, appBuildString];
+
+    NSString *userAgent = [NSString stringWithFormat:@"%@/%@ (%@; iOS %@; Scale/%0.2f) %@/%@",
+                           @"VelocitySDK",
+                           [VLTConfig libVersion],
+                           [[UIDevice currentDevice] model],
+                           [[UIDevice currentDevice] systemVersion],
+                           [[UIScreen mainScreen] scale],
+                           [[NSBundle mainBundle] bundleIdentifier],
+                           versionBuildString
+                           ];
+    return userAgent;
 }
 
 @end
