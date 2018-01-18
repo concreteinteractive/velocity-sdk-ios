@@ -36,7 +36,6 @@ NSString *const VLTMotionDriving = @"driving";
 @property (atomic, copy) void (^detectionHandler)(VLTMotionDetectResult *_Nonnull);
 
 @property (nonatomic) VLTDataThrottler *trackingThrottler;
-@property (atomic) NSUInteger seqIndex;
 
 @end
 
@@ -59,10 +58,10 @@ NSString *const VLTMotionDriving = @"driving";
         _client = [[VLTClient alloc] init];
         vlt_weakify(self);
         _client.operationFatoryHandler = ^NSArray<VLTMotionDataOperation *> *(
-            VLTWsApiClient *wsApiClient, NSArray<VLTData *> *motionData, UInt32 sequenceIndex)
+            VLTWsApiClient *wsApiClient, NSArray<VLTData *> *motionData)
         {
             vlt_strongify(self);
-            return [self operationWithWsApiClient:wsApiClient motionData:motionData sequenceIndex:sequenceIndex];
+            return [self operationWithWsApiClient:wsApiClient motionData:motionData];
         };
         _client.errorHandler = ^(NSError *error) {
             NSLog(@"VelocitySDK error: %@", error);
@@ -136,10 +135,7 @@ NSString *const VLTMotionDriving = @"driving";
 
 - (NSArray<VLTMotionDataOperation *> *)operationWithWsApiClient:(VLTWsApiClient *)wsApiClient
                                                      motionData:(NSArray<VLTData *> *)motionData
-                                                  sequenceIndex:(UInt32)sequenceIndex
 {
-    self.seqIndex = self.seqIndex + 1;
-
     NSMutableArray<VLTMotionDataOperation *> *operations = [[NSMutableArray alloc] init];
     if (self.isTrackingOn && ![self.trackingThrottler shouldThrottle]) {
         VLTWsCaptureUploadOperation *captureOp =

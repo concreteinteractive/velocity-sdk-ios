@@ -15,8 +15,4 @@
 @property (atomic, copy, nullable) void (^onError)(NSUInteger bytesSent, NSError *_Nonnull);
 @property (atomic, copy, nullable) void (^onSuccess)(NSUInteger bytesSent);
 
-@property (nonatomic, assign, readonly) UInt32 sequenceIndex;
-
-- (nonnull instancetype)initWithMotionData:(nonnull NSArray<VLTData *> *)motionData sequenceIndex:(UInt32)sequenceIndex;
-
 @end

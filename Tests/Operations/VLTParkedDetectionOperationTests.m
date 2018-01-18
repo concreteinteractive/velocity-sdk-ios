@@ -34,7 +34,7 @@
     [super setUp];
 
     VLTData *gpsData = [[VLTData alloc] initWithSensorType:VLTSensorTypeGPS values:@[]];
-    self.operation = [[VLTParkedDetectOperation alloc] initWithMotionData:@[gpsData] sequenceIndex:1];
+    self.operation = [[VLTParkedDetectOperation alloc] initWithMotionData:@[gpsData]];
 }
 
 - (void)tearDown

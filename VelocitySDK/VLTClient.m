@@ -37,8 +37,6 @@ static const NSUInteger VLTWsApiQueueSize              = 10;
 @property (atomic, strong) id<VLTMotionRecorder> recorder;
 @property (atomic, strong) dispatch_source_t hitTimer;
 @property (atomic, assign, getter=isInProgress) BOOL inProgress;
-@property (atomic, assign) UInt32 sequenceIndex;
-@property (atomic, assign) UInt32 labeledSequenceIndex;
 @property (atomic, strong) VLTWsApiClient *wsApiClient;
 
 @property (nonatomic, strong) NSOperationQueue *processingQueue;
@@ -252,11 +250,8 @@ static const NSUInteger VLTWsApiQueueSize              = 10;
 
         NSTimeInterval sampleSize = self.recordingConfig.sampleSize;
         if ([self.recorder availableTimeInBuffer] > sampleSize) {
-            UInt32 seqIndex    = self.sequenceIndex;
-            self.sequenceIndex = self.sequenceIndex + 1;
-
             NSArray<VLTData *> *datas                     = [self.recorder dataForTimeInterval:sampleSize];
-            NSArray<VLTMotionDataOperation *> *operations = factoryHandler(self.wsApiClient, datas, seqIndex);
+            NSArray<VLTMotionDataOperation *> *operations = factoryHandler(self.wsApiClient, datas);
             [self.processingQueue addOperations:operations waitUntilFinished:YES];
         }
         self.inProgress = NO;
@@ -277,8 +272,6 @@ static const NSUInteger VLTWsApiQueueSize              = 10;
     }
 
     [self.processingQueue addOperationWithBlock:^{
-        self.labeledSequenceIndex = self.labeledSequenceIndex + 1;
-
         NSArray<VLTData *> *motionData = [self.recorder dataForTimeInterval:LabeledDataMaxTimeInterval];
         VLTLabeledDataUploadOperation *op =
             [[VLTLabeledDataUploadOperation alloc] initWithMotionData:motionData labels:labels];

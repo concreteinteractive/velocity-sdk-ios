@@ -48,7 +48,7 @@
         [invocation getArgument:&successBlock atIndex:3];
         successBlock(20);
     });
-    op = [[VLTHTTPCaptureUploadOperation alloc] initWithMotionData:@[] sequenceIndex:1];
+    op = [[VLTHTTPCaptureUploadOperation alloc] initWithMotionData:@[]];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Error handler invoked"];
     
     op.onSuccess = ^(NSUInteger bytesCount) {
@@ -67,7 +67,7 @@
     });
     XCTestExpectation *errorExpectation = [self expectationWithDescription:@"Error handler invoked"];
 
-    op = [[VLTHTTPCaptureUploadOperation alloc] initWithMotionData:@[] sequenceIndex:1];
+    op = [[VLTHTTPCaptureUploadOperation alloc] initWithMotionData:@[]];
     op.onError = ^(NSUInteger bytesCount, NSError *error) {
         [errorExpectation fulfill];
     };
