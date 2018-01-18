@@ -24,4 +24,6 @@
 + (NSString *)defaultUserID;
 + (BOOL)trackingEnabled;
 
++ (NSString *)userAgent;
+
 @end

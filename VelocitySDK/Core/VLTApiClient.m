@@ -25,12 +25,13 @@ static NSString *const VLTApiClientBaseUrl = @"https://sdk.vlcty.net/api/";
 static NSString *const VLTAcceptJSONValue     = @"application/vnd.sdk.velocity.v1+json";
 static NSString *const VLTAcceptProtobufValue = @"application/vnd.sdk.velocity.v1+octet-stream";
 
-static NSString *const SessionIDKey = @"session_id";
-static NSString *const UserIDKey    = @"user_id";
-static NSString *const AppIDKey     = @"app_id";
-static NSString *const GoalIDKey    = @"goal_id";
-static NSString *const EventIDKey   = @"event_id";
-static NSString *const LabelsKey    = @"labels";
+static NSString *const SessionIDKey     = @"session_id";
+static NSString *const UserIDKey        = @"user_id";
+static NSString *const AppIDKey         = @"app_id";
+static NSString *const GoalIDKey        = @"goal_id";
+static NSString *const EventIDKey       = @"event_id";
+static NSString *const LabelsKey        = @"labels";
+static NSString *const DataLengthKey    = @"data_length";
 
 typedef NS_ENUM(NSInteger, VLTApiStatusCode) {
     VLTApiStatusCodeUnrecognizedToken = 401,
@@ -124,6 +125,8 @@ typedef NS_ENUM(NSInteger, VLTApiStatusCode) {
 
     NSDictionary *params = @{
         LabelsKey: labels,
+        UserIDKey: [VLTUserDataStore shared].userId,
+        DataLengthKey: @(data.length)
     };
     NSString *endpoint = [NSString stringWithFormat:@"motions/label"];
 
@@ -262,7 +265,7 @@ typedef NS_ENUM(NSInteger, VLTApiStatusCode) {
         [request setValue:tokenField forHTTPHeaderField:@"Authorization"];
     }
 
-    [request setValue:[self userAgent] forHTTPHeaderField:@"User-Agent"];
+    [request setValue:[VLTConfig userAgent] forHTTPHeaderField:@"User-Agent"];
     [request setValue:[VLTConfig trackingEnabled] ? @"0" : @"1" forHTTPHeaderField:@"DNT"];
     [request setValue:VLTAcceptJSONValue forHTTPHeaderField:@"Accept"];
 }
@@ -312,17 +315,6 @@ typedef NS_ENUM(NSInteger, VLTApiStatusCode) {
     NSDictionary *userInfo = @{NSLocalizedDescriptionKey: message};
     NSError *apiError      = [NSError errorWithDomain:VLTErrorDomain code:VLTApiError userInfo:userInfo];
     return apiError;
-}
-
-- (NSString *)userAgent
-{
-    NSString *userAgent = [NSString stringWithFormat:@"%@/%@ (%@; iOS %@; Scale/%0.2f)",
-                                                     @"VelocitySDK",
-                                                     [VLTConfig libVersion],
-                                                     [[UIDevice currentDevice] model],
-                                                     [[UIDevice currentDevice] systemVersion],
-                                                     [[UIScreen mainScreen] scale]];
-    return userAgent;
 }
 
 @end
